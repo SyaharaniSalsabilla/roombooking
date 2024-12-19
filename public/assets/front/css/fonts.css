@@ -1,0 +1,515 @@
+/* General Styles */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'El Messiri', 'Montserrat', sans-serif;
+    background-color: #F7F1ED;
+}
+
+header {
+    background-color: #EBDDD1;
+    color: #A52123;
+    min-height: 100vh;
+    width: 100%;
+    background-image: linear-gradient(rgba(158,152,148,0.6),rgba(158,152,148,0.6)),url(assets/Anin.png);
+    background-position: center;
+    background-size: cover;
+    position: relative;
+}
+ 
+/* Navbar Styles */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #EBDDD1;
+}
+
+.left-section .open-hours, .left-section .phone-number {
+    color: #A52123;
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+.logo img {
+    width: 150px;
+    height: auto;
+}
+
+.right-section {
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+}
+
+.right-section .login {
+    color: #A52123;
+    text-decoration: none;
+    margin-right: 10px;
+}
+
+.right-section .user-icon {
+    font-size: 20px;
+    color: #A52123;
+}
+
+/* Navigation Styles */
+nav {
+    background-color: #D3CBC5;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    padding: 10px 0;
+    margin: 0;
+}
+
+nav ul li {
+    margin: 0 15px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #A52123;
+    font-size: 16px;
+}
+
+nav ul li a:hover {
+    border-bottom: 2px solid #A52123;
+}
+
+.search-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    max-width: 800px;
+}
+
+.search-box {
+    display: flex;
+    background-color: #EBDDD1;
+    border-radius: 15px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.search-box input[type="text"] {
+    flex: 1;
+    padding: 15px 40px;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    background-color: #EBDDD1;
+}
+
+.search-box input[type="date"] {
+    padding: 15px;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    background-color: transparent;
+}
+
+.search-box button {
+    padding: 15px 50px;
+    background-color: #A52123;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 15px;
+
+}
+
+.search-box button:hover {
+    background-color: #8e1c1f;
+}
+
+.promo-section {
+    background-color: #F2E5DC;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+/*------ promo ------*/
+
+.promo-section {
+    padding: 20px;
+    background-color: #F5E9E5;
+}
+
+.promo-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.promo-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #A52123;
+    margin: 0;
+}
+
+.view-all-button {
+    background-color: transparent;
+    color: #A52123;
+    border: 1px solid #A52123;
+    padding: 5px 15px;
+    font-size: 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.view-all-button:hover {
+    background-color: #A52123;
+    color: white;
+}
+
+.swiper-container {
+    width: 100%;
+    padding-bottom: 20px;
+}
+
+.swiper-wrapper {
+    display: flex;
+}
+
+.swiper-slide {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.promo-card {
+    background-color: white;
+    border-radius: 10px;
+    overflow: hidden;
+    width: 200px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.promo-card img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/*------ fasilitas ------*/
+
+.fasilitas-section {
+    text-align: center;
+    padding: 40px;
+    background-color: #D3C5BE;
+}
+
+.fasilitas-section h2 {
+    font-family: 'El Messiri', sans-serif;
+    color: #A52123;
+    font-size: 24px;
+    margin-bottom: 30px;
+}
+
+.fasilitas-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+.fasilitas-item {
+    text-align: center;
+    color: #A52123;
+}
+
+.fasilitas-item i {
+    font-size: 36px;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.fasilitas-item p {
+    font-size: 14px;
+}
+
+
+
+
+
+
+
+.RUANGAN {
+    position: absolute;
+    width: 1375px;
+    height: 525px;
+    top: 1486px;
+    left: 80px;
+    overflow: hidden;
+    overflow-x: scroll;
+}
+  
+.PLATARAN {
+    position: absolute;
+    width: 677px;
+    height: 525px;
+    top: 0;
+    left: 0;
+}
+  
+.overlap-group-2 {
+    position: relative;
+    height: 525px;
+}
+  
+.img-ruangan {
+    position: absolute;
+    width: 677px;
+    height: 407px;
+    top: 0;
+    left: 0;
+}
+  
+.div-2 {
+    position: absolute;
+    width: 677px;
+    height: 170px;
+    top: 355px;
+    left: 0;
+    background-color: #a52123;
+    border-radius: 20px;
+}
+  
+.judul-ruangan {
+    position: absolute;
+    width: 127px;
+    top: 15px;
+    left: 32px;
+    font-family: "El Messiri-Bold", Helvetica;
+    font-weight: 700;
+    color: #ffffff;
+    font-size: 20px;
+    letter-spacing: 0;
+    line-height: normal;
+}
+  
+.harga-ruangan {
+    position: absolute;
+    width: 127px;
+    top: 104px;
+    left: 32px;
+    font-family: "El Messiri-Bold", Helvetica;
+    font-weight: 700;
+    color: #ffffff;
+    font-size: 20px;
+    letter-spacing: 0;
+    line-height: normal;
+}
+  
+.fluent-slide-size {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    top: 47px;
+    left: 32px;
+}
+  
+.p {
+    position: absolute;
+    top: 46px;
+    left: 62px;
+    font-family: "Montserrat-Regular", Helvetica;
+    font-weight: 400;
+    color: #ffffff;
+    font-size: 16px;
+    letter-spacing: 0;
+    line-height: normal;
+}
+  
+  .persegi-ruangan {
+    position: absolute;
+    top: 46px;
+    left: 281px;
+    font-family: "Montserrat-Regular", Helvetica;
+    font-weight: 400;
+    color: #ffffff;
+    font-size: 10px;
+    letter-spacing: 0;
+    line-height: normal;
+    white-space: nowrap;
+  }
+  
+  .rectangle-3 {
+    position: absolute;
+    width: 612px;
+    height: 2px;
+    top: 85px;
+    left: 32px;
+    background-color: #d9d9d9;
+  }
+  
+  .button-lebih-lengkap {
+    position: absolute;
+    width: 215px;
+    height: 35px;
+    top: 24px;
+    left: 429px;
+    background-color: #ebddd1;
+    border-radius: 20px;
+  }
+  
+  .lebih-lengkap-ruangan {
+    position: absolute;
+    top: 7px;
+    left: 25px;
+    font-family: "Montserrat-Regular", Helvetica;
+    font-weight: 400;
+    color: #a52123;
+    font-size: 16px;
+    letter-spacing: 0;
+    line-height: normal;
+  }
+  
+  .pesan {
+    position: absolute;
+    width: 215px;
+    height: 35px;
+    top: 105px;
+    left: 429px;
+    background-color: #ebddd1;
+    border-radius: 20px;
+  }
+  
+  .pesan-sekarang-ruangan {
+    position: absolute;
+    top: 7px;
+    left: 43px;
+    font-family: "Montserrat-Regular", Helvetica;
+    font-weight: 400;
+    color: #a52123;
+    font-size: 16px;
+    text-align: center;
+    letter-spacing: 0;
+    line-height: normal;
+  }
+  
+  .PAON {
+    height: 525px;
+    top: 0;
+    left: 1434px;
+    position: absolute;
+    width: 677px;
+  }
+  
+  .NIRMANA {
+    position: absolute;
+    width: 677px;
+    height: 525px;
+    top: 0;
+    left: 5736px;
+  }
+  
+  .img-5 {
+    position: absolute;
+    width: 677px;
+    height: 390px;
+    top: 0;
+    left: 0;
+  }
+  
+  .NIRWANA {
+    position: absolute;
+    width: 678px;
+    height: 525px;
+    top: 0;
+    left: 6452px;
+  }
+  
+  .nirmana {
+    position: absolute;
+    width: 677px;
+    height: 390px;
+    top: 0;
+    left: 1px;
+  }
+  
+  .nirwana {
+    position: absolute;
+    width: 677px;
+    height: 170px;
+    top: 355px;
+    left: 1px;
+    background-color: #a52123;
+    border-radius: 20px;
+  }
+  
+  .SANGITA {
+    position: absolute;
+    width: 677px;
+    height: 525px;
+    top: 0;
+    left: 717px;
+  }
+  
+  .NIRNAYA {
+    position: absolute;
+    width: 677px;
+    height: 525px;
+    top: 0;
+    left: 2151px;
+  }
+  
+  .BRAMARA {
+    position: absolute;
+    width: 677px;
+    height: 525px;
+    top: 0;
+    left: 2868px;
+  }
+  
+  .PANATA {
+    position: absolute;
+    width: 677px;
+    height: 525px;
+    top: 0;
+    left: 3585px;
+  }
+  
+  .img-6 {
+    position: absolute;
+    width: 677px;
+    height: 393px;
+    top: 0;
+    left: 0;
+  }
+  
+  .KARYA {
+    position: absolute;
+    width: 677px;
+    height: 525px;
+    top: 0;
+    left: 4302px;
+  }
+  
+  .ARUPADATU {
+    position: absolute;
+    width: 677px;
+    height: 525px;
+    top: 0;
+    left: 5019px;
+  }
+  
+  .arupadatu {
+    position: absolute;
+    width: 677px;
+    height: 453px;
+    top: 0;
+    left: 0;
+  }
+  
