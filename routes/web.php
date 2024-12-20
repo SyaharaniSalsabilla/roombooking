@@ -18,6 +18,7 @@ Route::get('/room', [LoginsController::class, 'room'])->name('room'); // Halaman
 Route::get('/contact', [LoginsController::class, 'contact'])->name('contact'); // Halaman contact
 Route::post('/login/email', [LoginsController::class, 'login_email'])->name('login.email'); // Halaman contact
 Route::resource('transaksi', TransactionController::class);
+Route::post('transaksi/pesan', [TransactionController::class, 'pesan'])->name('transaksi.pesan');
 
 // Login
 Route::get('/login', [UsersController::class, 'index'])->name('login'); // Halaman login

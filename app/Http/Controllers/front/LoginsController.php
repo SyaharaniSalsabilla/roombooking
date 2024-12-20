@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\MasterSpace;
+use App\Models\Ruangan;
 
 class LoginsController extends Controller
 {
@@ -21,7 +22,8 @@ class LoginsController extends Controller
 
     public function room()
     {
-        return view('.front.room');
+        $rooms = Ruangan::all();
+        return view('.front.room',['rooms' => $rooms]);
     }
 
     public function contact()
