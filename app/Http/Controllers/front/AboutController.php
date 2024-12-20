@@ -20,6 +20,20 @@ class AboutController extends Controller
     {
         $data = MasterSpace::all();
         // dd($space);
-        return view('.front.about')->with("data", $data);
+        return view('.front.promo')->with("data", $data);
+    }
+
+    public function room()
+    {
+        $data = MasterSpace::all();
+        // dd($space);
+        return view('.front.room')->with("data", $data);
+    }
+
+    public function contact()
+    {
+        $data = MasterSpace::all();
+        // dd($space);
+        return view('.front.contact')->with("data", $data);
     }
 }

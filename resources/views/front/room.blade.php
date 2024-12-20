@@ -3,7 +3,7 @@
 <div id="app" class="bg-primary-2">
         <section id="hiro" class=" mb-6">
             <div class="container flex flex-col justify-center py-8">
-                <h2 class="w-full text-center font-primary font-semibold uppercase text-3xl text-primary-5 mb-4">PROMO
+                <h2 class="w-full text-center font-primary font-semibold uppercase text-3xl text-primary-5 mb-4">Ruangan
                 </h2>
                 <div class="grid grid-cols-2 gap-6">
                     <div class="relative rounded-lg text-white mb-12">
@@ -24,8 +24,6 @@
                             <div class="flex justify-between py-2 items-center">
                                 <div class="flex gap-2 items-center">
                                     <h2 class=" font-primary text-lg uppercase">IDR XXXXX</h2>
-                                    <p class="line-through text-gray-300 font-primary">IDR XXXXX</p>
-                                    <h2 class=" font-primary text-lg uppercase">50% off</h2>
                                 </div>
                                 <button class="bg-primary-2 text-primary-5 px-4 py-1 rounded-lg">Pesan Sekarang</button>
                             </div>
@@ -49,8 +47,6 @@
                             <div class="flex justify-between py-2 items-center">
                                 <div class="flex gap-2 items-center">
                                     <h2 class=" font-primary text-lg uppercase">IDR XXXXX</h2>
-                                    <p class="line-through text-gray-300 font-primary">IDR XXXXX</p>
-                                    <h2 class=" font-primary text-lg uppercase">50% off</h2>
                                 </div>
                                 <button class="bg-primary-2 text-primary-5 px-4 py-1 rounded-lg">Pesan Sekarang</button>
                             </div>
@@ -74,8 +70,6 @@
                             <div class="flex justify-between py-2 items-center">
                                 <div class="flex gap-2 items-center">
                                     <h2 class=" font-primary text-lg uppercase">IDR XXXXX</h2>
-                                    <p class="line-through text-gray-300 font-primary">IDR XXXXX</p>
-                                    <h2 class=" font-primary text-lg uppercase">50% off</h2>
                                 </div>
                                 <button class="bg-primary-2 text-primary-5 px-4 py-1 rounded-lg">Pesan Sekarang</button>
                             </div>
@@ -99,8 +93,6 @@
                             <div class="flex justify-between py-2 items-center">
                                 <div class="flex gap-2 items-center">
                                     <h2 class=" font-primary text-lg uppercase">IDR XXXXX</h2>
-                                    <p class="line-through text-gray-300 font-primary">IDR XXXXX</p>
-                                    <h2 class=" font-primary text-lg uppercase">50% off</h2>
                                 </div>
                                 <button class="bg-primary-2 text-primary-5 px-4 py-1 rounded-lg">Pesan Sekarang</button>
                             </div>

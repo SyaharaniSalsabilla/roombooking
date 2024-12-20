@@ -28,7 +28,7 @@
                         </p>
                         <p class="font-primary">
                             Nin Space dapat diakses dengan mudah karena jaraknya yang dekat dengan
-                            Stasiun KRL, MRT, TJ, dan pintu tol Bintaro.
+                            Stasiun KRL, MRT, Trans Jakarta, dan pintu tol Bintaro.
                         </p>
                     </div>
                     <div>
@@ -44,8 +44,8 @@
                 </h2>
                 <div class="grid grid-cols-3 gap-4">
                     <button class="bg-primary-5 text-white font-primary rounded-2xl py-2 px-4">SHIFT 1 : 08:00 - 12:00 WIB</button>
-                    <button class="bg-primary-5 text-white font-primary rounded-2xl py-2 px-4">SHIFT 1 : 08:00 - 12:00 WIB</button>
-                    <button class="bg-primary-5 text-white font-primary rounded-2xl py-2 px-4">SHIFT 1 : 08:00 - 12:00 WIB</button>
+                    <button class="bg-primary-5 text-white font-primary rounded-2xl py-2 px-4">SHIFT 2 : 13.00 - 17.00 WIB</button>
+                    <button class="bg-primary-5 text-white font-primary rounded-2xl py-2 px-4">SHIFT 3 : 18.00 - 22.00 WIB</button>
                 </div>
             </div>
         </section>

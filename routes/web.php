@@ -13,6 +13,9 @@ Route::redirect('/', '/home');
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/about', [AboutController::class, 'about'])->name('about');
 Route::get('/promo', [AboutController::class, 'promo'])->name('promo');
+Route::get('/room', [AboutController::class, 'room'])->name('room');
+Route::get('/contact', [AboutController::class, 'contact'])->name('contact');
+
 // Space Booking
 Route::get('/spaceBooking', [SpaceController::class, 'booking'])->name('spaceBooking');
 

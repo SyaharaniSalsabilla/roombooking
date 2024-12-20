@@ -27,10 +27,10 @@
                     <a href="{{route('promo')}}" class="hover:text-red-500">
                         Promo
                     </a>
-                    <a href="{{route('ruangan')}}" class="hover:text-red-500">
+                    <a href="{{route('room')}}" class="hover:text-red-500">
                         Ruangan
                     </a>
-                    <a href="{{route('kontak')}}" class="hover:text-red-500">
+                    <a href="{{route('contact')}}" class="hover:text-red-500">
                         Kontak
                     </a>
                 </nav>
