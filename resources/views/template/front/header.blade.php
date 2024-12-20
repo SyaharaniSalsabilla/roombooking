@@ -18,19 +18,19 @@
             <div class="container flex items-center justify-center py-2 font-inter">
                 <nav id="nav-menu"
                     class="absolute uppercase font-semibold flex-col hidden gap-2 p-6 text-sm text-center text-primary-5 border rounded-lg md:flex border-primary-500 md:border-none md:p-0 md:rounded-none top-full right-4 md:bg-transparent md:flex-row md:gap-3 lg:gap-8 md:space-x-2 lg:space-x-4 md:static ">
-                    <a href="index.html" class="hover:text-red-500">
+                    <a href="{{route('home')}}" class="hover:text-red-500">
                         Beranda
                     </a>
-                    <a href="tentang.html" class="hover:text-red-500">
+                    <a href="{{route('about')}}" class="hover:text-red-500">
                         Tentang Kami
                     </a>
-                    <a href="promo.html" class="hover:text-red-500">
+                    <a href="{{route('promo')}}" class="hover:text-red-500">
                         Promo
                     </a>
-                    <a href="ruangan.html" class="hover:text-red-500">
+                    <a href="{{route('ruangan')}}" class="hover:text-red-500">
                         Ruangan
                     </a>
-                    <a href="kontak.html" class="hover:text-red-500">
+                    <a href="{{route('kontak')}}" class="hover:text-red-500">
                         Kontak
                     </a>
                 </nav>

@@ -26,108 +26,158 @@
     </section>
     <section id="promo">
         <div class="container py-8">
-            <div class="flex justify-between items-center">
-                <h2 class="font-primary font-semibold text-primary-5 text-3xl uppercase">Promo</h2>
-                <button
-                    class="border-primary-5 border text-primary-5 py-2 px-4 rounded-2xl hover:bg-primary-1 hover:text-white">
-                    Lihat Semua
-                    <i class="fa-solid fa-arrow-right"></i>
-                </button>
-            </div>
-            <div class="flex gap-4 mt-4">
-                <div class="flex-1 rounded-lg">
-                    <img src="../../../assets/front/image/Promo.png" alt="">
+        <div class="container py-8">
+                <div class="flex justify-between items-center">
+                    <h2 class="font-primary font-semibold text-primary-5 text-3xl uppercase">Promo</h2>
+                    <button
+                        class="border-primary-5 border text-primary-5 py-2 px-4 rounded-2xl hover:bg-primary-1 hover:text-white">
+                        Lihat Semua
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
                 </div>
-                <div class="flex-1 rounded-lg">
-                    <img src="../../../assets/front/image/Promo.png" alt="">
-                </div>
-                <div class="flex-1 rounded-lg">
-                    <img src="../../../assets/front/image/Promo.png" alt="">
+                <div class="overflow-x-auto">
+                    <div class="flex flex-nowrap gap-4 mt-4">
+                        <a class="w-1/3 rounded-lg flex-shrink-0 hover:scale-90 transition-transform duration-300">
+                            <img src="../../../assets/front/image/Promo.png" alt="">
+                        </a>
+                        <a class="w-1/3 rounded-lg flex-shrink-0 hover:scale-90 transition-transform duration-300">
+                            <img src="../../../assets/front/image/Promo.png" alt="">
+                        </a>
+                        <a class="w-1/3 rounded-lg flex-shrink-0 hover:scale-90 transition-transform duration-300">
+                            <img src="../../../assets/front/image/Promo.png" alt="">
+                        </a>
+                        <a class="w-1/3 rounded-lg flex-shrink-0 hover:scale-90 transition-transform duration-300">
+                            <img src="../../../assets/front/image/Promo.png" alt="">
+                        </a>
+                        <a class="w-1/3 rounded-lg flex-shrink-0 hover:scale-90 transition-transform duration-300">
+                            <img src=".../../../assets/front/image/Promo.png" alt="">
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
     <section id="fasilitas" class="bg-primary-4">
-        <div class="container flex flex-col justify-center py-8">
-            <h2 class="w-full text-center font-primary font-semibold uppercase text-3xl text-primary-5 mb-4">fasilitas
-            </h2>
-            <div class="flex justify-center ">
-                <div class="grid grid-cols-8 gap-2 text-primary-5 w-3/5">
-                    <div class="flex flex-col gap-2 items-center">
-                        <i class="fa-solid fa-car text-3xl"></i>
-                        <h2 class="text-center text-sm font-thin">Parkiran Luas</h2>
-                    </div>
-                    <div class="flex flex-col gap-2 items-center">
-                        <i class="fa-solid fa-wifi text-3xl"></i>
-                        <h2 class="text-center text-sm font-thin">Wifi</h2>
-                    </div>
-                    <div class="flex flex-col gap-2 items-center">
-                        <i class="fa-solid fa-car text-3xl"></i>
-                        <h2 class="text-center text-sm font-thin">Ruangan Terhubung</h2>
-                    </div>
+            <div class="container flex flex-col justify-center py-8">
+                <h2 class="w-full text-center font-primary font-semibold uppercase text-3xl text-primary-5 mb-4">
+                    fasilitas
+                </h2>
+                <div class="flex justify-center ">
+                    <div class="grid grid-cols-8 gap-2 text-primary-5 w-3/5">
+                        <div class="flex flex-col gap-2 items-center">
+                            <i class="fa-solid fa-car text-3xl"></i>
+                            <h2 class="text-center text-xs font-thin">Parkiran Luas</h2>
+                        </div>
+                        <div class="flex flex-col gap-2 items-center">
+                            <i class="fa-solid fa-wifi text-3xl"></i>
+                            <h2 class="text-center text-xs font-thin">Wifi</h2>
+                        </div>
+                        <div class="flex flex-col gap-2 items-center">
+                            <i class="fa-solid fa-building text-3xl"></i>
+                            <h2 class="text-center text-xs font-thin">Ruangan Terhubung</h2>
+                        </div>
 
-                    <div class="flex flex-col gap-2 items-center">
-                        <i class="fa-solid fa-car text-3xl"></i>
-                        <h2 class="text-center text-sm font-thin">Ruangan Bebas Asap Rokok</h2>
-                    </div>
-                    <div class="flex flex-col gap-2 items-center">
-                        <i class="fa-solid fa-car text-3xl"></i>
-                        <h2 class="text-center text-sm font-thin">Toilet</h2>
-                    </div>
-                    <div class="flex flex-col gap-2 items-center">
-                        <i class="fa-solid fa-car text-3xl"></i>
-                        <h2 class="text-center text-sm font-thin">Caffe</h2>
-                    </div>
-                    <div class="flex flex-col gap-2 items-center">
-                        <i class="fa-solid fa-car text-3xl"></i>
-                        <h2 class="text-center text-sm font-thin">Balkon</h2>
-                    </div>
-                    <div class="flex flex-col gap-2 items-center">
-                        <i class="fa-solid fa-car text-3xl"></i>
-                        <h2 class="text-center text-sm font-thin">Ruang Musik</h2>
+                        <div class="flex flex-col gap-2 items-center">
+                            <i class="fa-solid fa-joint text-3xl"></i>
+                            <h2 class="text-center text-xs font-thin">Ruangan Bebas Asap Rokok</h2>
+                        </div>
+                        <div class="flex flex-col gap-2 items-center">
+                            <i class="fa-solid fa-toilet text-3xl"></i>
+                            <h2 class="text-center text-xs font-thin">Toilet</h2>
+                        </div>
+                        <div class="flex flex-col gap-2 items-center">
+                            <i class="fa-solid fa-coffee text-3xl"></i>
+                            <h2 class="text-center text-xs font-thin">Caffe</h2>
+                        </div>
+                        <div class="flex flex-col gap-2 items-center">
+                            <i class="fa-solid fa-home text-3xl"></i>
+                            <h2 class="text-center text-xs font-thin">Balkon</h2>
+                        </div>
+                        <div class="flex flex-col gap-2 items-center">
+                            <i class="fa-solid fa-music text-3xl"></i>
+                            <h2 class="text-center text-xs font-thin">Ruang Musik</h2>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
     </section>
     <section id="ruangan">
-        <div class="container flex flex-col justify-center py-8">
-            <h2 class="w-full text-center font-primary font-semibold uppercase text-3xl text-primary-5 mb-4">Ruangan
-            </h2>
-            <div class="flex justify-center ">
-                <div class="grid grid-cols-2 gap-4 text-primary-5 w-full">
-                    <div class="rounded-lg">
-                        <img src="../../../assets/front/image/Plataran.jpg" class="rounded-3xl" alt="">
-                    </div>
-                    <div class="rounded-lg">
-                        <img src="../../../assets/front/image/Plataran.jpg" class="rounded-3xl" alt="">
+            <div class="container flex flex-col justify-center py-8">
+                <h2 class="w-full text-center font-primary font-semibold uppercase text-3xl text-primary-5 mb-4">Ruangan
+                </h2>
+                <div class="flex justify-center ">
+                    <div class="grid grid-cols-2 gap-4 text-primary-5 w-full">
+                        <div class="relative rounded-lg text-white">
+                            <img src="../../../assets/front/image/Plataran.jpg" class="rounded-xl z-0 relative" alt="">
+                            <div
+                                class="absolute inset-x-0 -bottom-12 bg-primary-5 z-10 px-4 py-2 rounded-xl divide-y-2 divide-white">
+                                <div class="flex justify-between py-2 items-center">
+                                    <div class="flex flex-col">
+                                        <h2 class=" font-primary text-lg uppercase">Putaran</h2>
+                                        <div class="flex gap-2 items-center">
+                                            <i class="fa-solid fa-expand"></i>
+                                            <p>Ukuran ruangan : 91 meter <sup>2</sup></p>
+                                        </div>
+                                    </div>
+                                    <button class="bg-primary-2 text-primary-5 px-4 py-1 rounded-lg">Lihat lebih
+                                        lengkap</button>
+                                </div>
+                                <div class="flex justify-between py-2 items-center">
+                                    <h2 class=" font-primary text-lg uppercase">IDR XXXXX</h2>
+                                    <button class="bg-primary-2 text-primary-5 px-4 py-1 rounded-lg">Pesan Sekarang</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="relative rounded-lg text-white">
+                            <img src="../../../assets/front/image/Plataran.jpg" class="rounded-xl z-0 relative" alt="">
+                            <div
+                                class="absolute inset-x-0 -bottom-12 bg-primary-5 z-10 px-4 py-2 rounded-xl divide-y-2 divide-white">
+                                <div class="flex justify-between py-2 items-center">
+                                    <div class="flex flex-col">
+                                        <h2 class=" font-primary text-lg uppercase">Putaran</h2>
+                                        <div class="flex gap-2 items-center">
+                                            <i class="fa-solid fa-expand"></i>
+                                            <p>Ukuran ruangan : 91 meter <sup>2</sup></p>
+                                        </div>
+                                    </div>
+                                    <button class="bg-primary-2 text-primary-5 px-4 py-1 rounded-lg">Lihat lebih
+                                        lengkap</button>
+                                </div>
+                                <div class="flex justify-between py-2 items-center">
+                                    <h2 class=" font-primary text-lg uppercase">IDR XXXXX</h2>
+                                    <button class="bg-primary-2 text-primary-5 px-4 py-1 rounded-lg">Pesan Sekarang</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
     </section>
     <section id="Informasi">
-        <div class="container flex flex-col justify-center py-8">
-            <h2 class="w-full text-center font-primary font-semibold uppercase text-3xl text-primary-5 mb-4">Informasi
-            </h2>
-            <div class="flex justify-center ">
-                <div class="grid grid-cols-4 gap-4 text-primary-5 w-full">
-                    <div class="rounded-lg">
-                        <img src="../../../assets/front/image/Pasar Bahagia (1).jpg" alt="">
+            <div class="container flex flex-col justify-center py-8">
+                <h2 class="w-full text-center font-primary font-semibold uppercase text-3xl text-primary-5 mb-4">
+                    Informasi
+                </h2>
+                <div class="overflow-x-auto">
+                    <div class="flex flex-nowrap gap-3 text-primary-5">
+                        <div class="rounded-lg w-1/4 flex-shrink-0 hover:scale-95 transition-transform duration-300">
+                            <img src="../../../assets/front/image/Pasar Bahagia (1).jpg" alt="">
+                        </div>
+                        <div class="rounded-lg w-1/4 flex-shrink-0 hover:scale-95 transition-transform duration-300">
+                            <img src="../../../assets/front/image/Pasar Bahagia (2).jpg" alt="">
+                        </div>
+                        <div class="rounded-lg w-1/4 flex-shrink-0 hover:scale-95 transition-transform duration-300">
+                            <img src="../../../assets/front/image/Pasar Bahagia (3).jpg" alt="">
+                        </div>
+                        <div class="rounded-lg w-1/4 flex-shrink-0 hover:scale-95 transition-transform duration-300">
+                            <img src="../../../assets/front/image/Pasar Bahagia (4).jpg" alt="">
+                        </div>
+                        <div class="rounded-lg w-1/4 flex-shrink-0 hover:scale-95 transition-transform duration-300">
+                            <img src="../../../assets/front/image/Pasar Bahagia (5).jpg" alt="">
+                        </div>
                     </div>
-                    <div class="rounded-lg">
-                        <img src="../../../assets/front/image/Pasar Bahagia (2).jpg" alt="">
-                    </div>
-                    <div class="rounded-lg">
-                        <img src="../../../assets/front/image/Pasar Bahagia (3).jpg" alt="">
-                    </div>
-                    <div class="rounded-lg">
-                        <img src="../../../assets/front/image/Pasar Bahagia (4).jpg" alt="">
-                    </div>
-
                 </div>
             </div>
-        </div>
     </section>
 </div>
 @endsection
