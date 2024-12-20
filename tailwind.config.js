@@ -1,7 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    "./resources/**/*.blade.php",
+    "./resources/views/**/*.blade.php",
     "./resources/**/*.js",
     "./resources/**/*.vue",
     "./public/**/*.html"
@@ -11,6 +11,9 @@ module.exports = {
       fontFamily: {
         'primary': ['El Messiri', 'sans-serif'],
         'secondary' : ['Montserrat', 'sans-serif'],
+      },
+      margin: {
+        '200px': '200px',
       },
       container: {
         center: true,

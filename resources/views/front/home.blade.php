@@ -31,8 +31,10 @@
                     <h2 class="font-primary font-semibold text-primary-5 text-3xl uppercase">Promo</h2>
                     <button
                         class="border-primary-5 border text-primary-5 py-2 px-4 rounded-2xl hover:bg-primary-1 hover:text-white">
+                        <a href="{{route('promo')}}" class="hover:text-red-500">
                         Lihat Semua
                         <i class="fa-solid fa-arrow-right"></i>
+                        </a>
                     </button>
                 </div>
                 <div class="overflow-x-auto">
@@ -113,7 +115,7 @@
                                 class="absolute inset-x-0 -bottom-12 bg-primary-5 z-10 px-4 py-2 rounded-xl divide-y-2 divide-white">
                                 <div class="flex justify-between py-2 items-center">
                                     <div class="flex flex-col">
-                                        <h2 class=" font-primary text-lg uppercase">Putaran</h2>
+                                        <h2 class=" font-primary text-lg uppercase">Plataran</h2>
                                         <div class="flex gap-2 items-center">
                                             <i class="fa-solid fa-expand"></i>
                                             <p>Ukuran ruangan : 91 meter <sup>2</sup></p>
@@ -134,7 +136,7 @@
                                 class="absolute inset-x-0 -bottom-12 bg-primary-5 z-10 px-4 py-2 rounded-xl divide-y-2 divide-white">
                                 <div class="flex justify-between py-2 items-center">
                                     <div class="flex flex-col">
-                                        <h2 class=" font-primary text-lg uppercase">Putaran</h2>
+                                        <h2 class=" font-primary text-lg uppercase">Plataran</h2>
                                         <div class="flex gap-2 items-center">
                                             <i class="fa-solid fa-expand"></i>
                                             <p>Ukuran ruangan : 91 meter <sup>2</sup></p>

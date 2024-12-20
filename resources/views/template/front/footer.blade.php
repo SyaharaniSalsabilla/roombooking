@@ -1,5 +1,5 @@
-<footer class="bg-primary-1">
-        <div class="container divide-y-2 divide-neutral-200">
+<footer class="bg-primary-1 bottom">
+        <div class="container divide-y-2 divide-neutral-200 bottom-0 w-full">
             <div class="flex flex-col md:flex-row items-center justify-between py-4 ">
                 <img src="../../../assets/front/image/Anindhaloka.png" width="150px">
                 <div class="absolute uppercase font-semibold flex-col hidden gap-2 p-6 text-sm text-center text-primary-5 border rounded-lg md:flex border-primary-500 md:border-none md:p-0 md:rounded-none top-full right-4 md:bg-transparent md:flex-row md:gap-3 lg:gap-8 md:space-x-2 lg:space-x-4 md:static ">

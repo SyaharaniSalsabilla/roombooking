@@ -1,8 +1,7 @@
 @extends('template.front.main')
 @section('content')
-<div id="app" class="bg-primary-2">
-        <section id="hiro" class=" mb-6">
-            <div class="container flex flex-col justify-center py-8">
+<div id="app" class="bg-primary-2 flex flex-col p-8">
+            <div class="container flex flex-col justify-center py-8 ">
                 <h2 class="w-full text-center font-primary font-semibold uppercase text-3xl text-primary-5 mb-4">Kontak
                 </h2>
                 <div class="grid grid-cols-2 gap-12">
@@ -26,6 +25,5 @@
                     </div>
                 </div>
             </div>
-        </section>
     </div>
 @endsection

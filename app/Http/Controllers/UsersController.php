@@ -13,7 +13,7 @@ class UsersController extends Controller
     public function index()
 {
     \Log::info('Memuat halaman login');
-    return view("template.front.login");
+    return view("front.login");
 }
 
     public function login(Request $request)
