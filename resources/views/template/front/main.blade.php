@@ -28,27 +28,64 @@
     <!-- footer -->
     @include('template.front.footer')
 
-    <script src="{{ asset('static/website/new/vendor/jquery.2.2.3.min.js') }}"></script>
-    <!-- Popper js -->
-    <script src="{{ asset('static/website/new/vendor/popper.js/popper.min.js') }}"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <!-- Popper.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.8/umd/popper.min.js"></script>
+
     <script>
         $(document).ready(function () {
 
         });
     </script>
+
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            flatpickr("#date-range", {
-                mode: "range",
-                dateFormat: "d/m/Y",
-                placeholder: "Tanggal Awal - Tanggal Akhir",
-                onClose: function (selectedDates, dateStr, instance) {
-                    if (selectedDates.length === 2) {
-                        console.log("Selected date range:", dateStr);
-                    }
-                }
+        const modal = document.getElementById('modal');
+        const openModal = document.querySelectorAll('.openModal')
+        const closeModal = document.getElementById('closeModal');
+
+
+        openModal.forEach(button => {
+            button.addEventListener('click', () => {
+                modal.classList.remove('hidden');
             });
+        });
+
+        // Tutup modal (dari tombol close)
+        closeModal.addEventListener('click', () => {
+            modal.classList.add('hidden');
+        });
+
+        // Tutup modal jika klik di luar modal
+        modal.addEventListener('click', (event) => {
+            if (event.target === modal) {
+                modal.classList.add('hidden');
+            }
+        });
+    </script>
+    <script>
+        const modal2 = document.getElementById('modal2');
+        const openModal2 = document.querySelectorAll('.openModal2')
+        const closeModal2 = document.getElementById('closeModal2');
+
+
+        openModal2.forEach(button => {
+            button.addEventListener('click', () => {
+                modal2.classList.remove('hidden');
+            });
+        });
+
+        // Tutup modal (dari tombol close)
+        closeModal2.addEventListener('click', () => {
+            modal2.classList.add('hidden');
+        });
+
+        // Tutup modal jika klik di luar modal
+        modal2.addEventListener('click', (event) => {
+            if (event.target === modal) {
+                modal2.classList.add('hidden');
+            }
         });
     </script>
 

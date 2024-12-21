@@ -35,4 +35,14 @@ class LoginsController extends Controller
     {
         return view('.front.login_email');
     }
+
+    public function pesan1()
+    {
+        return view('.front.pesan1');
+    }
+
+    public function pesan2()
+    {
+        return view('.front.pesan2');
+    }
 }

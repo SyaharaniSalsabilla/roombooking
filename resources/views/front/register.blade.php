@@ -86,7 +86,9 @@
                 <span>Lanjutkan dengan Google</span>
             </button>
             <div class="flex justify-center">
-                <h2 class="text-xs text-center flex text-gray-500">Sudah Punya Akun? Masuk</h2>
+                <form id="emailForm" action="{{route('login.email')}}" method="POST">@csrf</form>
+                <BUtton type="submit" onClick="document.getElementById('emailForm').submit()">
+                    <h2 class="text-xs text-center flex text-gray-500">Sudah Punya Akun? Masuk</h2></BUtton>
             </div>
         </form>
     </div>

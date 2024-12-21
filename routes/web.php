@@ -16,7 +16,9 @@ Route::get('/about', [LoginsController::class, 'about'])->name('about'); // Hala
 Route::get('/promo', [LoginsController::class, 'promo'])->name('promo'); // Halaman promo
 Route::get('/room', [LoginsController::class, 'room'])->name('room'); // Halaman room
 Route::get('/contact', [LoginsController::class, 'contact'])->name('contact'); // Halaman contact
-Route::post('/login/email', [LoginsController::class, 'login_email'])->name('login.email'); // Halaman contact
+Route::post('/login/email', [LoginsController::class, 'login_email'])->name('login.email'); // Halaman login dengan email
+Route::get('/pesan1', [LoginsController::class, 'pesan1'])->name('pesan1'); // Halaman pesan1
+Route::get('/pesan2', [LoginsController::class, 'pesan2'])->name('pesan2'); // Halaman pesan2
 Route::resource('transaksi', TransactionController::class);
 Route::post('transaksi/pesan', [TransactionController::class, 'pesan'])->name('transaksi.pesan');
 
