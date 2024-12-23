@@ -54,7 +54,7 @@
                                 <p class="text-center">IDR XXXXXX</p>
                             </div>
                             <div class="grid grid-cols-1 items-center p-4">
-
+                            <a href="{{route('pesan3')}}" class="hover:text-red-500">
                                 <button class="text-primary-2 bg-primary-5 rounded-xl py-2 px-4">Lanjutkan</button>
                             </div>
                         </div>

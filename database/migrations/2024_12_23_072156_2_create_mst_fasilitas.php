@@ -11,8 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('master_space_facility', function (Blueprint $table) {
+        Schema::create('mst_fasilitas', function (Blueprint $table) {
             $table->id();
+            $table->string('nama_fasilitas');
+            $table->string('kuantitas');
+            $table->string('deskripsi');
+            $table->double('harga_satuan');
+            $table->string('image');
             $table->timestamps();
         });
     }
@@ -22,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('master_space_facility');
+        //
     }
 };

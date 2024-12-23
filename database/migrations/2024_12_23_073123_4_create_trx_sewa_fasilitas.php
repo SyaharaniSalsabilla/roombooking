@@ -11,10 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('master_space_image', function (Blueprint $table) {
+        Schema::create('trx_sewa_fasilitas', function (Blueprint $table) {
             $table->id();
-            $table->foreign('master_space_id')->references('id')->on('master_space');
-            $table->unsignedBigInteger('master_space_id');
+            $table->string('trx_sewa_id');
+            $table->string('mst_fasilitas_id');
+            $table->integer('kuantitas');
+            $table->double('satuan');
             $table->timestamps();
         });
     }
@@ -24,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('master_space_image');
+        //
     }
 };

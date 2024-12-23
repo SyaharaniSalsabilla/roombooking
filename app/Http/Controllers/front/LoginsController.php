@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\MasterSpace;
 use App\Models\Ruangan;
+use App\Models\trx_sewa;
 
 class LoginsController extends Controller
 {
@@ -17,13 +18,48 @@ class LoginsController extends Controller
 
     public function promo()
     {
-        return view('.front.promo');
+        $datas = \App\Models\Ruangan::orderBy('id','ASC')->get();
+        return view('.front.promo')->with('datas', $datas);
     }
 
     public function room()
     {
-        $rooms = Ruangan::all();
+        $rooms = Ruangan::orderBy('id','ASC')->get();
         return view('.front.room',['rooms' => $rooms]);
+    }
+
+    public function search_room(Request $request)
+    {
+        
+        $rooms = Ruangan::with('booked');
+        $keyword = $request->get('cari') ?? '';
+        $arryaDate = explode(' ', $request->get('tanggal'));
+
+        $arryaDate = array_filter($arryaDate, fn($item) => $item !== 'to');
+        if (count($arryaDate) === 2) {
+            $startDate = $arryaDate[0];
+            $endDate = $arryaDate[2];
+
+            $rooms = $rooms->whereDoesntHave('booked', function ($query) use ($startDate, $endDate) {
+                $query->whereBetween('tanggal_awal', [$startDate, $endDate])
+                    ->orWhereBetween('tanggal_akhir', [$startDate, $endDate]);
+            });
+        }
+
+        if ($keyword) {
+            $rooms->where('nama_ruangan', 'LIKE', "%{$keyword}%");
+        }
+
+        $rooms = $rooms->get();
+
+        return view('front.room', ['rooms' => $rooms]);
+    }
+
+    public function hasil_cari()
+    {
+        $datas = Ruangan::orderBy('id', 'ASC')->get();
+        
+        return view('.front.hasil_cari')->with('datas',$datas);
     }
 
     public function contact()
@@ -38,11 +74,18 @@ class LoginsController extends Controller
 
     public function pesan1()
     {
-        return view('.front.pesan1');
+        $datas = Ruangan::orderBy('id','ASC')->get();
+        
+        return view('front.pesan1', ['datas' => $datas]);
     }
 
     public function pesan2()
     {
         return view('.front.pesan2');
+    }
+
+    public function pesan3()
+    {
+        return view('.front.pesan3');
     }
 }

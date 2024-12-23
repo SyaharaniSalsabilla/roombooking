@@ -7,11 +7,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class Ruangan extends Authenticatable
+class Informasi extends Authenticatable
 {
     use HasFactory, Notifiable;
 
-    protected $table = 'mst_ruangan';
+    protected $table = 'informasi';
     /**
      * The attributes that are mass assignable.
      *
@@ -19,16 +19,9 @@ class Ruangan extends Authenticatable
      */
 
     protected $fillable = [
-        'nama_ruangan',
-        'kapasitas',
-        'lokasi',
-        'panjang_ruangan',
-        'lebar_ruangan',
+        'id',
+        'nama',
         'deskripsi',
-        'image'
+        'image',
     ];
-
-    public function booked(){
-        return $this->hasMany(\App\Models\trx_sewa::class, 'mst_ruangan_id');
-    }
 }

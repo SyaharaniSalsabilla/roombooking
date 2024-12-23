@@ -11,12 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('master_space', function (Blueprint $table) {
+        Schema::create('mst_harga_sewa', function (Blueprint $table) {
             $table->id();
-            $table->string('name_space');
-            $table->integer('area');
-            $table->integer('capacity');
-            $table->string('description');
+            $table->string('ruangan_id');
+            $table->integer('durasi');
+            $table->double('harga');
             $table->timestamps();
         });
     }
@@ -26,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('master_space');
+        //
     }
 };

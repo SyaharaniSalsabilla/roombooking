@@ -33,7 +33,7 @@
 
     <!-- Popper.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.8/umd/popper.min.js"></script>
-
+    @yield('script')
     <script>
         $(document).ready(function () {
 
@@ -64,31 +64,6 @@
             }
         });
     </script>
-    <script>
-        const modal2 = document.getElementById('modal2');
-        const openModal2 = document.querySelectorAll('.openModal2')
-        const closeModal2 = document.getElementById('closeModal2');
-
-
-        openModal2.forEach(button => {
-            button.addEventListener('click', () => {
-                modal2.classList.remove('hidden');
-            });
-        });
-
-        // Tutup modal (dari tombol close)
-        closeModal2.addEventListener('click', () => {
-            modal2.classList.add('hidden');
-        });
-
-        // Tutup modal jika klik di luar modal
-        modal2.addEventListener('click', (event) => {
-            if (event.target === modal) {
-                modal2.classList.add('hidden');
-            }
-        });
-    </script>
-
 </body>
 
 </html>
