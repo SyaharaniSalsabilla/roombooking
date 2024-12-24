@@ -45,24 +45,25 @@
         const openModal = document.querySelectorAll('.openModal')
         const closeModal = document.getElementById('closeModal');
 
-
-        openModal.forEach(button => {
-            button.addEventListener('click', () => {
-                modal.classList.remove('hidden');
+        if(modal){
+            openModal.forEach(button => {
+                button.addEventListener('click', () => {
+                    modal.classList.remove('hidden');
+                });
             });
-        });
 
-        // Tutup modal (dari tombol close)
-        closeModal.addEventListener('click', () => {
-            modal.classList.add('hidden');
-        });
-
-        // Tutup modal jika klik di luar modal
-        modal.addEventListener('click', (event) => {
-            if (event.target === modal) {
+            // Tutup modal (dari tombol close)
+            closeModal.addEventListener('click', () => {
                 modal.classList.add('hidden');
-            }
-        });
+            });
+
+            // Tutup modal jika klik di luar modal
+            modal.addEventListener('click', (event) => {
+                if (event.target === modal) {
+                    modal.classList.add('hidden');
+                }
+            });
+        }
     </script>
 </body>
 

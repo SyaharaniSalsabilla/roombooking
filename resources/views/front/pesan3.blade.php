@@ -13,7 +13,7 @@
                         </h2>
                         <div class="flex flex-col justify-center items-center bg-primary-1 rounded-lg p-8">
                             <h2 class="w-full text-center font-primary font-semibold text-xl text-primary-5 mb-4">
-                                Kebijakan pembatalan
+                                Kebijakan Pembatalan
                             </h2>
                             <ul class="list-decimal">
                                 <li>Pembatalan Lebih dari 24 Jam Sebelum Waktu Pemakaian:
@@ -42,7 +42,7 @@
                             <h2 class="w-full text-center font-primary font-semibold text-xl text-primary-5 mb-4">
                                 Tambah Catatan Pesanan
                             </h2>
-                            <p for="" class="text-left">Sertakan Komentar atau permintaan terkait pesanan</p>
+                            <p for="" class="text-left">Sertakan komentar atau permintaan terkait pesanan</p>
                             <textarea name="" rows="5" id="" class="border border-primary-5 w-full rounded-lg bg-primary-1 p-3 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"></textarea>
                         </div>
                     </div>
@@ -69,7 +69,6 @@
                                 <p class="text-center">IDR XXXXXX</p>
                             </div>
                             <div class="grid grid-cols-1 items-center p-4">
-
                                 <button class="text-primary-2 bg-primary-5 rounded-xl py-2 px-4">Lanjutkan</button>
                             </div>
                         </div>

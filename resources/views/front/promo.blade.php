@@ -29,7 +29,7 @@
                                     data-image="{{$Ruangan->image}}"
                                     data-nama="{{$Ruangan->nama_ruangan}}"
                                     >
-                                    Lihat lebih lengkap
+                                    Lebih Lengkap
                                 </button>
                             </div>
                             <div class="flex justify-between py-2 items-center">

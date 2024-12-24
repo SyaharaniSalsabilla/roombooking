@@ -30,8 +30,7 @@
                                     data-deskripsi="{{$Ruangan->deskripsi}}"
                                     data-image="{{$Ruangan->image}}"
                                     data-nama="{{$Ruangan->nama_ruangan}}"
-                                    >Lihat lebih
-                                        lengkap</button>
+                                    >Lebih Lengkap</button>
                                 </div>
                             </div>
                             <div class="flex justify-between py-2 items-center">
@@ -39,7 +38,9 @@
                                     <h2 class=" font-primary text-lg uppercase">IDR {{$Ruangan->harga}}</h2>
                                 </div>
                                 <form id="pesanan" action="{{route('transaksi.pesan',[12,1])}}" method="POST">@csrf</form>
-                                <button class="bg-primary-2 text-primary-5 px-4 py-1 rounded-lg" onClick="document.getElementById('pesanan').submit()">Pesan Sekarang</button>
+                                <a href="{{route('pesan1')}}" class="hover:text-red-500">
+                                    <button class="bg-primary-2 text-primary-5 px-4 py-1 rounded-lg">Pesan Sekarang</button>
+                                </a>
                             </div>
                         </div>
                     </div>

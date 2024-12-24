@@ -79,13 +79,21 @@ class LoginsController extends Controller
         return view('front.pesan1', ['datas' => $datas]);
     }
 
-    public function pesan2()
+    public function pesan2(Request $request)
     {
-        return view('.front.pesan2');
+        $data = json_decode($request->input('data_json'), true);
+
+        // Pastikan data diteruskan dengan struktur yang sesuai
+        return view('.front.pesan2', [
+            'ruangan' => $data['ruangan'] ?? [],
+            'itemTambahan' => $data['itemTambahan'] ?? null,
+            'totalHarga' => $data['totalHarga'] ?? 0
+        ]);
     }
 
-    public function pesan3()
+    public function pesan3(Request $request)
     {
+        dd($request->all());
         return view('.front.pesan3');
     }
 }

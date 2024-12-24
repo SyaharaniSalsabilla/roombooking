@@ -6,7 +6,7 @@
         <div class="absolute inset-0 opacity-50 bg-primary-4"></div>
         <div
             class="container relative flex items-center justify-center min-h-svh h-full px-4 mx-auto text-center text-primary-5 z-51">
-             <form method="POST" action="{{ route('room.search') }}" class="w-3/4 justify-center">
+             <form method="POST" action="{{ route('room.search') }}" class="justify-center w-3/4 ">
                 @csrf 
                 <div
                     class="flex w-3/4 items-center justify-center gap-2 p-2 bg-primary-1/90 backdrop-blur-sm rounded-lg shadow-sm border">
@@ -133,8 +133,7 @@
                                 data-deskripsi="{{$Ruangan->deskripsi}}"
                                 data-image="{{$Ruangan->image}}"
                                 data-nama="{{$Ruangan->nama_ruangan}}"
-                                >Lihat lebih
-                                    lengkap</button>
+                                >Lebih Lengkap</button>
                             </div>
                             <div class="flex justify-between py-2 items-center">
                                 <h2 class=" font-primary text-lg uppercase">IDR {{$Ruangan->harga}}</h2>

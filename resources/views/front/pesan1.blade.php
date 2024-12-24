@@ -41,8 +41,8 @@
                                 data-harga="{{$Ruangan->harga}}"
                                 data-deskripsi="{{$Ruangan->deskripsi}}"
                                 data-image="{{$Ruangan->image}}"
-                                data-nama="{{$Ruangan->nama_ruangan}}">Lihat
-                            Lebih lengkap
+                                data-nama="{{$Ruangan->nama_ruangan}}">
+                                Lebih Lengkap
                         </button>
                     </div>
                     @endforeach
@@ -67,41 +67,37 @@
                         <tbody>
                             <tr class="">
                                 <td class="py-3 px-4 border border-slate-400">1</td>
-                                <td class="py-3 px-4 border border-slate-400">Catering Sarapan</td>
+                                <td class="py-3 px-4 border border-slate-400"><label id="nm_tambahan" value="Makanan1">Catering Sarapan</label></td>
                                 <td class="py-3 px-4 border border-slate-400">
                                     <div class="flex flex-col gap-1">
                                         <span>1 paket = 5 porsi sarapan</span>
-                                        <button
-                                            class="bg-primary-5 openModal2 text-white px-3 py-1 rounded text-sm w-fit">Lihat
-                                            Detail</button>
+                                        <button class="bg-primary-5 openModal2 text-white px-3 py-1 rounded text-sm w-fit">Lihat Detail</button>
                                     </div>
                                 </td>
-                                <td class="py-3 px-4 border border-slate-400">Rp xxxxxxxx</td>
+                                <td class="py-3 px-4 border border-slate-400"><label id="hrg_tambahan" value='10000'>IDR xxxxxxxx</td>
                                 <td class="py-3 px-4 border border-slate-400">
                                     <div class="flex items-center gap-3">
-                                        <button class="text-primary-5 font-bold text-xl">−</button>
-                                        <span>1</span>
-                                        <button class="text-primary-5 font-bold text-xl">+</button>
+                                        <button class="text-primary-5 font-bold text-xl minus">−</button>
+                                        <span class="quantity"><label class="qty_tambahan">0</label></span>
+                                        <button class="text-primary-5 font-bold text-xl plus">+</button>
                                     </div>
                                 </td>
                             </tr>
                             <tr class="">
                                 <td class="py-3 px-4 border border-slate-400">2</td>
-                                <td class="py-3 px-4 border border-slate-400">Catering Makan Siang</td>
+                                <td class="py-3 px-4 border border-slate-400"><label id="nm_tambahan" value="Makanan">Catering Makan Siang</label></td>
                                 <td class="py-3 px-4 border border-slate-400">
                                     <div class="flex flex-col gap-1">
                                         <span>1 paket = 5 porsi makan siang</span>
-                                        <button
-                                            class="bg-primary-5 openModal2 text-white px-3 py-1 rounded text-sm w-fit">Lihat
-                                            Detail</button>
+                                        <button class="bg-primary-5 openModal2 text-white px-3 py-1 rounded text-sm w-fit">Lihat Detail</button>
                                     </div>
                                 </td>
-                                <td class="py-3 px-4 border border-slate-400">Rp xxxxxxxx</td>
+                                <td class="py-3 px-4 border border-slate-400"><label class="hrg_tambahan" value='10000'>IDR xxxxxxxx </td>
                                 <td class="py-3 px-4 border border-slate-400">
                                     <div class="flex items-center gap-3">
-                                        <button class="text-primary-5 font-bold text-xl">−</button>
-                                        <span>1</span>
-                                        <button class="text-primary-5 font-bold text-xl">+</button>
+                                        <button class="text-primary-5 font-bold text-xl minus">−</button>
+                                        <span class="quantity" value=""><label class="qty_tambahan">0</label></span>
+                                        <button class="text-primary-5 font-bold text-xl plus">+</button>
                                     </div>
                                 </td>
                             </tr>
@@ -119,95 +115,74 @@
                         <h2 class="font-primary font-semibold uppercase text-xl text-primary-5">Nin Space
                         </h2>
                     </div>
-                    <div class="grid grid-cols-2 items-center py-2 space-y-2 div-nr">
-                        <h2 class="text-primary-5 text-2xl font-semibold text-center">Plantaran</h2>
-                        <p class="text-center">IDR <label id="ruangan-harga">xxxxxxxx</label></p>
+                    <div class="items-center py-2 space-y-2 div-nr">
+                        <div class="item-1 grid grid-cols-2 ">
+                            <p class="text-primary-5 text-2xl font-semibold text-center">Nama Ruangan</p>
+                            <p class="text-center">IDR <label id="ruangan-harga">Harga</label></p>
+                        </div>
                     </div>
-                    <div class="grid grid-cols-2 items-center py-2 div-na">
-                        <h2 class="text-primary-5 text-2xl font-semibold text-center">Cemilan</h2>
-                        <p class="text-center">IDR XXXXXX</p>
+                    <div class="items-center py-2 space-y-2 px-4 div-na">
+                        <div class="item-summary flex justify-between border-b py-2">
+                            <p class="item-name text-primary-5 font-semibold default">Nama Item</p>
+                            <p class="item-quantity text-sm font-semibold default"><label id="jumlah-tambahan">Jumlah</label></p>
+                            <p class="item-subtotal text-sm default">IDR <label id="harga-tambahan">Harga</label></p>
+                        </div>
                     </div>
                     <div class="grid grid-cols-2 items-center py-2 div-tot">
                         <h2 class="text-primary-5 text-2xl font-semibold text-center">Total</h2>
                         <p class="text-center">IDR XXXXXX</p>
                     </div>
-                    <div class="grid grid-cols-1 items-center p-4">
-                    <a href="{{route('pesan2')}}" class="hover:text-red-500">
-                        <button class="text-primary-2 bg-primary-5 rounded-xl py-2 px-8">Lanjutkan</button>
-                    </a>
-                    </div>
+                    <form method="POST" id="orderForm" action="{{route('pesan2')}}">
+                        @csrf
+                        <input type="hidden" name="data_json" id="data_json">
+                        <a href="#" class="hover:text-red-500">
+                            <div class="grid grid-cols-1 items-center p-4">
+                                <button id="btn_submit" class="text-primary-2 bg-primary-5 rounded-xl py-2 px-8">Lanjutkan</button>
+                            </div>
+                        </a>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
+    <div id="modal2" class="fixed z-50 inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden">
+        <div class="bg-primary-1 rounded-lg w-1/4 shadow-lg max-h-screen">
+            <div class="w-full relative rounded-lg">
+                <img src="{{ url('/assets/front/image/'.'Sarapan.png') }}" class="rounded-xl z-0 relative" height="120%" alt="">
+                <button id="closeModal2"
+                    class="absolute top-2 text-white right-2 bg-primary-5 px-2 py-1 hover:bg-red-500 focus:outline-none">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+        </div>
+    </div>
 </section>
-
 @include('components.modal')
 @endsection
 @section('script')
-<script>
-        const modal2 = document.getElementById('modal2');
-        const openModal2 = document.querySelectorAll('.openModal2');
-        const closeModal2 = document.getElementById('closeModal2');
-        const terms = document.querySelectorAll('.checkbox-item');
-        const lblRuanganHarga = document.getElementById('ruangan-harga');
-        const divNR = document.getElementsByClassName('div-nr')[0];  // Get the first div with the class 'div-nr'
+<script>     
+document.addEventListener('DOMContentLoaded', function(){
+    const btnDetails = document.querySelectorAll(".btn-detail");
+    const lblKapasitas = document.getElementById('lbl-kapasitas');
+    const modal2 = document.getElementById('modal2');
+    const openModal2 = document.querySelectorAll('.openModal2');
+    const closeModal2 = document.getElementById('closeModal2');
+    const minusButtons = document.querySelectorAll('.minus');
+    const plusButtons = document.querySelectorAll('.plus');
+    const terms = document.querySelectorAll('.checkbox-item');
+    const lblRuanganHarga = document.getElementById('ruangan-harga');
+    const divNR = document.getElementsByClassName('div-nr')[0]; 
+    const divNA = document.getElementsByClassName('div-na')[0]; 
+    const harga_tambahan = document.getElementById('harga-tambahan');
+    //
+    const qty_tambahan = document.getElementById('qty_tambahan');
+    const nm_tambahan = document.getElementById('nm_tambahan');
+    const hrg_tambahn = document.getElementById('hrg_tambahn');
 
-        let names = [];
-        let selected = [];
+    var total_tambahan =0;
+    var lastCount = 0;
 
-        terms.forEach(item => {
-            item.addEventListener('click', (e) => {
-                selected = Array.from(document.querySelectorAll('.checkbox-item:checked')).map(checkbox => parseFloat(checkbox.value));
-                names = Array.from(document.querySelectorAll('.checkbox-item:checked')).map(checkbox => checkbox.getAttribute('data-nr'));
-                
-                const totalSum = selected.reduce((sum, value) => sum + value, 0);
-                lblRuanganHarga.innerHTML = totalSum.toFixed(2); 
-                divNR.innerHTML = '';
-                // 1. left
-                names.forEach(name => {
-                    createComponent('h2', ['text-primary-5', 'text-2xl', 'font-semibold', 'text-center'], name, divNR);
-                });
-                // 2. right
-                selected.forEach(sel => {
-                        createComponent('p', ['text-center'], `IDR <label id="ruangan-harga">${sel}</label>`, divNR);
-                });
-                // 3. tambahkan br disini
-
-            });
-        });
-
-        function createComponent(elementType, classes = [], content = '', container) {
-            const newElement = document.createElement(elementType);
-            newElement.innerHTML = content;
-            newElement.classList.add(...classes);
-            container.appendChild(newElement);
-        }
-
-
-
-
-       /**  openModal2.forEach(button => {
-            button.addEventListener('click', () => {
-                modal2.classList.remove('hidden');
-            });
-        });
-
-        // Tutup modal (dari tombol close)
-        closeModal2.addEventListener('click', () => {
-            modal2.classList.add('hidden');
-        });
-
-        // Tutup modal jika klik di luar modal
-        modal2.addEventListener('click', (event) => {
-            if (event.target === modal) {
-                modal2.classList.add('hidden');
-            }
-        });*/
-
-    document.addEventListener('DOMContentLoaded', function(){
-        const btnDetails = document.querySelectorAll(".btn-detail");
-        const lblKapasitas = document.getElementById('lbl-kapasitas');
+    if (btnDetails) {
         btnDetails.forEach(btn => {
             btn.addEventListener('click', function(evt) {
                 lblKapasitas.innerHTML = evt.target.getAttribute('data-kapasitas') + " Orang";
@@ -221,7 +196,204 @@
                 // modal.classList.remove('hidden'); // Show modal
             });
         });
-    });
-</script>
+    }
 
+    let names = [];
+    let selected = [];
+
+    if (terms && divNR) {
+        terms.forEach(item => {
+            item.addEventListener('click', (e) => {
+                selected = Array.from(document.querySelectorAll('.checkbox-item:checked')).map(checkbox => parseFloat(checkbox.value));
+                names = Array.from(document.querySelectorAll('.checkbox-item:checked')).map(checkbox => checkbox.getAttribute('data-nr'));
+                const totalSum = selected.reduce((sum, value) => sum + value, 0);
+                lblRuanganHarga.innerHTML = totalSum.toLocaleString(); 
+                divNR.innerHTML = ''; 
+
+                names.forEach((name, index) => {
+                    const wrapperDiv = createComponent('div', ['items-center', 'div-nr'], '', divNR);
+                    const item1Div = createComponent('div', ['item-1', 'grid', 'grid-cols-2'], '', wrapperDiv);
+                    createComponent('p', ['text-primary-5', 'text-2xl', 'font-semibold', 'text-center'], name, item1Div);
+                    createComponent('p', ['text-center'], `IDR <label id="ruangan-harga">${selected[index].toLocaleString()}</label>`, item1Div);
+                });
+                updateTotal()
+            });
+        });
+    }
+
+    if (openModal2 && modal2) {
+        openModal2.forEach(button => {
+            button.addEventListener('click', () => {
+                modal2.classList.remove('hidden');
+            });
+        });
+        // Tutup modal (dari tombol close)
+
+        closeModal2.addEventListener('click', () => {
+            modal2.classList.add('hidden');
+        });
+
+        // Tutup modal jika klik di luar modal
+        modal2.addEventListener('click', (event) => {
+            if (event.target === modal) {
+                modal2.classList.add('hidden');
+            }
+        });
+    }
+    if(minusButtons && plusButtons){
+        minusButtons.forEach(button => {
+            button.addEventListener('click', function () {
+                const quantityElement = this.nextElementSibling;
+                let quantity = parseInt(quantityElement.textContent);
+
+                if (quantity > 1) {
+                    let hrgSatuan = parseInt(hrg_tambahan.getAttribute('value')); 
+                    const row = this.closest('tr');
+                    const nama = row.querySelector('#nm_tambahan').getAttribute('value');
+
+                    quantity--; // Kurangi jumlah
+                    quantityElement.textContent = quantity; // Update jumlah
+                    quantityElement.setAttribute('value', quantity); // Update value
+                    let harga = hrgSatuan * quantity;
+                    hargaCalculate(divNA, nama, quantity, hrgSatuan);
+
+                    harga_tambahan.textContent = 'IDR ' + harga;
+
+                    updateTotal();
+                }
+            });
+        });
+        
+        plusButtons.forEach(button => {
+            button.addEventListener('click', function () {
+                const quantityElement = this.previousElementSibling;
+                let quantity = parseInt(quantityElement.textContent);
+                quantity++;
+                quantityElement.textContent = quantity;
+                let hrgSatuan = hrg_tambahan.getAttribute('value');
+
+                const row = this.closest('tr');
+                const nama = row.querySelector('#nm_tambahan').getAttribute('value');
+                // Cek apakah divNA sudah terisi atau belum
+                const defaultcontent = divNA.querySelectorAll('.default')[0];
+                if (defaultcontent) {
+                    divNA.innerHTML = ''
+                    hargaCalculate(divNA, nama, quantity, hrgSatuan);
+                } else {
+                    hargaCalculate(divNA, nama, quantity, hrgSatuan);
+                }
+                updateTotal();
+            });
+        });
+    }
+
+    function createComponent(elementType, classes = [], content = '', container) {
+        const newElement = document.createElement(elementType);
+        newElement.innerHTML = content;
+        newElement.classList.add(...classes);
+        container.appendChild(newElement);
+        return newElement; 
+    }
+
+    function hargaCalculate(container, nama, quantity, satuan){
+        let existingItem = Array.from(container.children).find(child => 
+            child.querySelector('.item-name')?.textContent === nama
+        );
+
+        let subTotal = parseInt(satuan * quantity)
+        if (existingItem) {
+            existingItem.querySelector('.item-quantity').textContent = `${quantity}`;
+            existingItem.querySelector('.item-subtotal').textContent = `IDR ${subTotal.toLocaleString()}`;
+        } else {
+            const wrapperDiv = createComponent('div', ['item-summary', 'flex', 'justify-between', 'border-b', 'py-2'], '', container);
+            createComponent('p', ['item-name', 'text-primary-5', 'font-semibold'], nama, wrapperDiv);
+            createComponent('p', ['item-quantity', 'text-sm'], `${quantity}`, wrapperDiv);
+            createComponent('p', ['item-subtotal', 'text-sm', 'font-semibold'], `IDR ${subTotal.toLocaleString()}`, wrapperDiv);
+        }
+    }
+
+    // Fungsi untuk mengupdate total harga (ruangan + item tambahan)
+    function updateTotal() {
+        const totalRuangan = selected.reduce((sum, value) => sum + value, 0);
+        
+        let additionalTotal = 0;
+        const additionalItems = Array.from(document.querySelectorAll('.item-summary'));
+        additionalItems.forEach(item => {
+            const priceElement = item.querySelector('.item-subtotal');
+            if (priceElement) {
+                const itemPrice = parseFloat(priceElement.textContent.replace('IDR ', '').replace(/,/g, ''));
+                additionalTotal += itemPrice;
+            }
+        });
+        console.log(totalRuangan)
+        let grandTotal = totalRuangan;
+
+        if (additionalTotal > 0) {
+            grandTotal += additionalTotal;
+        }
+
+        const totalDiv = document.querySelector('.div-tot p');
+        if (totalDiv) {
+            totalDiv.innerHTML = `IDR ${grandTotal.toLocaleString()}`;
+        }
+    }
+
+    function prepareDataForController() {
+        // Buat array untuk data ruangan
+        const ruanganData = selected.map((value, index) => ({
+            nama: names[index],
+            harga: value
+        }));
+
+        // Hitung total harga semua ruangan
+        const totalRuangan = selected.reduce((sum, value) => sum + value, 0);
+
+        // Buat array untuk item tambahan
+        const itemTambahan = [];
+        const additionalItems = Array.from(document.querySelectorAll('.item-summary'));
+        additionalItems.forEach(item => {
+            const name = item.querySelector('.item-name').textContent;
+            const quantityElement = item.querySelector('.item-quantity');
+            const quantity = parseInt(quantityElement.textContent);
+            const priceElement = item.querySelector('.item-subtotal');
+            const itemPrice = parseFloat(priceElement.textContent.replace('IDR ', '').replace(/,/g, ''));
+
+            if (itemPrice > 0) {
+                itemTambahan.push({
+                    nama: name,
+                    jumlah: quantity,
+                    subtotal: itemPrice
+                });
+            }
+        });
+
+        // Hitung total harga tambahan
+        const totalTambahan = itemTambahan.reduce((sum, item) => sum + item.subtotal, 0);
+
+        // Hitung total keseluruhan
+        const totalHarga = totalRuangan + totalTambahan;
+
+        // Struktur data untuk dikirim
+        const dataToSend = {
+            ruangan: ruanganData.length > 0 ? ruanganData : null, // Jika tidak ada ruangan, set null
+            itemTambahan: itemTambahan.length > 0 ? itemTambahan : null, // Jika tidak ada tambahan, set null
+            totalHarga: totalHarga
+        };
+
+        return dataToSend;
+    }
+
+
+    document.querySelector('#btn_submit').addEventListener('click', function(event) {
+        event.preventDefault();
+
+        const dataToSend = prepareDataForController();
+        console.log(dataToSend)
+        document.getElementById('data_json').value = JSON.stringify(dataToSend);
+        document.getElementById('orderForm').submit();
+    });
+
+
+});
+</script>
 @endsection

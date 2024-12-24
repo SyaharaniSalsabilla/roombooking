@@ -20,8 +20,8 @@ Route::get('/hasil/cari', [LoginsController::class, 'hasil_cari'])->name('hasil_
 Route::get('/contact', [LoginsController::class, 'contact'])->name('contact'); // Halaman contact
 Route::post('/login/email', [LoginsController::class, 'login_email'])->name('login.email'); // Halaman login dengan email
 Route::get('/pesan1', [LoginsController::class, 'pesan1'])->name('pesan1'); // Halaman pesan1
-Route::get('/pesan2', [LoginsController::class, 'pesan2'])->name('pesan2'); // Halaman pesan2
-Route::get('/pesan3', [LoginsController::class, 'pesan3'])->name('pesan3'); // Halaman pesan3
+Route::post('/pesan2', [LoginsController::class, 'pesan2'])->name('pesan2'); // Halaman pesan2
+Route::post('/pesan3', [LoginsController::class, 'pesan3'])->name('pesan3'); // Halaman pesan3
 Route::resource('transaksi', TransactionController::class);
 Route::post('transaksi/pesan', [TransactionController::class, 'pesan'])->name('transaksi.pesan');
 
