@@ -73,7 +73,7 @@
                                 <h2 class="text-primary-5 text-left text-2xl font-semibold p-4">Total</h2>
                                 <p class="text-right px-4">IDR {{ number_format($totalHarga, 0, ',', '.') }}</p>
                             </div>
-                            <form method="POST" id="orderForm" action="{{route('pesan3')}}">
+                            <form method="POST" id="orderForm" action="{{ Auth::check() ? route('pesan3') : route('pesan3.login')}}">
                                 @csrf
                                 <input type="hidden" name="data_ruangan" id="data_ruangan"> 
                                 <input type="hidden" name="data_tambahan" id="data_tambahan">
@@ -83,7 +83,7 @@
                                 <input type="hidden" name="data_tgl_sampai" id="data_tgl_sampai">  
                                 <input type="hidden" name="data_jam_mulai" id="data_jam_mulai">  
                                 <input type="hidden" name="data_jam_sampai" id="data_jam_sampai">  
-                                <a href="{{route('pesan3')}}" class="hover:text-red-500">   
+                                <a href="{{route('pesan3.login')}}" class="hover:text-red-500">   
                                     <div class="grid grid-cols-1 items-center p-4">
                                         <button id="btn_submit" class="text-primary-2 bg-primary-5 rounded-xl py-2 px-4">Lanjutkan</button>
                                     </div>

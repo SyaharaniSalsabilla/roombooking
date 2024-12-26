@@ -20,12 +20,16 @@
 </head>
     <body class="min-h-screen flex items-center justify-center bg-primary-2">
     <div class="w-full max-w-md p-6 space-y-2">
-        <form class="space-y-3">
+        <form class="space-y-3" action="{{ route('login.post')}}" method="POST">
+            @csrf
             <img src="../../../assets/front/image/Anindhaloka.png" alt="">
             <!-- Email Input -->
             <div class="relative">
-                <input type="email" placeholder="Email"
-                    class="w-full pl-10 pr-4 py-3 bg-primary-1 border border-primary-5  rounded-md text-primary-5 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent">
+                <input type="email" placeholder="Email" name="email"
+                    class="w-full pl-10 pr-4 py-3 bg-primary-1 
+                    border border-primary-5  rounded-md text-primary-5 
+                    placeholder-gray-500 focus:outline-none focus:ring-2 
+                    focus:ring-red-500 focus:border-transparent form-control">
                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                     <svg class="h-5 w-5 text-primary-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
                         fill="currentColor">
@@ -37,8 +41,10 @@
 
             <!-- Password Input -->
             <div class="relative">
-                <input type="password" placeholder="Password"
-                    class="w-full pl-10 pr-4 py-3 bg-primary-1 border border-primary-5 rounded-md text-primary-5 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent">
+                <input type="password" placeholder="Password" name="password"
+                    class="w-full pl-10 pr-4 py-3 bg-primary-1 border border-primary-5 
+                    rounded-md text-primary-5 placeholder-gray-500 focus:outline-none 
+                    focus:ring-2 focus:ring-red-500 focus:border-transparent form-control">
                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                     <svg class="h-5 w-5 text-primary-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
                         fill="currentColor">

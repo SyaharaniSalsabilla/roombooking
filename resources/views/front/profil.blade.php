@@ -10,20 +10,21 @@
                     <div class="flex justify-start gap-2 items-center">
                         <img src="../assets/Dana.png" class="rounded-full" width="100px" alt="">
                         <div class="flex flex-col">
-                            <h2 class="text-xl text-primary-5 mb-2">Ria Ricis</h2>
+                            <h2 class="text-xl text-primary-5 mb-2">
+                                Syaharani Salsabilla</h2>
                             <p>08911111111</p>
-                            <p>Riaricis2gmai.com</p>
+                            <p>syaharanibilla1@gmail.com</p>
                             <p>Bintaro, Jakarta Selatan</p>
                         </div>
                     </div>
                     <div class="flex justify-end gap-2 items-center">
-                        <button class="text-primary-5 bg-primary-1 p-2 rounded-md">Unggah Foto Profille
-                            Baru</button>
+                        <button class="text-primary-5 bg-primary-1 p-2 rounded-md">
+                            Unggah Foto Profille Baru</button>
                         <button class="text-white bg-primary-5 p-2 rounded-md">Hapus Foto Profile</button>
                     </div>
                 </div>
                 <div class="flex flex-col gap-2 py-6">
-                    <label for="" class="text-primary-5">First Name</label>
+                    <label for="" class="text-primary-5">Nama</label>
                     <input type="text"
                         class="bg-primary-1 rounded-md p-2 border border-primary-5 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent">
                     <div class="grid grid-cols-2 gap-2">

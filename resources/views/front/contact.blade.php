@@ -15,9 +15,15 @@
                         </div>
                         <button class="bg-primary-5 text-primary-2 px-6 py-3 rounded-lg text-center">Kirim</button>
                         <button class="bg-primary-5 text-primary-2 px-6 py-3 rounded-lg text-center">
-                            <i class="fa-solid fa-phone mx-2"></i>
-                            <i class="fa-solid fa-envelope mx-2"></i>
-                            <i class="fa-brands fa-instagram mx-2"></i>
+                            <a href="">
+                                <i class="fa-solid fa-phone mx-2"></i>
+                            </a>
+                            <a href="branding.anindhaloka@gmail.com">
+                                <i class="fa-solid fa-envelope mx-2"></i>
+                            </a>
+                            <a href="">
+                                 <i class="fa-brands fa-instagram mx-2"></i>
+                            </a>
                         </button>
                     </div>
                     <div>

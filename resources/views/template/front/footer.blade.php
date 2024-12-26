@@ -23,10 +23,12 @@
                     <a href=""
                         class="flex items-center justify-center w-10 h-10 p-2 border rounded-full  hover:bg-primary-500">
                         <i class="text-xl fa-brands fa-whatsapp"></i>
-                    </a> <a href=""
+                    </a> 
+                    <a href="https://www.instagram.com/anindhaloka_id/"
                         class="flex items-center justify-center w-10 h-10 p-2 border rounded-full  hover:bg-primary-500">
                         <i class="text-xl fa-brands fa-instagram"></i>
-                    </a> <a href=""
+                    </a> 
+                    <a href=""
                         class="flex items-center justify-center w-10 h-10 p-2 border rounded-full  hover:bg-primary-500">
                         <i class="text-xl fa-brands fa-facebook"></i>
                     </a>

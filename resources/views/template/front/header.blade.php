@@ -8,16 +8,20 @@
                 <div class="flex justify-center">
                     <img src="../../../assets/front/image/Anindhaloka.png" class="" width="200px" alt="">
                 </div>
-                <span href="{{route('login')}}" class="flex justify-end space-x-2 hover:text-red-500">
-                        <a href="{{route('login')}}">
-                            Masuk  
-                        </a>
-                        / 
-                        <a href="{{ route('register') }}"> 
-                            Daftar 
-                        </a>
-                    <i class="fas fa-user"></i>
-                </span>
+                @if(!Auth::check())
+                    <span href="{{route('login')}}" class="flex justify-end space-x-2 hover:text-red-500">
+                            <a href="{{route('login')}}">
+                                Masuk  
+                            </a>
+                            / 
+                            <a href="{{ route('register') }}"> 
+                                Daftar 
+                            </a>
+                        <i class="fas fa-user"></i>
+                    </span>
+                @else
+                <span class="flex justify-end space-x-2 hover:text-red-500 gap-2"> {{ Auth::user()->email }} <i class="fas fa-user"></i></span>
+                @endif
             </div>
         </div>
         <div class="bg-primary-3">

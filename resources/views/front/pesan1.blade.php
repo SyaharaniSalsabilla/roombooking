@@ -117,8 +117,8 @@
                     </div>
                     <div class="items-center py-2 space-y-2 div-nr">
                         <div class="item-1 grid grid-cols-2 ">
-                            <p class="text-primary-5 text-2xl font-semibold text-center">Nama Ruangan</p>
-                            <p class="text-center">IDR <label id="ruangan-harga">Harga</label></p>
+                            <p class="text-primary-5 text-left text-2xl font-semibold px-4 py-1">Nama Ruangan</p>
+                            <p class="text-right px-4">IDR <label id="ruangan-harga">Harga</label></p>
                         </div>
                     </div>
                     <div class="items-center py-2 space-y-2 px-4 div-na">

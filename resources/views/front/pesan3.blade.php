@@ -43,10 +43,20 @@
                                 Tambah Catatan Pesanan
                             </h2>
                             <p for="" class="text-left">Sertakan komentar atau permintaan terkait pesanan</p>
-                            <textarea name="" rows="5" id="" class="border border-primary-5 w-full rounded-lg bg-primary-1 p-3 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"></textarea>
+                            <textarea name="note" id="note" rows="5" id="" class="border border-primary-5 w-full rounded-lg bg-primary-1 p-3 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"></textarea>
                         </div>
                     </div>
                     <div class="col-span-1">
+                        <form method="POST" id="prev" action="{{route('pesan3')}}">
+                            @csrf
+                            <input type="hidden" name="data_ruangan" id="data_ruangan" value="{{ json_encode($ruangans)}}"> 
+                            <input type="hidden" name="data_tambahan" id="data_tambahan" value="{{json_encode($tambahans)}}">
+                            <input type="hidden" name="data_total" id="data_total" value="{{$totalHarga}}">  
+
+                            <input type="hidden" name="data_tgl_mulai" id="data_tgl_mulai" value="{{$tgl_mulai}}">  
+                            <input type="hidden" name="data_tgl_sampai" id="data_tgl_sampai" value="{{$tgl_selesai}}">
+                            <input type="hidden" name="data_note" id="data_note" value="{{$notes}}">
+                        </form>
                         <div class="flex flex-col mb-4">
                             <button class="text-primary-2 bg-primary-5 rounded-xl py-2 px-4">Kembali</button>
                         </div>
@@ -56,24 +66,82 @@
                                 <h2 class="font-primary font-semibold uppercase text-xl text-primary-5">Nin Space
                                 </h2>
                             </div>
+                            <span class="divider text-center " >
+                                <div class="p-2">
+                                    <label id="lbl_tanggal_awal" class="font-semibold">{{$tgl_mulai}}</label> 
+                                    <span class="text-primary-5">to</span>
+                                    <label id="lbl_tanggal_akhir" class="font-semibold">{{ $tgl_selesai}}</label>
+                                </div>
+                            </span>
+
+                            @if($ruangans)
+                                <div class="grid grid-cols-2 items-center py-1 space-x-between">
+                                @foreach($ruangans as $r)
+                                    <p class="text-primary-5 text-left text-2xl font-semibold px-4 py-1">{{ $r['nama'] }}</p>
+                                    <p class="text-right px-4">IDR {{ number_format($r['harga'], 0, ',', '.') }}</p>
+                                @endforeach
+                                </div>
+                            @endif
+                            @if($tambahans)
+                                <div class="items-center py-2 space-y-2 px-4 div-na">
+                                        @foreach($tambahans as $item)
+                                        <div class="item-summary flex justify-between border-b py-1 pr-4">
+                                            <p class="item-name text-primary-5 text-left font-semibold">{{ $item['nama'] }}</p>
+                                            <p class="item-quantity text-sm font-semibold"><label id="jumlah-tambahan">{{ $item['jumlah'] }}</label></p>
+                                            <p class="item-subtotal text-right px-0">IDR <label id="harga-tambahan">{{ number_format($item['subtotal'], 0, ',', '.') }}</label></p>
+                                        </div>
+                                        @endforeach
+                                </div>
+                            @endif
                             <div class="grid grid-cols-2 items-center py-2">
-                                <h2 class="text-primary-5 text-2xl font-semibold text-center">Plantaran</h2>
-                                <p class="text-center">IDR XXXXXX</p>
+                                <h2 class="text-primary-5 text-left text-2xl font-semibold p-4">Total</h2>
+                                <p class="text-right px-4">IDR {{ number_format($totalHarga, 0, ',', '.') }}</p>
                             </div>
-                            <div class="grid grid-cols-2 items-center py-2">
-                                <h2 class="text-primary-5 text-2xl font-semibold text-center">Cemilan</h2>
-                                <p class="text-center">IDR XXXXXX</p>
-                            </div>
-                            <div class="grid grid-cols-2 items-center py-2">
-                                <h2 class="text-primary-5 text-2xl font-semibold text-center">Total</h2>
-                                <p class="text-center">IDR XXXXXX</p>
-                            </div>
-                            <div class="grid grid-cols-1 items-center p-4">
-                                <button class="text-primary-2 bg-primary-5 rounded-xl py-2 px-4">Lanjutkan</button>
-                            </div>
+                            <form method="POST" id="orderForm" action="{{route('pesan4')}}">
+                                @csrf
+                                <input type="hidden" name="data_ruangan" id="data_ruangan"> 
+                                <input type="hidden" name="data_tambahan" id="data_tambahan">
+                                <input type="hidden" name="data_total" id="data_total">  
+
+                                <input type="hidden" name="data_tgl_mulai" id="data_tgl_mulai">  
+                                <input type="hidden" name="data_tgl_sampai" id="data_tgl_sampai">
+                                <input type="hidden" name="data_note" id="data_note">
+                                <a class="hover:text-red-500">   
+                                    <div class="grid grid-cols-1 items-center p-4">
+                                        <button id="btn_submit" class="text-primary-2 bg-primary-5 rounded-xl py-2 px-4">Lanjutkan</button>
+                                    </div>
+                                </a>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
 </section>
+@endsection
+@section('script')
+<script>
+    document.addEventListener('DOMContentLoaded', function(){
+        const btn = document.querySelector('#btn_submit');
+        var ruangans = @json($ruangans);
+        var tambahans = @json($tambahans);
+        var totalHarga = @json($totalHarga);
+        var tgl_mulai = @json($tgl_mulai);
+        var tgl_selesai = @json($tgl_selesai);
+        var note = '';
+
+        btn.addEventListener('click', function(event) {
+                event.preventDefault();
+                document.getElementById('data_ruangan').value = JSON.stringify(ruangans);
+                document.getElementById('data_tambahan').value = JSON.stringify(tambahans);
+                document.getElementById('data_tgl_mulai').value = JSON.stringify(tgl_mulai);
+                document.getElementById('data_tgl_sampai').value = JSON.stringify(tgl_selesai);
+                document.getElementById('data_total').value = totalHarga;
+                note = document.getElementById('note').value ;
+                document.getElementById('data_note').value = note;
+                
+                document.getElementById('orderForm').submit();
+        });
+    });
+
+</script>
 @endsection

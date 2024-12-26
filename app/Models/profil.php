@@ -24,4 +24,8 @@ class profil extends Model
         'email',
         'telepon',
     ];
+
+    public function user(){
+        return $this->belongsTo(User::class, 'email');
+    }
 }

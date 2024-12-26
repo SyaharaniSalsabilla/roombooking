@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Hash;
+use Laravel\Socialite\Facades\Socialite;
 
 class UsersController extends Controller
 {
@@ -22,12 +23,14 @@ class UsersController extends Controller
             'email'     => 'required',
             'password'  => 'required'
         ]);
-
+        
         $login = [
             'email'     =>$request->email,
             'password'  =>$request->password,
             // 'active'    =>1,
         ];
+        
+        $userFromDB = User::where('email', $request->email)->get();
 
         if(Auth::attempt($login)){
             return view('admin.dashboard');
@@ -39,6 +42,13 @@ class UsersController extends Controller
     public function register()
     {
         return view('front.register');
+    }
+
+    public function logout(Request $request){
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect('/login');
     }
 
     public function create(Request $request)
