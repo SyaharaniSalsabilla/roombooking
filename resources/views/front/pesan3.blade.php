@@ -55,10 +55,10 @@
 
                             <input type="hidden" name="data_tgl_mulai" id="data_tgl_mulai" value="{{$tgl_mulai}}">  
                             <input type="hidden" name="data_tgl_sampai" id="data_tgl_sampai" value="{{$tgl_selesai}}">
-                            <input type="hidden" name="data_note" id="data_note" value="{{$notes}}">
                         </form>
                         <div class="flex flex-col mb-4">
-                            <button class="text-primary-2 bg-primary-5 rounded-xl py-2 px-4">Kembali</button>
+                            <button class="text-primary-2 bg-primary-5 rounded-xl py-2 px-4"
+                            onclick="document.getElementById('prev').submit()">Kembali</button>
                         </div>
                         <div class="flex flex-col divide-y-2 divide-primary-5 bg-primary-1 rounded-lg">
                             <div class="flex justify-center items-center p-2">
@@ -99,12 +99,12 @@
                             </div>
                             <form method="POST" id="orderForm" action="{{route('pesan4')}}">
                                 @csrf
-                                <input type="hidden" name="data_ruangan" id="data_ruangan"> 
-                                <input type="hidden" name="data_tambahan" id="data_tambahan">
-                                <input type="hidden" name="data_total" id="data_total">  
+                                <input type="hidden" name="data_ruangan" id="data_ruangan" value="{{ json_encode($ruangans)}}"> 
+                                <input type="hidden" name="data_tambahan" id="data_tambahan" value="{{json_encode($tambahans)}}">
+                                <input type="hidden" name="data_total" id="data_total" value="{{$totalHarga}}">  
 
-                                <input type="hidden" name="data_tgl_mulai" id="data_tgl_mulai">  
-                                <input type="hidden" name="data_tgl_sampai" id="data_tgl_sampai">
+                                <input type="hidden" name="data_tgl_mulai" id="data_tgl_mulai" value="{{$tgl_mulai}}">  
+                                <input type="hidden" name="data_tgl_sampai" id="data_tgl_sampai" value="{{$tgl_selesai}}">
                                 <input type="hidden" name="data_note" id="data_note">
                                 <a class="hover:text-red-500">   
                                     <div class="grid grid-cols-1 items-center p-4">

@@ -4,13 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 
 class profil extends Model
 {
 
     use HasFactory, Notifiable;
 
-    protected $table = 'profil';
+    protected $table = 'master_profil_customer';
     /**
      * The attributes that are mass assignable.
      *
@@ -19,13 +20,19 @@ class profil extends Model
 
     protected $fillable = [
         'id',
-        'nama',
-        'alamat',
         'email',
+        'nama',
         'telepon',
+        'alamat',
+        'password',
+        'password_baru',
+        'password_lama',
+        'created_at',
+        'updated_at',
+
     ];
 
     public function user(){
-        return $this->belongsTo(User::class, 'email');
+        return $this->hasOne(User::class, 'email', 'email');
     }
 }

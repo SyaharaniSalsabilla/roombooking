@@ -33,7 +33,7 @@
                     </div>
                     <div class="col-span-1">
                         <div class="flex flex-col mb-4">
-                            <button class="text-primary-2 bg-primary-5 rounded-xl py-2 px-4">Kembali</button>
+                            <a href="{{ route('pesan1') }}" class="text-primary-2 bg-primary-5 rounded-xl py-2 px-4 text-center">Kembali</a>
                         </div>
                         <div class="flex flex-col divide-y-2 divide-primary-5 bg-primary-1 rounded-lg">
                             <div class="flex justify-center items-center p-2">

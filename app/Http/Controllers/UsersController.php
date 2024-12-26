@@ -12,10 +12,10 @@ use Laravel\Socialite\Facades\Socialite;
 class UsersController extends Controller
 {
     public function index()
-{
-    \Log::info('Memuat halaman login');
-    return view("front.login");
-}
+    {
+        \Log::info('Memuat halaman login');
+        return view("front.login");
+    }
 
     public function login(Request $request)
     {
@@ -77,6 +77,34 @@ class UsersController extends Controller
             return redirect("template.front.login");
         } else {
             return redirect("front.register")->withErrors('data tidak masuk');
+        }
+    }
+
+    public function customer_login()
+    {
+        \Log::info('Memuat halaman login');
+        return view("front.login_customer");
+    }
+
+    public function login_customer(Request $request)
+    {
+        $request->validate([
+            'email'     => 'required',
+            'password'  => 'required'
+        ]);
+        
+        $login = [
+            'email'     =>$request->email,
+            'password'  =>$request->password,
+            // 'active'    =>1,
+        ];
+        
+        $userFromDB = User::where('email', $request->email)->get();
+
+        if(Auth::attempt($login)){
+            return redirect()->route('pesan3');
+        } else {
+            return redirect('login')->withErrors('Email dan Password tidak valid');
         }
     }
 }

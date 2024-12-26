@@ -6,15 +6,7 @@
                 <h2 class="w-full text-center font-primary font-semibold uppercase text-3xl text-primary-5 mb-4">Pesan
                     Ruangan
                 </h2>
-                <form method="POST" id="prev" action="{{route('pesan4')}}">
-                    @csrf
-                    <input type="hidden" name="data_ruangan" id="data_ruangan" value="{{ json_encode($ruangans)}}"> 
-                    <input type="hidden" name="data_tambahan" id="data_tambahan" value="{{json_encode($tambahans)}}">
-                    <input type="hidden" name="data_total" id="data_total" value="{{$totalHarga}}">  
-
-                    <input type="hidden" name="data_tgl_mulai" id="data_tgl_mulai" value="{{$tgl_mulai}}">  
-                    <input type="hidden" name="data_tgl_sampai" id="data_tgl_sampai" value="{{$tgl_selesai}}">
-                    <input type="hidden" name="data_note" id="data_note" value="{{$notes}}">
+                <form method="GET" id="prev" action="{{route('home')}}">
                 </form>
                 <div class="grid grid-cols-3 gap-12">
                     <div class="flex flex-col gap-2 col-span-2 font-secondary text-justify">

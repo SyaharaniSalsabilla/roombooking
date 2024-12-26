@@ -13,9 +13,6 @@ use Illuminate\Support\Facades\Auth;
 
 class LoginsController extends Controller
 {
-    public function redirect(){
-        return Socialite::driver('google')->redirect();
-    }
 
     public function about()
     {
@@ -84,20 +81,49 @@ class LoginsController extends Controller
         return view('front.pesan1', ['datas' => $datas]);
     }
 
+    public function profile()
+    {
+        if($request->method() == 'GET'){
+            $datas = session()->get('profile');
+            return view('.front.profil',$datas);
+        }
+
+        $data = json_decode($request->input('data_json'), true);
+        $datas = [
+            'nama' => $data['nama'] ?? [],
+            'email' => $data['email'] ?? null,
+            'telepon' => $data['telepon'] ?? 0
+        ];
+
+        session()->put('pesan2', $datas);
+        return view('front.profil');
+    }
+    
     public function pesan2(Request $request)
     {
-        $data = json_decode($request->input('data_json'), true);
+        if($request->method() == 'GET'){
+            $datas = session()->get('pesan2');
+            return view('.front.pesan2',$datas);
+        }
 
-        // Pastikan data diteruskan dengan struktur yang sesuai
-        return view('.front.pesan2', [
+        $data = json_decode($request->input('data_json'), true);
+        $datas = [
             'ruangan' => $data['ruangan'] ?? [],
             'itemTambahan' => $data['itemTambahan'] ?? null,
             'totalHarga' => $data['totalHarga'] ?? 0
-        ]);
+        ];
+
+        session()->put('pesan2', $datas);
+        return view('.front.pesan2',$datas);
     }
 
     public function pesan3(Request $request)
     {
+        if($request->method() == 'GET'){
+            $datas = session()->get('pesan3');
+            return view('.front.pesan3',$datas);
+        }
+
         $data_ruangan = json_decode($request->input('data_ruangan'), true);
         $data_tambahan = json_decode($request->input('data_tambahan'), true);
         $data_total = json_decode($request->input('data_total'), true);
@@ -115,6 +141,8 @@ class LoginsController extends Controller
             'tgl_selesai' => $tgl_jam_selesai,
             'totalHarga' => $data_total
         ];
+
+        session()->put('pesan3', $returnsVal);
         
         return view('.front.pesan3',$returnsVal);
     }
@@ -138,12 +166,18 @@ class LoginsController extends Controller
             'tgl_selesai' => $tgl_jam_selesai,
             'totalHarga' => $data_total
         ];
-        
+        $request->session()->put('datas', $returnsVal);
+
         return view('.front.pesan3_login',$returnsVal);
     }
 
     public function pesan4(Request $request)
     {
+        if($request->method() == 'GET'){
+            $datas = session()->get('pesan4');
+            return view('.front.pesan4',$datas);
+        }
+
         $data_ruangan = json_decode($request->input('data_ruangan'), true);
         $data_tambahan = json_decode($request->input('data_tambahan'), true);
         $data_total = json_decode($request->input('data_total'), true);
@@ -160,12 +194,19 @@ class LoginsController extends Controller
             'totalHarga' => $data_total,
             'notes' => $note
         ];
+
+        session()->put('pesan4', $returnsVal);
         
         return view('.front.pesan4',$returnsVal);
     }
 
     public function transfer(Request $request)
     {
+        if($request->method() == 'GET'){
+            $datas = session()->get('transfer');
+            return view('.front.transfer',$datas);
+        }
+
         $data_ruangan = json_decode($request->input('data_ruangan'), true);
         $data_tambahan = json_decode($request->input('data_tambahan'), true);
         $data_total = json_decode($request->input('data_total'), true);
@@ -186,7 +227,8 @@ class LoginsController extends Controller
             'kode' => $kode,
             'metode_bayar' => $metode_bayar
         ];
-        // dd($returnsVal);
+
+        session()->put('transfer', $returnsVal);
         return view('.front.transfer',$returnsVal);
     }
 }

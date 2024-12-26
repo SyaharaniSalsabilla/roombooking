@@ -12,8 +12,9 @@
                             Buat akun atau masuk
                         </h2>
                         <div class="flex justify-center items-center bg-primary-1 rounded-lg">
+                            @if(!Auth::check())
                             <div class="w-full max-w-md p-6 space-y-2">
-                                <form action="{{ route('login.email') }}" id="formLogin" method="GET"></form>
+                                <form action="{{ route('login.customer') }}" id="formLogin" method="GET"></form>
                                 <button type="button" onclick="document.getElementById('formLogin').submit()"
                                     class="w-full bg-primary-5 text-white py-3 px-4 rounded-md font-medium hover:bg-red-500 transition-colors">
                                     Masuk dengan Email
@@ -28,6 +29,7 @@
                                     </a>
                                 </div>
                             </div>
+                            @endif
                         </div>
                     </div>
                     <div class="col-span-1">

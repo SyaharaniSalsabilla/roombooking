@@ -11,16 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('master_profil_customer', function (Blueprint $table) {
+        Schema::create('informasi', function (Blueprint $table) {
             $table->id();
-            $table->string('email')->unique();
             $table->string('nama');
-            $table->string('telepon');
-            $table->string('alamat');
-            $table->string('password');
-            $table->string('password_baru');
-            $table->string('password_lama');
-            $table->timestamps();
+            $table->string('deskripsi');
+            $table->string('image');
         });
     }
 
@@ -29,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('master_profil_customer');
+       
     }
 };

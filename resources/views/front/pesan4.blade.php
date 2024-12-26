@@ -98,15 +98,14 @@
                             </div>
                             <form method="POST" id="orderForm" action="{{route('transfer')}}">
                                 @csrf
-                                <input type="hidden" name="data_ruangan" id="data_ruangan"> 
-                                <input type="hidden" name="data_tambahan" id="data_tambahan">
-                                <input type="hidden" name="data_total" id="data_total">  
+                                <input type="hidden" name="data_ruangan" id="data_ruangan" value="{{ json_encode($ruangans)}}"> 
+                                <input type="hidden" name="data_tambahan" id="data_tambahan" value="{{json_encode($tambahans)}}">
+                                <input type="hidden" name="data_total" id="data_total" value="{{$totalHarga}}">  
 
-                                <input type="hidden" name="data_tgl_mulai" id="data_tgl_mulai">  
-                                <input type="hidden" name="data_tgl_sampai" id="data_tgl_sampai">  
-                                <input type="hidden" name="data_payment_code" id="data_payment_code">  
+                                <input type="hidden" name="data_tgl_mulai" id="data_tgl_mulai" value="{{$tgl_mulai}}">  
+                                <input type="hidden" name="data_tgl_sampai" id="data_tgl_sampai" value="{{$tgl_selesai}}">
+                                <input type="hidden" name="data_note" id="data_note" value="{{$notes}}"> 
                                 <input type="hidden" name="data_metode_bayar" id="data_metode_bayar">
-                                <input type="hidden" name="data_note" id="data_note">
                                 <input type="hidden" name="data_kode" id="data_kode">
                                 <a class="hover:text-red-500">   
                                     <div class="grid grid-cols-1 items-center p-4">

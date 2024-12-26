@@ -8,19 +8,13 @@
             <div class="flex flex-col divide-y-2 divide-primary-5 gap-6">
                 <div class="grid grid-cols-2">
                     <div class="flex justify-start gap-2 items-center">
-                        <img src="../assets/Dana.png" class="rounded-full" width="100px" alt="">
                         <div class="flex flex-col">
-                            <h2 class="text-xl text-primary-5 mb-2">
+                            <h2 class="text-xl text-primary-5 mb-2 font-primary font-bold">
                                 Syaharani Salsabilla</h2>
                             <p>08911111111</p>
                             <p>syaharanibilla1@gmail.com</p>
                             <p>Bintaro, Jakarta Selatan</p>
                         </div>
-                    </div>
-                    <div class="flex justify-end gap-2 items-center">
-                        <button class="text-primary-5 bg-primary-1 p-2 rounded-md">
-                            Unggah Foto Profille Baru</button>
-                        <button class="text-white bg-primary-5 p-2 rounded-md">Hapus Foto Profile</button>
                     </div>
                 </div>
                 <div class="flex flex-col gap-2 py-6">

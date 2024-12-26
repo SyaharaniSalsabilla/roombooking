@@ -20,7 +20,7 @@
                         <i class="fas fa-user"></i>
                     </span>
                 @else
-                <span class="flex justify-end space-x-2 hover:text-red-500 gap-2"> {{ Auth::user()->email }} <i class="fas fa-user"></i></span>
+                <a class="flex justify-end space-x-2 hover:text-red-500 gap-2" href="{{ route('profil') }}"> {{ Auth::user()->profile->nama ?? '' }} <i class="fas fa-user"></i></a>
                 @endif
             </div>
         </div>
