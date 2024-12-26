@@ -10,6 +10,8 @@ use App\Models\Ruangan;
 use App\Models\trx_sewa;
 use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use App\Models\fasilitas;
 
 class LoginsController extends Controller
 {
@@ -35,7 +37,7 @@ class LoginsController extends Controller
     {
         
         $rooms = Ruangan::with('booked');
-        $keyword = $request->get('cari') ?? '';
+        $keyword = strtolower($request->get('cari')) ?? '';
         $arryaDate = explode(' ', $request->get('tanggal'));
 
         $arryaDate = array_filter($arryaDate, fn($item) => $item !== 'to');
@@ -50,11 +52,11 @@ class LoginsController extends Controller
         }
 
         if ($keyword) {
-            $rooms->where('nama_ruangan', 'LIKE', "%{$keyword}%");
+            $rooms->whereRaw("lower(nama_ruangan) LIKE '%{$keyword}%'");
         }
         $rooms = $rooms->get();
-
-        return view('front.hasil_cari', ['rooms' => $rooms]);
+        
+        return view('front.hasil_cari', ['rooms' => $rooms, 'dates' => $request->get('tanggal'),'cari' => $request->get('cari')]);
     }
 
     public function hasil_cari()
@@ -74,29 +76,59 @@ class LoginsController extends Controller
         return view('.front.login_email');
     }
 
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        $request->session()->invalidate(); 
+        $request->session()->regenerateToken();
+        return redirect()->route('home');
+    }
+
+    public function profile(Request $request)
+    {
+        return view('front.profil');
+    }
+
+    public function updatePassword(Request $request)
+    {
+        $user = Auth::user();
+        if ( $request->has('password_baru') && $request->password_baru != null ){
+            $valid = $request->validate([
+                'password_baru' => 'required',
+            ]);
+            $user->password = Hash::make($request->input('password_baru'));
+            $user->save();
+
+            $request['password'] = $request->input('password_baru');
+        }else{
+            unset($request['password_baru']);
+        }
+
+        unset($request['_token']);
+        $profile = $user->profile;
+        $datas = $request->all();
+        
+        foreach($datas as $key=>$val){
+            if($key == 'email' && $user->email != $val){
+                $user->email = $val;
+                $user->save();
+            }
+            $profile->$key  = $val;
+        }
+        // dd($profile);
+        $profile->save();
+
+        return back()->with('success', 'Password berhasil diperbarui.');
+    }
+
+
+    
     public function pesan1()
     {
         $datas = Ruangan::orderBy('id','ASC')->get();
+        $fasilitas = fasilitas::orderBy('id','ASC')->get();
         
-        return view('front.pesan1', ['datas' => $datas]);
-    }
-
-    public function profile()
-    {
-        if($request->method() == 'GET'){
-            $datas = session()->get('profile');
-            return view('.front.profil',$datas);
-        }
-
-        $data = json_decode($request->input('data_json'), true);
-        $datas = [
-            'nama' => $data['nama'] ?? [],
-            'email' => $data['email'] ?? null,
-            'telepon' => $data['telepon'] ?? 0
-        ];
-
-        session()->put('pesan2', $datas);
-        return view('front.profil');
+        return view('front.pesan1', ['datas' => $datas, 'fasilitas' => $fasilitas]);
     }
     
     public function pesan2(Request $request)
@@ -120,8 +152,11 @@ class LoginsController extends Controller
     public function pesan3(Request $request)
     {
         if($request->method() == 'GET'){
-            $datas = session()->get('pesan3');
-            return view('.front.pesan3',$datas);
+            $datas = session()->get('datas');
+            
+            if($datas){
+                return view('.front.pesan3',$datas);
+            }
         }
 
         $data_ruangan = json_decode($request->input('data_ruangan'), true);

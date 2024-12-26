@@ -24,7 +24,7 @@
                                     data-kapasitas="{{$Ruangan->kapasitas}}"
                                     data-panjang="{{$Ruangan->panjang_ruangan}}"
                                     data-lebar="{{$Ruangan->lebar_ruangan}}"
-                                    data-harga="{{$Ruangan->harga}}"
+                                    data-harga="{{ number_format($Ruangan->harga, 0, ',', '.') }}"
                                     data-deskripsi="{{$Ruangan->deskripsi}}"
                                     data-image="{{$Ruangan->image}}"
                                     data-nama="{{$Ruangan->nama_ruangan}}"
@@ -34,8 +34,8 @@
                             </div>
                             <div class="flex justify-between py-2 items-center">
                                 <div class="flex gap-2 items-center">
-                                    <h2 class=" font-primary text-lg uppercase">IDR {{$Ruangan->harga}}</h2>
-                                    <p class="line-through text-gray-300 font-primary">IDR {{$Ruangan->harga}}</p>
+                                    <h2 class=" font-primary text-lg uppercase">IDR {{ number_format($Ruangan->harga, 0, ',', '.') }}</h2>
+                                    <p class="line-through text-gray-300 font-primary">IDR {{ number_format($Ruangan->harga, 0, ',', '.') }}</p>
                                     <h2 class=" font-primary text-lg uppercase">50% off</h2>
                                 </div>
                                 <a href="{{route('pesan1')}}" class="hover:text-red-500">

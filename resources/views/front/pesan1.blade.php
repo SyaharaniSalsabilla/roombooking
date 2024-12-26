@@ -38,7 +38,7 @@
                                 data-kapasitas="{{$Ruangan->kapasitas}}"
                                 data-panjang="{{$Ruangan->panjang_ruangan}}"
                                 data-lebar="{{$Ruangan->lebar_ruangan}}"
-                                data-harga="{{$Ruangan->harga}}"
+                                data-harga="{{ number_format($Ruangan->harga, 0, ',', '.') }}"
                                 data-deskripsi="{{$Ruangan->deskripsi}}"
                                 data-image="{{$Ruangan->image}}"
                                 data-nama="{{$Ruangan->nama_ruangan}}">
@@ -47,7 +47,6 @@
                     </div>
                     @endforeach
                 </div>
-
 
                 <h2 class="w-full font-primary font-semibold text-3xl text-primary-5 mb-2">
                     Pilih Tambahan
@@ -65,16 +64,20 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach($fasilitas as $fas)
                             <tr class="">
-                                <td class="py-3 px-4 border border-slate-400">1</td>
-                                <td class="py-3 px-4 border border-slate-400"><label id="nm_tambahan" value="Makanan1">Catering Sarapan</label></td>
+                                <td class="py-3 px-4 border border-slate-400">{{$loop->iteration}}</td>
+                                <td class="py-3 px-4 border border-slate-400"><label id="nm_tambahan" value="{{$fas->nama_fasilitas}}">{{$fas->nama_fasilitas}}</label></td>
                                 <td class="py-3 px-4 border border-slate-400">
                                     <div class="flex flex-col gap-1">
-                                        <span>1 paket = 5 porsi sarapan</span>
-                                        <button class="bg-primary-5 openModal2 text-white px-3 py-1 rounded text-sm w-fit">Lihat Detail</button>
+                                        <span>{{$fas->deskripsi}}</span>
+                                        <button class="bg-primary-5 openModal2 text-white px-3 py-1 rounded text-sm w-fit" id="fasilitas_detail" 
+                                        data-image="{{ url('/assets/front/image/') .'/'. $fas->image}}">Lihat Detail</button>
                                     </div>
                                 </td>
-                                <td class="py-3 px-4 border border-slate-400"><label id="hrg_tambahan" value='10000'>IDR xxxxxxxx</td>
+                                <td class="py-3 px-4 border border-slate-400"><label id="hrg_tambahan" value='{{ $fas->harga_satuan }}'>
+                                    {{ number_format($fas->harga_satuan, 0, ',', '.') }}
+                                </td>
                                 <td class="py-3 px-4 border border-slate-400">
                                     <div class="flex items-center gap-3">
                                         <button class="text-primary-5 font-bold text-xl minus">−</button>
@@ -83,24 +86,7 @@
                                     </div>
                                 </td>
                             </tr>
-                            <tr class="">
-                                <td class="py-3 px-4 border border-slate-400">2</td>
-                                <td class="py-3 px-4 border border-slate-400"><label id="nm_tambahan" value="Makanan">Catering Makan Siang</label></td>
-                                <td class="py-3 px-4 border border-slate-400">
-                                    <div class="flex flex-col gap-1">
-                                        <span>1 paket = 5 porsi makan siang</span>
-                                        <button class="bg-primary-5 openModal2 text-white px-3 py-1 rounded text-sm w-fit">Lihat Detail</button>
-                                    </div>
-                                </td>
-                                <td class="py-3 px-4 border border-slate-400"><label class="hrg_tambahan" value='10000'>IDR xxxxxxxx </td>
-                                <td class="py-3 px-4 border border-slate-400">
-                                    <div class="flex items-center gap-3">
-                                        <button class="text-primary-5 font-bold text-xl minus">−</button>
-                                        <span class="quantity" value=""><label class="qty_tambahan">0</label></span>
-                                        <button class="text-primary-5 font-bold text-xl plus">+</button>
-                                    </div>
-                                </td>
-                            </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -123,7 +109,7 @@
                     </div>
                     <div class="items-center py-2 space-y-2 px-4 div-na">
                         <div class="item-summary flex justify-between border-b py-2">
-                            <p class="item-name text-primary-5 font-semibold default">Nama Item</p>
+                            <p class="item-name text-primary-5 font-semibold default" id="nama-tambahan">Nama Item</p>
                             <p class="item-quantity text-sm font-semibold default"><label id="jumlah-tambahan">Jumlah</label></p>
                             <p class="item-subtotal text-sm default">IDR <label id="harga-tambahan">Harga</label></p>
                         </div>
@@ -148,7 +134,7 @@
     <div id="modal2" class="fixed z-50 inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden">
         <div class="bg-primary-1 rounded-lg w-1/4 shadow-lg max-h-screen">
             <div class="w-full relative rounded-lg">
-                <img src="{{ url('/assets/front/image/'.'Sarapan.png') }}" class="rounded-xl z-0 relative" height="120%" alt="">
+                <img src="{{ url('/assets/front/image/'.'Sarapan.png') }}" class="rounded-xl z-0 relative" height="120%" alt="" id="img_fas">
                 <button id="closeModal2"
                     class="absolute top-2 text-white right-2 bg-primary-5 px-2 py-1 hover:bg-red-500 focus:outline-none">
                     <i class="fa-solid fa-xmark"></i>
@@ -177,7 +163,7 @@ document.addEventListener('DOMContentLoaded', function(){
     //
     const qty_tambahan = document.getElementById('qty_tambahan');
     const nm_tambahan = document.getElementById('nm_tambahan');
-    const hrg_tambahn = document.getElementById('hrg_tambahn');
+    const hrg_tambahan = document.getElementById('hrg_tambahan');
 
     var total_tambahan =0;
     var lastCount = 0;
@@ -213,7 +199,7 @@ document.addEventListener('DOMContentLoaded', function(){
                 names.forEach((name, index) => {
                     const wrapperDiv = createComponent('div', ['items-center', 'div-nr'], '', divNR);
                     const item1Div = createComponent('div', ['item-1', 'grid', 'grid-cols-2'], '', wrapperDiv);
-                    createComponent('p', ['text-primary-5', 'text-2xl', 'font-semibold', 'text-center'], name, item1Div);
+                    createComponent('p', ['text-primary-5', 'text-2xl', 'font-semibold', 'text-left', 'px-4', 'py-1'], name, item1Div);
                     createComponent('p', ['text-center'], `IDR <label id="ruangan-harga">${selected[index].toLocaleString()}</label>`, item1Div);
                 });
                 updateTotal()
@@ -223,7 +209,10 @@ document.addEventListener('DOMContentLoaded', function(){
 
     if (openModal2 && modal2) {
         openModal2.forEach(button => {
-            button.addEventListener('click', () => {
+            button.addEventListener('click', (evt) => {
+                var img = evt.target.getAttribute('data-image');
+                document.getElementById('img_fas').setAttribute('src', img);
+                
                 modal2.classList.remove('hidden');
             });
         });
@@ -242,19 +231,24 @@ document.addEventListener('DOMContentLoaded', function(){
     }
     if(minusButtons && plusButtons){
         minusButtons.forEach(button => {
-            button.addEventListener('click', function () {
+            button.addEventListener('click', function (evt) {
                 const quantityElement = this.nextElementSibling;
                 let quantity = parseInt(quantityElement.textContent);
+                const row = this.closest('tr');
+                const nama = row.querySelector('#nm_tambahan').getAttribute('value');
+                let hrgSatuan = parseInt( row.querySelector('#hrg_tambahan').getAttribute('value')); 
 
-                if (quantity > 1) {
-                    let hrgSatuan = parseInt(hrg_tambahan.getAttribute('value')); 
-                    const row = this.closest('tr');
-                    const nama = row.querySelector('#nm_tambahan').getAttribute('value');
+                if(quantity < 1){
+                    
+                }
+
+                if (quantity > 0) {
 
                     quantity--; // Kurangi jumlah
                     quantityElement.textContent = quantity; // Update jumlah
                     quantityElement.setAttribute('value', quantity); // Update value
                     let harga = hrgSatuan * quantity;
+                    
                     hargaCalculate(divNA, nama, quantity, hrgSatuan);
 
                     harga_tambahan.textContent = 'IDR ' + harga;
@@ -265,16 +259,17 @@ document.addEventListener('DOMContentLoaded', function(){
         });
         
         plusButtons.forEach(button => {
-            button.addEventListener('click', function () {
+            button.addEventListener('click', function (evt) {
                 const quantityElement = this.previousElementSibling;
                 let quantity = parseInt(quantityElement.textContent);
                 quantity++;
                 quantityElement.textContent = quantity;
-                let hrgSatuan = hrg_tambahan.getAttribute('value');
 
                 const row = this.closest('tr');
                 const nama = row.querySelector('#nm_tambahan').getAttribute('value');
+                let hrgSatuan = row.querySelector('#hrg_tambahan').getAttribute('value');
                 // Cek apakah divNA sudah terisi atau belum
+                
                 const defaultcontent = divNA.querySelectorAll('.default')[0];
                 if (defaultcontent) {
                     divNA.innerHTML = ''
@@ -301,6 +296,7 @@ document.addEventListener('DOMContentLoaded', function(){
         );
 
         let subTotal = parseInt(satuan * quantity)
+        
         if (existingItem) {
             existingItem.querySelector('.item-quantity').textContent = `${quantity}`;
             existingItem.querySelector('.item-subtotal').textContent = `IDR ${subTotal.toLocaleString()}`;
@@ -325,7 +321,7 @@ document.addEventListener('DOMContentLoaded', function(){
                 additionalTotal += itemPrice;
             }
         });
-        console.log(totalRuangan)
+        
         let grandTotal = totalRuangan;
 
         if (additionalTotal > 0) {
@@ -388,12 +384,19 @@ document.addEventListener('DOMContentLoaded', function(){
         event.preventDefault();
 
         const dataToSend = prepareDataForController();
-        console.log(dataToSend)
+        
         document.getElementById('data_json').value = JSON.stringify(dataToSend);
         document.getElementById('orderForm').submit();
     });
 
 
 });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', ()=>{
+        const fasilitas_detail= document.getElementById('fasilitas_detail').addEventListener('click', function(event) {
+
+        })
+    })
 </script>
 @endsection
