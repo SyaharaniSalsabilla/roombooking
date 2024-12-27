@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('keperluan');
             $table->integer('diskon');
             $table->string('deskripsi');
+            $table->date('tanggal_booking');
             $table->timestamps();
         });
     }

@@ -34,7 +34,7 @@
             @endif
             
         </div>
-        <hr class="h-1 my-1 mx-4 bg-primary-5 border-0 dark:bg-gray-700">
+        <hr class="h-1 my-1 mx-4 bg-primary-5 border-0 dark:bg-primary-5">
         <div class="p-4">
             <p class="text-center deskripsi">Plataran artinya serambi atau halaman rumah. Plataran merupakan ruang
                 terbuka (outdoor) yang hijau dan sejuk, berlokasi di halaman Rumah
@@ -42,6 +42,5 @@
                 komunitas, maupun bisnis, seperti ulang tahun, peluncuran produk, pertunjukan
                 musik, dan office gathering.</p>
         </div>
-        <hr class="h-1 my-1 mx-4 bg-primary-5 border-0 dark:bg-gray-700">
     </div>
 </div>

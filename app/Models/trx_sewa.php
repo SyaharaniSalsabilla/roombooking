@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Models\fasilitas;
 
 class trx_sewa extends Model
 {
@@ -22,8 +23,8 @@ class trx_sewa extends Model
     protected $fillable = [
         'id',
         'mst_ruangan_id',
-        'harga_sewa_id',
-        'profil_id',
+        'mst_harga_sewa_id',
+        'mst_profil_id',
         'tanggal_awal',
         'tangga_akhir',
         'keperluan',
@@ -33,5 +34,9 @@ class trx_sewa extends Model
 
     public function ruangan(){
         return $this->belongsTo(\App\Models\Ruangan::class, 'mst_ruangan_id');
+    }
+
+    public function sewaFasilitas(){
+        return $this->hasMany(sewa_fasilitas::class, 'trx_sewa_id');
     }
 }

@@ -12,24 +12,27 @@
                             Pilih Waktu Awal Sewa
                         </h2>
                         <div class="grid grid-cols-3 gap-3 mb-2">
-                            <input type="date" placeholder="" id="input-mulai"
+                            <input type="date" placeholder="" id="input-mulai" required
                                 class="w-full text -center px-3 py-3 bg-primary-1 border border-primary-5  rounded-md text-primary-5 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent">
 
-                            <input type="time" placeholder="" id="jam-mulai"
+                            <input type="time" placeholder="" id="jam-mulai" required
                                 class="w-full text-center px-3 py-3 bg-primary-1 border border-primary-5  rounded-md text-primary-5 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent">
                             <button class="text-primary-1 bg-primary-5 rounded-xl py-2 px-4" id="mulai-ok">OK</button>
                         </div>
+                        <span class="text-danger text-primary-5"> {{ $errors->has('data_tgl_mulai') ? $errors->first('data_tgl_mulai') : '' }}</span>
+
                         <h2 class="w-full font-primary font-semibold text-3xl text-primary-5 mb-2">
                             Pilih Waktu Akhir Sewa
                         </h2>
                         <div class="grid grid-cols-3 gap-3 mb-2">
-                            <input type="date" placeholder="" id="input-sampai"
+                            <input type="date" placeholder="" id="input-sampai" required
                                 class="w-full text -center px-3 py-3 bg-primary-1 border border-primary-5  rounded-md text-primary-5 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent">
 
-                            <input type="time" placeholder="" id="jam-sampai"
+                            <input type="time" placeholder="" id="jam-sampai" required
                                 class="w-full text-center px-3 py-3 bg-primary-1 border border-primary-5  rounded-md text-primary-5 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent">
                             <button class="text-primary-1 bg-primary-5 rounded-xl py-2 px-4" id="sampai-ok">OK</button>
                         </div>
+                        <span class="text-danger text-primary-5">{{ $errors->has('data_tgl_sampai') ? $errors->first('data_tgl_sampai') : ''}}</span>
                     </div>
                     <div class="col-span-1">
                         <div class="flex flex-col mb-4">

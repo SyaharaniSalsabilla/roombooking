@@ -26,6 +26,7 @@ Route::get('/pesan2', [LoginsController::class, 'pesan2'])->name('pesan2');
 Route::post('/pesan3', [LoginsController::class, 'pesan3'])->name('pesan3');
 Route::get('/pesan3', [LoginsController::class, 'pesan3'])->name('pesan3');
 Route::post('/pesan3/login', [LoginsController::class, 'pesan3_login'])->name('pesan3.login');
+Route::get('/pesan3/login', [LoginsController::class, 'pesan3_login'])->name('pesan3.login');
 Route::post('/pesan4', [LoginsController::class, 'pesan4'])->name('pesan4');
 Route::get('/pesan4', [LoginsController::class, 'pesan4'])->name('pesan4');
 Route::post('/transfer', [LoginsController::class, 'transfer'])->name('transfer');

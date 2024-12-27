@@ -47,7 +47,7 @@
                         </div>
                     </div>
                     <div class="col-span-1">
-                        <form method="POST" id="prev" action="{{route('pesan3')}}">
+                        <form method="POST" id="prev" action="{{route('pesan2')}}">
                             @csrf
                             <input type="hidden" name="data_ruangan" id="data_ruangan" value="{{ json_encode($ruangans)}}"> 
                             <input type="hidden" name="data_tambahan" id="data_tambahan" value="{{json_encode($tambahans)}}">

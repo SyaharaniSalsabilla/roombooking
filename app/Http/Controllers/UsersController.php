@@ -61,12 +61,15 @@ class UsersController extends Controller
     public function create(Request $request)
     {
         if($request->input('password') != $request->input('password_konfirmasi')){
-            return back()->withErrors(['message' => 'Password dengan konfirmasi tidak sesuai']);
+            return back()->withErrors(['message' => 'Konfirmasi password tidak sesuai']);
         }
         
         $validator = Validator::make($request->all(), [
             'email'      => 'required|unique:users|max:255',
             'password'   => 'required',
+        ],[
+            'email.required' => 'Email sudah terpakai',
+            'password.required' => 'Email sudah terpakai',
         ]);
 
         if ($validator->fails()) {

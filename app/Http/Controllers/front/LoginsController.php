@@ -12,6 +12,7 @@ use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\fasilitas;
+use Illuminate\Support\Facades\Validator;
 
 class LoginsController extends Controller
 {
@@ -95,6 +96,7 @@ class LoginsController extends Controller
         if ( $request->has('password_baru') && $request->password_baru != null ){
             $valid = $request->validate([
                 'password_baru' => 'required',
+                'email' => 'required'
             ]);
             $user->password = Hash::make($request->input('password_baru'));
             $user->save();
@@ -133,6 +135,7 @@ class LoginsController extends Controller
     
     public function pesan2(Request $request)
     {
+        
         if($request->method() == 'GET'){
             $datas = session()->get('pesan2');
             return view('.front.pesan2',$datas);
@@ -184,6 +187,14 @@ class LoginsController extends Controller
 
     public function pesan3_login(Request $request)
     {
+        if($request->method() == 'GET'){
+            $datas = session()->get('datas');
+            
+            if($datas){
+                return view('.front.pesan3_login',$datas);
+            }
+        }
+        
         $data_ruangan = json_decode($request->input('data_ruangan'), true);
         $data_tambahan = json_decode($request->input('data_tambahan'), true);
         $data_total = json_decode($request->input('data_total'), true);
@@ -201,6 +212,26 @@ class LoginsController extends Controller
             'tgl_selesai' => $tgl_jam_selesai,
             'totalHarga' => $data_total
         ];
+        
+        $validator = Validator::make($request->all(), [
+            'data_tgl_mulai' => 'required|date|before:data_tgl_sampai',
+            'data_tgl_sampai' => 'required|date|after:data_tgl_mulai',
+        ], [
+            'data_tgl_mulai.required' => 'Tanggal mulai harus diisi.',
+            'data_tgl_mulai.date' => 'Tanggal mulai harus berupa tanggal yang valid.',
+            'data_tgl_mulai.before' => 'Tanggal mulai harus lebih kecil dari tanggal selesai.',
+            'data_tgl_sampai.required' => 'Tanggal selesai harus diisi.',
+            'data_tgl_sampai.date' => 'Tanggal selesai harus berupa tanggal yang valid.',
+            'data_tgl_sampai.after' => 'Tanggal selesai harus lebih besar dari tanggal mulai.',
+        ]);
+        
+
+        if ($validator->fails()) {
+            return back()
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+
         $request->session()->put('datas', $returnsVal);
 
         return view('.front.pesan3_login',$returnsVal);
@@ -237,6 +268,7 @@ class LoginsController extends Controller
 
     public function transfer(Request $request)
     {
+        
         if($request->method() == 'GET'){
             $datas = session()->get('transfer');
             return view('.front.transfer',$datas);
@@ -262,6 +294,56 @@ class LoginsController extends Controller
             'kode' => $kode,
             'metode_bayar' => $metode_bayar
         ];
+        $valid = Validator::make($returnsVal,[
+            'ruangans' => 'required',
+            'tambahans' => 'nullable',
+            'tgl_mulai' => 'required',
+            'tgl_selesai' => 'required',
+            'totalHarga' => 'required',
+            'notes' => 'nullable',
+            'kode' => 'required',
+            'metode_bayar' => 'required'
+        ],[
+            'ruangans.required' => 'Silahkan memilih ruangan',
+            'tambahans.required' => '',
+            'tgl_mulai.required' => 'Tanggal dan waktu mulai harus terisi',
+            'tgl_selesai.required' => 'Tanggal dan waktu akhir harus terisi',
+            'totalHarga.required' => '',
+            'notes.required' => '',
+            'kode.required' => 'Silahkan memilih metode pembayaran',
+            'metode_bayar.required' => 'Silahkan memilih metode pembayaran'
+        ]);
+        if ($valid->fails()) {
+            return back()
+                        ->withErrors($valid)
+                        ->withInput();
+        }
+        
+        
+        // Menyimpan data trx_ruangan
+        $trx_ruangan = trx_sewa::create([
+            'mst_ruangan_id' => $data_ruangan[0]['id'], // Mengambil ID ruangan pertama
+            'mst_harga_sewa_id' => $data_total, // Menggunakan total harga
+            'mst_profil_id' => auth()->user()->id, // Profil user yang login
+            'tanggal_awal' => $tgl_mulai,
+            'tanggal_akhir' => $tgl_sampai,
+            'keperluan' => $note,
+            'diskon' => 0, // Jika ada diskon, Anda bisa menambahkannya di sini
+            'deskripsi' => $metode_bayar, // Deskripsi bisa menggunakan metode pembayaran
+        ]);
+
+        // Menyimpan data tambahan jika ada
+        if (!empty($data_tambahan)) {
+            foreach ($data_tambahan as $item) {
+                $trx_ruangan->sewaFasilitas()->create([
+                    'trx_sewa_id' => $trx_ruangan->id,
+                    'mst_fasilitas_id' => $item['id'],
+                    'kuantitas' => $item['jumlah'],
+                    'satuan',
+                ]);
+            }
+        }
+
 
         session()->put('transfer', $returnsVal);
         return view('.front.transfer',$returnsVal);

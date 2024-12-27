@@ -20,7 +20,7 @@ class UserSeeder extends Seeder
         //     [
         //         'email' => 'syaharanibilla1@gmail.com',
         //         'email_verified_at' => now(),
-        //         'password' => Hash::make('123456'), // Password terenkripsi
+        //         'password' => '123456',
         //         'status' => 1, // Status aktif
         //         'remember_token' => \Str::random(10),
         //         'created_at' => now(),
@@ -31,7 +31,7 @@ class UserSeeder extends Seeder
         // DB::table('mst_ruangan')->insert([
         //     [
         //         'nama_ruangan' => 'Plataran',
-        //         'kapasitas' => '45',
+        //         'kapasitas' => '100',
         //         'lokasi' => 'Lantai 1',
         //         'panjang_ruangan' => '10',
         //         'lebar_ruangan' => '15',
@@ -41,7 +41,7 @@ class UserSeeder extends Seeder
         //         kegiatan kumpul keluarga, komunitas, maupun bisnis, seperti ulang tahun, 
         //         peluncuran produk, pertunjukan musik, dan office gathering.',
         //         'image' => 'Plataran.jpg',
-        //         'harga' => '2000000',
+        //         'harga' => '5500000',
         //     ],
         //     [
         //         'nama_ruangan' => 'Sangita',
@@ -54,7 +54,7 @@ class UserSeeder extends Seeder
         //         dan podcast. Ketika dipadukan bersama Ruang Plataran, Sangita 
         //         bertransformasi menjadi panggung pertunjukan musik untuk berbagai acara kumpul keluarga dan bisnis.',
         //         'image' => 'Sangita.jpg',
-        //         'harga' => '3000000',
+        //         'harga' => '12000000',
         //     ],
         //     [
         //         'nama_ruangan' => 'Nirnaya',
@@ -68,7 +68,7 @@ class UserSeeder extends Seeder
         //         nyaman dalam bentuk talk show, dialog, atau rapat kecil yang rileks. Dipadu 
         //         dengan Bramara, Nirnaya menjadi ruang makan yang akrab.',
         //         'image' => 'Nirnaya.jpg',
-        //         'harga' => '1500000',
+        //         'harga' => '3000000',
         //     ],
         //     [
         //         'nama_ruangan' => 'Bramara',
@@ -81,11 +81,11 @@ class UserSeeder extends Seeder
         //         seminar, webinar, lokakarya, workshop, dan pameran. Namun Bramara juga
         //         dapat digunakan untuk acara keluarga, seperti ulang tahun dan reuni.',
         //         'image' => 'Bramara.jpg',
-        //         'harga' => '2500000',
+        //         'harga' => '4500000',
         //     ],
         //     [
         //         'nama_ruangan' => 'Panata',
-        //         'kapasitas' => '15',
+        //         'kapasitas' => '8',
         //         'lokasi' => 'Lantai 2',
         //         'panjang_ruangan' => '10',
         //         'lebar_ruangan' => '15',
@@ -93,7 +93,7 @@ class UserSeeder extends Seeder
         //         diharapkan mampu menjadi penata bagi dirinya dan sesama. Ruang Panata 
         //         dirancang menjadi kantor atau tempat bekerja bagi organisasi ataupun komunitas.',
         //         'image' => 'Panata.jpg',
-        //         'harga' => '4000000',
+        //         'harga' => '2000000',
         //     ],
         //     [
         //         'nama_ruangan' => 'Karya',
@@ -105,11 +105,11 @@ class UserSeeder extends Seeder
         //         untuk menghasilkan dan menampilkan buah pekerjaan. Karya dirancang untuk 
         //         kegiatan lokakarya, dialog, talkshow, pameran karya, hingga pemutaran film.',
         //         'image' => 'Karya.jpg',
-        //         'harga' => '3000000',
+        //         'harga' => '3200000',
         //     ],
         //     [
         //         'nama_ruangan' => 'Arupadatu',
-        //         'kapasitas' => '40',
+        //         'kapasitas' => '50',
         //         'lokasi' => 'Lantai 3',
         //         'panjang_ruangan' => '10',
         //         'lebar_ruangan' => '15',
@@ -120,11 +120,11 @@ class UserSeeder extends Seeder
         //         pameran, lokakarya, pemutaran film, office and community gathering, hingga 
         //         acara-acara keluarga seperti ulang tahun dan reuni.',
         //         'image' => 'Arupadatu.jpg',
-        //         'harga' => '4500000',
+        //         'harga' => '8000000',
         //     ],
         //     [
         //         'nama_ruangan' => 'Nirmana',
-        //         'kapasitas' => '40',
+        //         'kapasitas' => '80',
         //         'lokasi' => 'Lantai 3',
         //         'panjang_ruangan' => '10',
         //         'lebar_ruangan' => '15',
@@ -133,11 +133,11 @@ class UserSeeder extends Seeder
         //         Ruang Nirmana merupakan area outdoor yang dirancang untuk beragam aktivitas, baik formal 
         //         maupun informal, seperti gathering, perayaan, latihan seni tari atau senam.',
         //         'image' => 'Nirmana.jpg',
-        //         'harga' => '2000000',
+        //         'harga' => '10000000',
         //     ],
         //     [
         //         'nama_ruangan' => 'Nirwana',
-        //         'kapasitas' => '25',
+        //         'kapasitas' => '15',
         //         'lokasi' => 'Lantai 3',
         //         'panjang_ruangan' => '10',
         //         'lebar_ruangan' => '15',
@@ -146,7 +146,35 @@ class UserSeeder extends Seeder
         //         Ruang Nirmana merupakan area outdoor yang dirancang untuk beragam aktivitas, baik formal 
         //         maupun informal, seperti gathering, perayaan, latihan seni tari atau senam.',
         //         'image' => 'Nirwana.jpg',
-        //         'harga' => '2000000',
+        //         'harga' => '1500000',
+        //     ],
+        // ]);
+
+        // DB::table('informasi')->insert([
+        //     [
+        //         'nama' => 'Pasar Bahagia Vol. 02 Kembali ke Akar',
+        //         'deskripsi' => 'Pasar Bahagia Vol. 02 Kembali ke Akar',
+        //         'image' => 'Pasar Bahagia (1).jpg'
+        //     ],
+        //     [
+        //         'nama' => 'Pasar Bahagia Memanggil Kreator Bahagia',
+        //         'deskripsi' => 'Pasar Bahagia Vol. 02 Kembali ke Akar Memanggil Kreator Bahagia',
+        //         'image' => 'Pasar Bahagia (2).jpg'
+        //     ],
+        //     [
+        //         'nama' => 'Workshop Membuat Es Cincau dari Pekarangan Dapur',
+        //         'deskripsi' => 'Workshop Membuat Es Cincau dari Pekarangan Dapur Bersama Wilma Chrysanti',
+        //         'image' => 'Pasar Bahagia (3).jpg'
+        //     ],
+        //     [
+        //         'nama' => 'Workshop Reparasi Baju Juga Lucu',
+        //         'deskripsi' => 'Workshop Reparasi Baju Juga Lucu Bersama Velie Kurniawan',
+        //         'image' => 'Pasar Bahagia (4).jpg'
+        //     ],
+        //     [
+        //         'nama' => 'Workshop Ramu Pangan Sirkular: Oleh Oleh Nanas',
+        //         'deskripsi' => 'Workshop Ramu Pangan Sirkular: Oleh Oleh Nanas Bersama Nia Nurdiansyah',
+        //         'image' => 'Pasar Bahagia (5).jpg'
         //     ],
         // ]);
 

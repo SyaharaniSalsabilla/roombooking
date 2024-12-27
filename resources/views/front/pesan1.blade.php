@@ -16,7 +16,7 @@
                     <div class="flex bg-primary-1 rounded-lg justify-between items-center">
                         <label class="flex items-center space-x-3 cursor-pointer group p-4 rounded-md">
                             <div class="relative flex items-center">
-                                <input type="checkbox" name="terms[]" value="{{$Ruangan->harga}}" data-nr="{{$Ruangan->nama_ruangan}}"
+                                <input type="checkbox" name="terms[]" value="{{$Ruangan->harga}}" data-ir="{{$Ruangan->id}}" data-nr="{{$Ruangan->nama_ruangan}}"
                                     class="checkbox-item before:content[''] peer relative h-5 w-5 cursor-pointer appearance-none rounded-full border 
                                     border-primary-5 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-12 
                                     before:w-12 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-red-500 before:opacity-0 
@@ -67,7 +67,7 @@
                             @foreach($fasilitas as $fas)
                             <tr class="">
                                 <td class="py-3 px-4 border border-slate-400">{{$loop->iteration}}</td>
-                                <td class="py-3 px-4 border border-slate-400"><label id="nm_tambahan" value="{{$fas->nama_fasilitas}}">{{$fas->nama_fasilitas}}</label></td>
+                                <td class="py-3 px-4 border border-slate-400"><span id="id_tambahan" value="{{$fas->id}}"></span><label id="nm_tambahan" value="{{$fas->nama_fasilitas}}">{{$fas->nama_fasilitas}}</label></td>
                                 <td class="py-3 px-4 border border-slate-400">
                                     <div class="flex flex-col gap-1">
                                         <span>{{$fas->deskripsi}}</span>
@@ -75,7 +75,7 @@
                                         data-image="{{ url('/assets/front/image/') .'/'. $fas->image}}">Lihat Detail</button>
                                     </div>
                                 </td>
-                                <td class="py-3 px-4 border border-slate-400"><label id="hrg_tambahan" value='{{ $fas->harga_satuan }}'>
+                                <td class="py-3 px-4 border border-slate-400"><label id="hrg_tambahan" value='{{ $fas->harga_satuan }}' data-id="{{$fas->id}}">
                                     {{ number_format($fas->harga_satuan, 0, ',', '.') }}
                                 </td>
                                 <td class="py-3 px-4 border border-slate-400">
@@ -109,6 +109,7 @@
                     </div>
                     <div class="items-center py-2 space-y-2 px-4 div-na">
                         <div class="item-summary flex justify-between border-b py-2">
+                            <p class="item-id text-primary-5 font-semibold default invisible" id="id-tambahan"></p>
                             <p class="item-name text-primary-5 font-semibold default" id="nama-tambahan">Nama Item</p>
                             <p class="item-quantity text-sm font-semibold default"><label id="jumlah-tambahan">Jumlah</label></p>
                             <p class="item-subtotal text-sm default">IDR <label id="harga-tambahan">Harga</label></p>
@@ -161,6 +162,7 @@ document.addEventListener('DOMContentLoaded', function(){
     const divNA = document.getElementsByClassName('div-na')[0]; 
     const harga_tambahan = document.getElementById('harga-tambahan');
     //
+    const id_tambahan = document.getElementById('id_tambahan');
     const qty_tambahan = document.getElementById('qty_tambahan');
     const nm_tambahan = document.getElementById('nm_tambahan');
     const hrg_tambahan = document.getElementById('hrg_tambahan');
@@ -176,6 +178,7 @@ document.addEventListener('DOMContentLoaded', function(){
                 document.getElementById('lbl-lebar').innerHTML = evt.target.getAttribute('data-lebar');
                 document.getElementById('lbl-harga').innerHTML = evt.target.getAttribute('data-harga');
                 document.getElementById("lbl-nama").innerHTML = evt.target.getAttribute("data-nama");
+                document.getElementById("lbl-id").innerHTML = evt.target.getAttribute("data-id");
                 var path =  "{{ url('/assets/front/image/')}}/";
                 document.getElementById('gambarModal').setAttribute('src', path + evt.target.getAttribute('data-image'));
                 document.querySelector(".deskripsi").innerHTML = evt.target.getAttribute("data-deskripsi");
@@ -184,6 +187,7 @@ document.addEventListener('DOMContentLoaded', function(){
         });
     }
 
+    let ids= [];
     let names = [];
     let selected = [];
 
@@ -192,6 +196,7 @@ document.addEventListener('DOMContentLoaded', function(){
             item.addEventListener('click', (e) => {
                 selected = Array.from(document.querySelectorAll('.checkbox-item:checked')).map(checkbox => parseFloat(checkbox.value));
                 names = Array.from(document.querySelectorAll('.checkbox-item:checked')).map(checkbox => checkbox.getAttribute('data-nr'));
+                ids = Array.from(document.querySelectorAll('.checkbox-item:checked')).map(checkbox => checkbox.getAttribute('data-ir'));
                 const totalSum = selected.reduce((sum, value) => sum + value, 0);
                 lblRuanganHarga.innerHTML = totalSum.toLocaleString(); 
                 divNR.innerHTML = ''; 
@@ -235,8 +240,11 @@ document.addEventListener('DOMContentLoaded', function(){
                 const quantityElement = this.nextElementSibling;
                 let quantity = parseInt(quantityElement.textContent);
                 const row = this.closest('tr');
+                const id = row.querySelector('#id_tambahan').getAttribute('value');
+                
                 const nama = row.querySelector('#nm_tambahan').getAttribute('value');
-                let hrgSatuan = parseInt( row.querySelector('#hrg_tambahan').getAttribute('value')); 
+                let hrgSatuan = parseInt( row.querySelector('#hrg_tambahan').getAttribute('value'));
+                let idFasilitas = parseInt( row.querySelector('#hrg_tambahan').getAttribute('value')); 
 
                 if(quantity < 1){
                     
@@ -249,7 +257,7 @@ document.addEventListener('DOMContentLoaded', function(){
                     quantityElement.setAttribute('value', quantity); // Update value
                     let harga = hrgSatuan * quantity;
                     
-                    hargaCalculate(divNA, nama, quantity, hrgSatuan);
+                    hargaCalculate(divNA, nama, quantity, hrgSatuan,id);
 
                     harga_tambahan.textContent = 'IDR ' + harga;
 
@@ -266,6 +274,7 @@ document.addEventListener('DOMContentLoaded', function(){
                 quantityElement.textContent = quantity;
 
                 const row = this.closest('tr');
+                const id = row.querySelector('#id_tambahan').getAttribute('value');
                 const nama = row.querySelector('#nm_tambahan').getAttribute('value');
                 let hrgSatuan = row.querySelector('#hrg_tambahan').getAttribute('value');
                 // Cek apakah divNA sudah terisi atau belum
@@ -273,9 +282,9 @@ document.addEventListener('DOMContentLoaded', function(){
                 const defaultcontent = divNA.querySelectorAll('.default')[0];
                 if (defaultcontent) {
                     divNA.innerHTML = ''
-                    hargaCalculate(divNA, nama, quantity, hrgSatuan);
+                    hargaCalculate(divNA, nama, quantity, hrgSatuan,id);
                 } else {
-                    hargaCalculate(divNA, nama, quantity, hrgSatuan);
+                    hargaCalculate(divNA, nama, quantity, hrgSatuan,id);
                 }
                 updateTotal();
             });
@@ -290,23 +299,33 @@ document.addEventListener('DOMContentLoaded', function(){
         return newElement; 
     }
 
-    function hargaCalculate(container, nama, quantity, satuan){
+    function hargaCalculate(container, nama, quantity, satuan, id) {
+        // Cari item berdasarkan nama
         let existingItem = Array.from(container.children).find(child => 
             child.querySelector('.item-name')?.textContent === nama
         );
 
-        let subTotal = parseInt(satuan * quantity)
-        
+        let subTotal = parseInt(satuan * quantity);
+
         if (existingItem) {
+            // Update quantity dan subtotal jika item sudah ada
             existingItem.querySelector('.item-quantity').textContent = `${quantity}`;
             existingItem.querySelector('.item-subtotal').textContent = `IDR ${subTotal.toLocaleString()}`;
         } else {
+            // Buat elemen baru untuk item
             const wrapperDiv = createComponent('div', ['item-summary', 'flex', 'justify-between', 'border-b', 'py-2'], '', container);
+            
+            // Tambahkan atribut data-id ke wrapper
+            wrapperDiv.dataset.id = id; // Pastikan id diset di sini
+            console.log(id)
+            // Tambahkan elemen lainnya
             createComponent('p', ['item-name', 'text-primary-5', 'font-semibold'], nama, wrapperDiv);
             createComponent('p', ['item-quantity', 'text-sm'], `${quantity}`, wrapperDiv);
             createComponent('p', ['item-subtotal', 'text-sm', 'font-semibold'], `IDR ${subTotal.toLocaleString()}`, wrapperDiv);
         }
     }
+
+
 
     // Fungsi untuk mengupdate total harga (ruangan + item tambahan)
     function updateTotal() {
@@ -337,10 +356,11 @@ document.addEventListener('DOMContentLoaded', function(){
     function prepareDataForController() {
         // Buat array untuk data ruangan
         const ruanganData = selected.map((value, index) => ({
+            id: ids[index],
             nama: names[index],
             harga: value
         }));
-
+        
         // Hitung total harga semua ruangan
         const totalRuangan = selected.reduce((sum, value) => sum + value, 0);
 
@@ -348,6 +368,8 @@ document.addEventListener('DOMContentLoaded', function(){
         const itemTambahan = [];
         const additionalItems = Array.from(document.querySelectorAll('.item-summary'));
         additionalItems.forEach(item => {
+            // Ambil data dari atribut 'data-id' untuk id item
+            const id = item.dataset.id; // Mengambil data-id yang sebelumnya disimpan di atribut
             const name = item.querySelector('.item-name').textContent;
             const quantityElement = item.querySelector('.item-quantity');
             const quantity = parseInt(quantityElement.textContent);
@@ -356,6 +378,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
             if (itemPrice > 0) {
                 itemTambahan.push({
+                    id: id, // Menggunakan id dari data-id
                     nama: name,
                     jumlah: quantity,
                     subtotal: itemPrice
@@ -378,6 +401,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
         return dataToSend;
     }
+
 
 
     document.querySelector('#btn_submit').addEventListener('click', function(event) {
