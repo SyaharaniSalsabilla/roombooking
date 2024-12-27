@@ -38,7 +38,7 @@
                         <h2 class="font-bold text-2xl">{{$kode}}</h2>
                         </div>
                         <p class="text-gray-700 text-base">Nomer Rekening</p>
-                        <h2 class="font-bold text-2xl">XXXXXXXXXXXXXXXXXXX</h2>
+                        <h2 class="font-bold text-2xl">6030571906</h2>
                     </div>
                 </div>
             </div>
