@@ -12,7 +12,7 @@
                     <div class="flex flex-col gap-2 col-span-2 font-secondary text-justify">
                         <p>Langkah 4 dari 4</p>
                         <h2 class="w-full font-primary font-semibold text-3xl text-primary-5 mb-2">
-                            Pilih Metode Pembayaran
+                            Selesaikan Pembayaran
                         </h2>
                     </div>
                     <div class="col-span-1">
