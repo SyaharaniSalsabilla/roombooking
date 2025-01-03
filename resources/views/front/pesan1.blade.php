@@ -135,7 +135,7 @@
     <div id="modal2" class="fixed z-50 inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden">
         <div class="bg-primary-1 rounded-lg w-1/4 shadow-lg max-h-screen">
             <div class="w-full relative rounded-lg">
-                <img src="{{ url('/assets/front/image/'.'Sarapan.png') }}" class="rounded-xl z-0 relative" height="120%" alt="" id="img_fas">
+                <img src="{{ url('../../../assets/front/image/'.'Sarapan.png') }}" class="rounded-xl z-0 relative" height="120%" alt="" id="img_fas">
                 <button id="closeModal2"
                     class="absolute top-2 text-white right-2 bg-primary-5 px-2 py-1 hover:bg-red-500 focus:outline-none">
                     <i class="fa-solid fa-xmark"></i>

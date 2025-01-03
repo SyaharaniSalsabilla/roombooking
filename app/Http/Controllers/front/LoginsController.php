@@ -40,7 +40,7 @@ class LoginsController extends Controller
         $rooms = Ruangan::with('booked');
         $keyword = strtolower($request->get('cari')) ?? '';
         $arryaDate = explode(' ', $request->get('tanggal'));
-
+        
         $arryaDate = array_filter($arryaDate, fn($item) => $item !== 'to');
         if (count($arryaDate) === 2) {
             $startDate = $arryaDate[0];
@@ -213,16 +213,17 @@ class LoginsController extends Controller
             'totalHarga' => $data_total
         ];
         
-        $validator = Validator::make($request->all(), [
-            'data_tgl_mulai' => 'required|date|before:data_tgl_sampai',
-            'data_tgl_sampai' => 'required|date|after:data_tgl_mulai',
+        // $validator = Validator::make($request->all(), [
+        $validator = Validator::make($returnsVal, [
+            'tgl_mulai' => 'required|date|before:tgl_selesai',
+            'tgl_selesai' => 'required|date|after:tgl_mulai',
         ], [
-            'data_tgl_mulai.required' => 'Tanggal mulai harus diisi.',
-            'data_tgl_mulai.date' => 'Tanggal mulai harus berupa tanggal yang valid.',
-            'data_tgl_mulai.before' => 'Tanggal mulai harus lebih kecil dari tanggal selesai.',
-            'data_tgl_sampai.required' => 'Tanggal selesai harus diisi.',
-            'data_tgl_sampai.date' => 'Tanggal selesai harus berupa tanggal yang valid.',
-            'data_tgl_sampai.after' => 'Tanggal selesai harus lebih besar dari tanggal mulai.',
+            'tgl_mulai.required' => 'Tanggal mulai harus diisi.',
+            'tgl_mulai.date' => 'Tanggal mulai harus berupa tanggal yang valid.',
+            'tgl_mulai.before' => 'Tanggal mulai harus lebih kecil dari tanggal selesai.',
+            'tgl_selesai.required' => 'Tanggal selesai harus diisi.',
+            'tgl_selesai.date' => 'Tanggal selesai harus berupa tanggal yang valid.',
+            'tgl_selesai.after' => 'Tanggal selesai harus lebih besar dari tanggal mulai.',
         ]);
         
 

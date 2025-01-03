@@ -5,6 +5,10 @@
         <div class="container flex flex-col justify-center py-8">
             <h2 class="w-full text-center font-primary font-semibold uppercase text-3xl text-primary-5 mb-4">Ruangan
             </h2>
+            <!-- <span class="py-4 bg-transparent p-0"></span> -->
+            <div class="section py-4 mb-4 rounded-2xl flex gap-4 flex-column bg-primary-5 px-8 justify-around">
+                <input name="tag" type="text" placeholder="apa ya"> <input type="text"> <input type="text">
+            </div>
             <div class="grid grid-cols-2 gap-6">
                 @foreach($rooms as $Ruangan)
                     <div class="relative rounded-lg text-white mb-12">

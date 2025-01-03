@@ -14,7 +14,7 @@
                 </span>
                 <span class="text-white bg-primary-5 px-2 py-1 flex text-sm items-center gap-2 rounded-md">
                     <i class="fa-solid fa-expand"></i>
-                    Ukuran ruangan : <label id="lbl-panjang"></label> X <label id="lbl-lebar"></label> meter
+                    Ukuran ruangan :<input type="hidden" id="lbl-id"></input> <label id="lbl-panjang"></label> X <label id="lbl-lebar"></label> meter
                 </span>
             </div>
         </div>
