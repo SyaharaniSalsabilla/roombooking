@@ -322,6 +322,42 @@ class LoginsController extends Controller
         
         
         // Menyimpan data trx_ruangan
+        if(is_array($returnsVal['ruangans'])){
+            for($i=0; $i < count($returnsVal['ruangans']); $i++){
+                if($this->checkPesanan($returnsVal['ruangans'][$i]['id'], [$returnsVal['tgl_mulai'], $returnsVal['tgl_selesai']])){
+                    return back()
+                        ->withErrors(['message' => 'Ruangan sudah ada yang pesan pada tanggal tsbut'])
+                        ->withInput();
+                }
+                // dd($returnsVal['ruangans'][$i]['nama']);
+                $trx_ruangan = trx_sewa::create([
+                    'mst_ruangan_id' => $returnsVal['ruangans'][$i]['id'],
+                    'mst_harga_sewa_id' => $data_total,
+                    'mst_profil_id' => auth()->user()->id, // Profil user yang login
+                    'tanggal_awal' => $tgl_mulai,
+                    'tanggal_akhir' => $tgl_sampai,
+                    'keperluan' => $note,
+                    'diskon' => 0, // Jika ada diskon, Anda bisa menambahkannya di sini
+                    'deskripsi' => $metode_bayar, // Deskripsi bisa menggunakan metode pembayaran
+                ]);
+            }
+
+            // Menyimpan data tambahan jika ada
+            if (!empty($data_tambahan)) {
+                foreach ($data_tambahan as $item) {
+                    $trx_ruangan->sewaFasilitas()->create([
+                        'trx_sewa_id' => $trx_ruangan->id,
+                        'mst_fasilitas_id' => $item['id'],
+                        'kuantitas' => $item['jumlah'],
+                        'satuan',
+                    ]);
+                }
+            }
+
+            session()->put('transfer', $returnsVal);
+            return view('.front.transfer',$returnsVal);
+        }
+        
         $trx_ruangan = trx_sewa::create([
             'mst_ruangan_id' => $data_ruangan[0]['id'], // Mengambil ID ruangan pertama
             'mst_harga_sewa_id' => $data_total, // Menggunakan total harga
@@ -345,8 +381,23 @@ class LoginsController extends Controller
             }
         }
 
-
         session()->put('transfer', $returnsVal);
         return view('.front.transfer',$returnsVal);
+    }
+
+    public function checkPesanan($id, $times){
+        if (is_array($times) && count($times) === 2) {
+            $cek = trx_sewa::where('mst_ruangan_id', $id)
+                ->whereRaw("
+                    (? BETWEEN tanggal_awal AND tanggal_akhir) OR
+                    (? BETWEEN tanggal_awal AND tanggal_akhir) OR
+                    (tanggal_awal BETWEEN ? AND ?) OR
+                    (tanggal_akhir BETWEEN ? AND ?)
+                ", [$times[0], $times[1], $times[0], $times[1], $times[0], $times[1]])
+                ->get();
+    
+            return true;
+        }
+        return false;
     }
 }
