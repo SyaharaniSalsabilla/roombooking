@@ -147,7 +147,7 @@ class LoginsController extends Controller
             'itemTambahan' => $data['itemTambahan'] ?? null,
             'totalHarga' => $data['totalHarga'] ?? 0
         ];
-
+        
         session()->put('pesan2', $datas);
         return view('.front.pesan2',$datas);
     }
@@ -314,6 +314,7 @@ class LoginsController extends Controller
             'kode.required' => 'Silahkan memilih metode pembayaran',
             'metode_bayar.required' => 'Silahkan memilih metode pembayaran'
         ]);
+        
         if ($valid->fails()) {
             return back()
                         ->withErrors($valid)
@@ -326,7 +327,7 @@ class LoginsController extends Controller
             for($i=0; $i < count($returnsVal['ruangans']); $i++){
                 if($this->checkPesanan($returnsVal['ruangans'][$i]['id'], [$returnsVal['tgl_mulai'], $returnsVal['tgl_selesai']])){
                     return back()
-                        ->withErrors(['message' => 'Ruangan sudah ada yang pesan pada tanggal tsbut'])
+                        ->withErrors(['message' => 'Ruangan sudah ada yang pesan pada tanggal tersebut'])
                         ->withInput();
                 }
                 // dd($returnsVal['ruangans'][$i]['nama']);
