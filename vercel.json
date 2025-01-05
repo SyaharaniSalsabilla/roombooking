@@ -1,0 +1,10 @@
+{
+    "builds": [
+      {
+        "src": "home.blade.php",
+        "use": "@vercel/static-build",
+        "config": { "distDir": "dist" }
+      }
+    ]
+  }
+  
