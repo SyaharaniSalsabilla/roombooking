@@ -326,8 +326,9 @@ class LoginsController extends Controller
         if(is_array($returnsVal['ruangans'])){
             for($i=0; $i < count($returnsVal['ruangans']); $i++){
                 if($this->checkPesanan($returnsVal['ruangans'][$i]['id'], [$returnsVal['tgl_mulai'], $returnsVal['tgl_selesai']])){
+                    $ruangan = Ruangan::find( $returnsVal['ruangans'][$i]['id'] )->first();
                     return back()
-                        ->withErrors(['message' => 'Ruangan sudah ada yang pesan pada tanggal tersebut'])
+                        ->withErrors(['message' => 'Ruangan  <span class="font-semibold">'. $ruangan->nama_ruangan .  '</span> sudah ada yang pesan pada tanggal <span class="font-semibold">' . $returnsVal['tgl_mulai'] . ' ' . $returnsVal['tgl_selesai'] .'</span> tersebut'])
                         ->withInput();
                 }
                 // dd($returnsVal['ruangans'][$i]['nama']);
@@ -396,9 +397,10 @@ class LoginsController extends Controller
                     (tanggal_akhir BETWEEN ? AND ?)
                 ", [$times[0], $times[1], $times[0], $times[1], $times[0], $times[1]])
                 ->get();
-    
-            return true;
+                if($cek->count() > 0){        
+                    return true;
+                }
+                return false;
         }
-        return false;
     }
 }

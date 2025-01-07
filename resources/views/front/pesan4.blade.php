@@ -44,7 +44,7 @@
                             @endif
                             @if ($errors->has('message'))
                                 <span class=" text-md m-4 text-primary-5 font-semibold"> 
-                                    {{ $errors->first('message') }}
+                                    {!! $errors->first('message') !!}
                                 </span>
                             @endif
                         </div>
