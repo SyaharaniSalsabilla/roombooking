@@ -4,13 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 
 class sewa_fasilitas extends Model
 {
 
     use HasFactory, Notifiable;
 
-    protected $table = 'sewa_fasilitas';
+    protected $table = 'trx_sewa_fasilitas';
     /**
      * The attributes that are mass assignable.
      *

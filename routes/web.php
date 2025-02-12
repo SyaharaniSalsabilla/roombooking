@@ -6,6 +6,10 @@ use App\Http\Controllers\SpaceController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\front\LoginsController;
 use App\Http\Controllers\front\TransactionController;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\RuanganController;
+use App\Http\Controllers\Admin\FasilitasController;
+use App\Http\Controllers\Admin\TransaksiController;
 
 // Redirect root URL ke home
 Route::redirect('/', '/home');
@@ -44,15 +48,18 @@ Route::get('/logout', [UsersController::class, 'logout'])->name('logout'); // Ha
 Route::get('/register', [UsersController::class, 'register'])->name('register'); // Halaman register
 Route::post('/register', [UsersController::class, 'create'])->name('register.post'); // Proses registrasi
 
-
-// Space Booking
-Route::get('/spaceBooking', [SpaceController::class, 'booking'])->name('spaceBooking');
-
-// Space Detail
-Route::get('/spaceDetail/{id}', [SpaceController::class, 'detail'])->name('spaceDetail');
-
 // Admin Dashboard
-Route::get('/admin', function () {
-    return view('admin.dashboard');
-})->name('admin.dashboard');
+Route::get('/admin', [DashboardController::class, 'index'])->name('admin.dashboard');
 
+Route::get('/admin/ruangan', [RuanganController::class, 'index'])->name('admin.ruangan');
+Route::post('/admin/ruangan', [RuanganController::class, 'store'])->name('admin.ruanganAdd');
+
+Route::get('/admin/hargaRuangan', [RuanganController::class, 'indexHarga'])->name('admin.ruanganHarga');
+Route::post('/admin/hargaRuangan', [RuanganController::class, 'storeHarga'])->name('admin.ruanganHargaAdd');
+
+Route::get('/admin/fasilitas', [fasilitasController::class, 'index'])->name('admin.fasilitas');
+Route::post('/admin/fasilitas', [fasilitasController::class, 'store'])->name('admin.fasilitasAdd');
+
+Route::get('/admin/transaksiRuangan', [TransaksiController::class, 'indexRuangan'])->name('admin.transaksiRuangan');
+
+Route::get('/admin/transaksiFasilitas', [TransaksiController::class, 'indexFasilitas'])->name('admin.transaksiFasilitas');
