@@ -73,7 +73,7 @@
                                 <h2 class="text-primary-5 text-left text-2xl font-semibold p-4">Total</h2>
                                 <p class="text-right px-4">IDR {{ number_format($totalHarga, 0, ',', '.') }}</p>
                             </div>
-                            <form method="POST" id="orderForm" action="{{route('pesan3')}}">
+                            {{--<form method="POST" id="orderForm" action="{{route('pesan3')}}">
                                 @csrf
 
                                 <input type="hidden" name="data_ruangan" id="data_ruangan" value="{{ json_encode($ruangans)}}"> 
@@ -82,11 +82,11 @@
 
                                 <input type="hidden" name="data_tgl_mulai" id="data_tgl_mulai" value="{{$tgl_mulai}}">  
                                 <input type="hidden" name="data_tgl_sampai" id="data_tgl_sampai" value="{{$tgl_selesai}}">
-                                <a href="{{route('pesan3')}}" class="hover:text-red-500">   
+                                 <a class="hover:text-red-500">   
                                     <div class="grid grid-cols-1 items-center p-4">
-                                        <button id="btn_submit" class="text-primary-2 bg-primary-5 rounded-xl py-2 px-4">Lanjutkan</button>
+                                        <button id="btn_submit" class="text-primary-2 @php (!Auth::check()) ? printf('bg-primary-5') : print('bg-primary-5') @endphp  rounded-xl py-2 px-4" @php (!Auth::check()) ? printf('disabled') : print('') @endphp>Lanjutkan</button>
                                     </div>
-                                </a>
+                                </a> --}}
                             </form>
                         </div>
                     </div>

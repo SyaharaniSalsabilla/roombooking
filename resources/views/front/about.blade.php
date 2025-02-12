@@ -39,8 +39,8 @@
         </section>
         <section id="oprasional" class="">
             <div class="container flex flex-col justify-center py-8">
-                <h2 class="w-full text-center font-primary font-semibold uppercase text-3xl text-primary-5 mb-4">Tentang
-                    Kami
+                <h2 class="w-full text-center font-primary font-semibold uppercase text-3xl text-primary-5 mb-4">
+                    JAM OPERASIONAL
                 </h2>
                 <div class="grid grid-cols-3 gap-4">
                     <button class="bg-primary-5 text-white font-primary rounded-2xl py-2 px-4">SHIFT 1 : 08:00 - 12:00 WIB</button>

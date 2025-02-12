@@ -5,6 +5,10 @@
         <div class="container flex flex-col justify-center py-8">
             <h2 class="w-full text-center font-primary font-semibold uppercase text-3xl text-primary-5 mb-4">Ruangan
             </h2>
+            <!-- <span class="py-4 bg-transparent p-0"></span> -->
+            <!-- <div class="section py-4 mb-4 rounded-2xl flex gap-4 flex-column bg-primary-5 px-8 justify-around">
+                <input name="tag" type="text" placeholder="apa ya"> <input type="text"> <input type="text">
+            </div> -->
             <div class="grid grid-cols-2 gap-6">
                 @foreach($rooms as $Ruangan)
                     <div class="relative rounded-lg text-white mb-12">
@@ -26,7 +30,7 @@
                                     data-kapasitas="{{$Ruangan->kapasitas}}"
                                     data-panjang="{{$Ruangan->panjang_ruangan}}"
                                     data-lebar="{{$Ruangan->lebar_ruangan}}"
-                                    data-harga="{{$Ruangan->harga}}"
+                                    data-harga="{{ number_format($Ruangan->harga, 0, ',', '.') }}"
                                     data-deskripsi="{{$Ruangan->deskripsi}}"
                                     data-image="{{$Ruangan->image}}"
                                     data-nama="{{$Ruangan->nama_ruangan}}"
@@ -35,7 +39,7 @@
                             </div>
                             <div class="flex justify-between py-2 items-center">
                                 <div class="flex gap-2 items-center">
-                                    <h2 class=" font-primary text-lg uppercase">IDR {{$Ruangan->harga}}</h2>
+                                    <h2 class=" font-primary text-lg uppercase">IDR {{ number_format($Ruangan->harga, 0, ',', '.') }}</h2>
                                 </div>
                                 <form id="pesanan" action="{{route('transaksi.pesan',[12,1])}}" method="POST">@csrf</form>
                                 <a href="{{route('pesan1')}}" class="hover:text-red-500">

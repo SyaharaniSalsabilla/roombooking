@@ -10,6 +10,9 @@ use App\Models\Ruangan;
 use App\Models\trx_sewa;
 use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use App\Models\fasilitas;
+use Illuminate\Support\Facades\Validator;
 
 class LoginsController extends Controller
 {
@@ -35,9 +38,9 @@ class LoginsController extends Controller
     {
         
         $rooms = Ruangan::with('booked');
-        $keyword = $request->get('cari') ?? '';
+        $keyword = strtolower($request->get('cari')) ?? '';
         $arryaDate = explode(' ', $request->get('tanggal'));
-
+        
         $arryaDate = array_filter($arryaDate, fn($item) => $item !== 'to');
         if (count($arryaDate) === 2) {
             $startDate = $arryaDate[0];
@@ -50,11 +53,11 @@ class LoginsController extends Controller
         }
 
         if ($keyword) {
-            $rooms->where('nama_ruangan', 'LIKE', "%{$keyword}%");
+            $rooms->whereRaw("lower(nama_ruangan) LIKE '%{$keyword}%'");
         }
         $rooms = $rooms->get();
-
-        return view('front.hasil_cari', ['rooms' => $rooms]);
+        
+        return view('front.hasil_cari', ['rooms' => $rooms, 'dates' => $request->get('tanggal'),'cari' => $request->get('cari')]);
     }
 
     public function hasil_cari()
@@ -74,33 +77,65 @@ class LoginsController extends Controller
         return view('.front.login_email');
     }
 
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        $request->session()->invalidate(); 
+        $request->session()->regenerateToken();
+        return redirect()->route('home');
+    }
+
+    public function profile(Request $request)
+    {
+        return view('front.profil');
+    }
+
+    public function updatePassword(Request $request)
+    {
+        $user = Auth::user();
+        if ( $request->has('password_baru') && $request->password_baru != null ){
+            $valid = $request->validate([
+                'password_baru' => 'required',
+                'email' => 'required'
+            ]);
+            $user->password = Hash::make($request->input('password_baru'));
+            $user->save();
+
+            $request['password'] = $request->input('password_baru');
+        }else{
+            unset($request['password_baru']);
+        }
+
+        unset($request['_token']);
+        $profile = $user->profile;
+        $datas = $request->all();
+        
+        foreach($datas as $key=>$val){
+            if($key == 'email' && $user->email != $val){
+                $user->email = $val;
+                $user->save();
+            }
+            $profile->$key  = $val;
+        }
+        // dd($profile);
+        $profile->save();
+
+        return back()->with('success', 'Password berhasil diperbarui.');
+    }
+
+
+    
     public function pesan1()
     {
         $datas = Ruangan::orderBy('id','ASC')->get();
+        $fasilitas = fasilitas::orderBy('id','ASC')->get();
         
-        return view('front.pesan1', ['datas' => $datas]);
-    }
-
-    public function profile()
-    {
-        if($request->method() == 'GET'){
-            $datas = session()->get('profile');
-            return view('.front.profil',$datas);
-        }
-
-        $data = json_decode($request->input('data_json'), true);
-        $datas = [
-            'nama' => $data['nama'] ?? [],
-            'email' => $data['email'] ?? null,
-            'telepon' => $data['telepon'] ?? 0
-        ];
-
-        session()->put('pesan2', $datas);
-        return view('front.profil');
+        return view('front.pesan1', ['datas' => $datas, 'fasilitas' => $fasilitas]);
     }
     
     public function pesan2(Request $request)
     {
+        
         if($request->method() == 'GET'){
             $datas = session()->get('pesan2');
             return view('.front.pesan2',$datas);
@@ -112,7 +147,7 @@ class LoginsController extends Controller
             'itemTambahan' => $data['itemTambahan'] ?? null,
             'totalHarga' => $data['totalHarga'] ?? 0
         ];
-
+        
         session()->put('pesan2', $datas);
         return view('.front.pesan2',$datas);
     }
@@ -120,8 +155,11 @@ class LoginsController extends Controller
     public function pesan3(Request $request)
     {
         if($request->method() == 'GET'){
-            $datas = session()->get('pesan3');
-            return view('.front.pesan3',$datas);
+            $datas = session()->get('datas');
+            
+            if($datas){
+                return view('.front.pesan3',$datas);
+            }
         }
 
         $data_ruangan = json_decode($request->input('data_ruangan'), true);
@@ -149,6 +187,14 @@ class LoginsController extends Controller
 
     public function pesan3_login(Request $request)
     {
+        if($request->method() == 'GET'){
+            $datas = session()->get('datas');
+            
+            if($datas){
+                return view('.front.pesan3_login',$datas);
+            }
+        }
+        
         $data_ruangan = json_decode($request->input('data_ruangan'), true);
         $data_tambahan = json_decode($request->input('data_tambahan'), true);
         $data_total = json_decode($request->input('data_total'), true);
@@ -166,6 +212,27 @@ class LoginsController extends Controller
             'tgl_selesai' => $tgl_jam_selesai,
             'totalHarga' => $data_total
         ];
+        
+        // $validator = Validator::make($request->all(), [
+        $validator = Validator::make($returnsVal, [
+            'tgl_mulai' => 'required|date|before:tgl_selesai',
+            'tgl_selesai' => 'required|date|after:tgl_mulai',
+        ], [
+            'tgl_mulai.required' => 'Tanggal mulai harus diisi.',
+            'tgl_mulai.date' => 'Tanggal mulai harus berupa tanggal yang valid.',
+            'tgl_mulai.before' => 'Tanggal mulai harus lebih kecil dari tanggal selesai.',
+            'tgl_selesai.required' => 'Tanggal selesai harus diisi.',
+            'tgl_selesai.date' => 'Tanggal selesai harus berupa tanggal yang valid.',
+            'tgl_selesai.after' => 'Tanggal selesai harus lebih besar dari tanggal mulai.',
+        ]);
+        
+
+        if ($validator->fails()) {
+            return back()
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+
         $request->session()->put('datas', $returnsVal);
 
         return view('.front.pesan3_login',$returnsVal);
@@ -202,6 +269,7 @@ class LoginsController extends Controller
 
     public function transfer(Request $request)
     {
+        
         if($request->method() == 'GET'){
             $datas = session()->get('transfer');
             return view('.front.transfer',$datas);
@@ -227,8 +295,118 @@ class LoginsController extends Controller
             'kode' => $kode,
             'metode_bayar' => $metode_bayar
         ];
+        $valid = Validator::make($returnsVal,[
+            'ruangans' => 'required',
+            'tambahans' => 'nullable',
+            'tgl_mulai' => 'required',
+            'tgl_selesai' => 'required',
+            'totalHarga' => 'required',
+            'notes' => 'nullable',
+            'kode' => 'required',
+            'metode_bayar' => 'required'
+        ],[
+            'ruangans.required' => 'Silahkan memilih ruangan',
+            'tambahans.required' => '',
+            'tgl_mulai.required' => 'Tanggal dan waktu mulai harus terisi',
+            'tgl_selesai.required' => 'Tanggal dan waktu akhir harus terisi',
+            'totalHarga.required' => '',
+            'notes.required' => '',
+            'kode.required' => 'Silahkan memilih metode pembayaran',
+            'metode_bayar.required' => 'Silahkan memilih metode pembayaran'
+        ]);
+        
+        if ($valid->fails()) {
+            return back()
+                        ->withErrors($valid)
+                        ->withInput();
+        }
+        
+        
+        // Menyimpan data trx_ruangan
+        $trx_ruangan = null;
+        if(is_array($returnsVal['ruangans'])){
+            foreach ($returnsVal['ruangans'] as $ruangan) {
+                if ($this->checkPesanan($ruangan['id'], [$returnsVal['tgl_mulai'], $returnsVal['tgl_selesai']])) {
+                    $namaRuangan = Ruangan::find($ruangan['id'])->nama_ruangan;
+                    return back()
+                        ->withErrors(['message' => "Ruangan $namaRuangan sudah dipesan pada tanggal {$returnsVal['tgl_mulai']} - {$returnsVal['tgl_selesai']}"])
+                        ->withInput();
+                }
+            
+                // Proses penyimpanan
+                $trx_ruangan = $this->savePesanan([
+                    "id"=> $ruangan["id"],
+                    "totalHarga" => $returnsVal["totalHarga"],
+                ], $tgl_mulai, $tgl_sampai, $note, $metode_bayar);
+            
+                // Simpan fasilitas tambahan
+                if (!empty($data_tambahan)) {
+                    foreach ($data_tambahan as $item) {
+                        $trx_ruangan->sewaFasilitas()->create([
+                            'mst_fasilitas_id' => $item['id'],
+                            'kuantitas' => $item['jumlah'],
+                            'satuan' => $item['satuan'] ?? '',
+                        ]);
+                    }
+                }
+            }            
+
+            // Menyimpan data tambahan jika ada
+            if (!empty($data_tambahan)) {
+                foreach ($data_tambahan as $item) {
+                    $trx_ruangan->sewaFasilitas()->create([
+                        'trx_sewa_id' => $trx_ruangan->id,
+                        'mst_fasilitas_id' => $item['id'],
+                        'kuantitas' => $item['jumlah'],
+                        'satuan',
+                    ]);
+                }
+            }
+
+            session()->put('transfer', $returnsVal);
+            return view('.front.transfer',$returnsVal);
+        }
+
+        // Menyimpan data tambahan jika ada
+        if (!empty($data_tambahan)) {
+            foreach ($data_tambahan as $item) {
+                $trx_ruangan->sewaFasilitas()->create([
+                    'trx_sewa_id' => $trx_ruangan->id,
+                    'mst_fasilitas_id' => $item['id'],
+                    'kuantitas' => $item['jumlah'],
+                    'satuan',
+                ]);
+            }
+        }
 
         session()->put('transfer', $returnsVal);
         return view('.front.transfer',$returnsVal);
+    }
+
+    public function checkPesanan($ruanganId, $tanggalRange)
+    {
+        return trx_sewa::where('mst_ruangan_id', $ruanganId)
+            ->where(function ($query) use ($tanggalRange) {
+                $query->whereBetween('tanggal_awal', $tanggalRange)
+                    ->orWhereBetween('tanggal_akhir', $tanggalRange)
+                    ->orWhere(function ($subQuery) use ($tanggalRange) {
+                        $subQuery->where('tanggal_awal', '<=', $tanggalRange[0])
+                                ->where('tanggal_akhir', '>=', $tanggalRange[1]);
+                    });
+            })->exists();
+    }
+
+
+    protected function savePesanan($data, $tgl_mulai, $tgl_sampai, $note, $metode_bayar) {
+        return trx_sewa::create([
+            'mst_ruangan_id' => $data['id'],
+            'mst_harga_sewa_id' => $data['totalHarga'],
+            'mst_profil_id' => auth()->user()->id,
+            'tanggal_awal' => $tgl_mulai,
+            'tanggal_akhir' => $tgl_sampai,
+            'keperluan' => $note,
+            'diskon' => 0,
+            'deskripsi' => $metode_bayar,
+        ]);
     }
 }

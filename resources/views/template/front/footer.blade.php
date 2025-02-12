@@ -20,7 +20,7 @@
                     </a>
                 </div>
                 <div class="grid grid-cols-3 gap-2 text-primary-5">
-                    <a href=""
+                    <a href="https://wa.me/6285695658645"
                         class="flex items-center justify-center w-10 h-10 p-2 border rounded-full  hover:bg-primary-500">
                         <i class="text-xl fa-brands fa-whatsapp"></i>
                     </a> 

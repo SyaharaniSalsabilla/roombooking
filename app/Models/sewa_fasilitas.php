@@ -4,6 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+<<<<<<< HEAD
+=======
+use App\Models\trx_sewa;
+>>>>>>> b7be7ecf98961a36d10fa3d27a4ac9d5d52ef462
 use Illuminate\Notifications\Notifiable;
 
 class sewa_fasilitas extends Model
@@ -21,8 +25,13 @@ class sewa_fasilitas extends Model
     protected $fillable = [
         'id',
         'trx_sewa_id',
-        'fasilitas_id',
+        'mst_fasilitas_id',
         'kuantitas',
         'satuan',
     ];
+
+
+    public function sewa(){
+        return $this->belongsTo(trx_sewa::class);
+    }
 }

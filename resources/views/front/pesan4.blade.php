@@ -34,6 +34,20 @@
                                 </div>
                             </div>
                         </div>
+                        
+                        <div class="flex flex-col justify-center items-center bg-primary-1 rounded-lg p-8 "> 
+                            @if($errors->has('metode_bayar'))
+                            <span class=" text-md m-4 text-primary-5 font-semibold"> 
+                                {{ $errors->first('metode_bayar') }} 
+                            </span>
+                        
+                            @endif
+                            @if ($errors->has('message'))
+                                <span class=" text-md m-4 text-primary-5 font-semibold"> 
+                                    {!! $errors->first('message') !!}
+                                </span>
+                            @endif
+                        </div>
                     </div>
                     <div class="col-span-1">
                         <form method="POST" id="prev" action="{{route('pesan3')}}">

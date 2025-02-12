@@ -31,6 +31,7 @@
         <p class="text-gray-400 text-center text-xs">Belum Punya Akun?</p>
         <!-- Register Link -->
         <div class="text-center">
+            <form id="emailForm" action="{{route('login.email')}}" method="GET"></form>
             <a href="register.html" class="text-primary-5 hover:text-red-700 text-sm font-medium">
                 Daftar sekarang
             </a>

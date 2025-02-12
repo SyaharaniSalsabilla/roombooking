@@ -10,23 +10,26 @@
                     <div class="flex justify-start gap-2 items-center">
                         <div class="flex flex-col">
                             <h2 class="text-xl text-primary-5 mb-2 font-primary font-bold">
-                                Syaharani Salsabilla</h2>
-                            <p>08911111111</p>
-                            <p>syaharanibilla1@gmail.com</p>
-                            <p>Bintaro, Jakarta Selatan</p>
+                            {{Auth::user()->profile->nama ?? ''}}</h2>
+                            <p>{{Auth::user()->profile->telepon ?? ''}}</p>
+                            <p>{{Auth::user()->profile->email ?? ''}}</p>
+                            <p>{{Auth::user()->profile->alamat ?? ''}}</p>
                         </div>
                     </div>
                 </div>
+                <form action="{{ route('profil.updatePassword') }}" method="POST" id="updateForm">
+                    @csrf
                 <div class="flex flex-col gap-2 py-6">
                     <label for="" class="text-primary-5">Nama</label>
-                    <input type="text"
-                        class="bg-primary-1 rounded-md p-2 border border-primary-5 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent">
+                    <input type="text" name="nama"
+                        class="bg-primary-1 rounded-md p-2 text-primary-5 border border-primary-5 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent" value="{{Auth::user()->profile->nama ?? ''}}">
                     <div class="grid grid-cols-2 gap-2">
                         <div class="flex flex-col gap-2">
                             <label for="" class="text-primary-5">Email</label>
                             <div class="relative">
-                                <input type="email" placeholder="Email"
-                                    class="w-full pl-10 pr-4 py-3 bg-primary-1 border border-primary-5  rounded-md text-primary-5 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent">
+                                <input type="email" placeholder="Email" name="email"
+                                    class="w-full pl-10 pr-4 py-3 bg-primary-1 border border-primary-5  rounded-md text-primary-5 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                                    value="{{Auth::user()->profile->email ?? ''}}">
                                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                     <svg class="h-5 w-5 text-primary-5" xmlns="http://www.w3.org/2000/svg"
                                         viewBox="0 0 20 20" fill="currentColor">
@@ -40,8 +43,9 @@
                         <div class="flex flex-col gap-2">
                             <label for="" class="text-primary-5">Telepon</label>
                             <div class="relative">
-                                <input type="text"
-                                    class="w-full pl-10 pr-4 py-3 bg-primary-1 border border-primary-5  rounded-md text-primary-5 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent">
+                                <input type="text" name="telepon"
+                                    class="w-full pl-10 pr-4 py-3 bg-primary-1 border border-primary-5  rounded-md text-primary-5 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                                    value="{{Auth::user()->profile->telepon ?? ''}}">
                                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                     <i class="fa-solid fa-phone h-5 w-5 text-primary-5"></i>
                                 </div>
@@ -50,8 +54,9 @@
                     </div>
                     <label for="" class="text-primary-5">Alamat</label>
                     <div class="relative">
-                        <input type="text"
-                            class="w-full pl-10 pr-4 py-3 bg-primary-1 border border-primary-5  rounded-md text-primary-5 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent">
+                        <input type="text" name="alamat"
+                            class="w-full pl-10 pr-4 py-3 bg-primary-1 border border-primary-5  rounded-md text-primary-5 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                            value="{{Auth::user()->profile->alamat ?? ''}}">
                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                             <i class="fa-solid fa-location-dot h-5 w-5 text-primary-5"></i>
                         </div>
@@ -62,7 +67,7 @@
                         <div class="flex flex-col gap-2">
                             <label for="" class="text-primary-5">Password</label>
                             <div class="relative">
-                                <input type="password"
+                                <input type="password" name="password" value="{{Auth::user()->profile->password ?? ''}}" disabled
                                     class="w-full pl-10 pr-4 py-3 bg-primary-1 border border-primary-5  rounded-md text-primary-5 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent">
                                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                     <ii class="fa-solid fa-key h-5 w-5 text-primary-5"></i>
@@ -70,36 +75,39 @@
                             </div>
                         </div>
                         <div class="flex flex-col gap-2">
-                            <label for="" class="text-primary-5">Password Baru</label>
+                            <label for="password_baru" class="text-primary-5">Password Baru</label>
                             <div class="relative">
-                                <input type="password"
-                                    class="w-full pl-10 pr-4 py-3 bg-primary-1 border border-primary-5  rounded-md text-primary-5 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent">
+                                <input type="password" name="password_baru" placeholder="Password Perubahan"
+                                    class="w-full pl-10 pr-4 py-3 bg-primary-1 border 
+                                    border-primary-5  rounded-md text-primary-5 placeholder-gray-500 
+                                    focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent">
                                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                     <i class="fa-solid fa-key h-5 w-5 text-primary-5"></i>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <label for="" class="text-primary-5">Konfirmasi Password Baru</label>
-                    <div class="relative">
-                        <input type="password"
-                            class="w-full pl-10 pr-4 py-3 bg-primary-1 border border-primary-5  rounded-md text-primary-5 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent">
-                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                            <i class="fa-solid fa-key h-5 w-5 text-primary-5"></i>
-                        </div>
-                    </div>
                 </div>
-            </div>
+            </div></form>
             <div class="grid grid-cols-2 mt-8">
                 <div class="flex justify-start gap-2 items-center">
-                    <button class="text-primary-5 bg-primary-1 py-2 px-4 rounded-md">Simpan Perubahan</button>
-                    <button class="text-white bg-primary-5 py-2 px-6 rounded-md">Hapus</button>
+                    <button class="text-white bg-primary-5 bg-primary-1 py-2 px-4 rounded-md"
+                    onclick="document.getElementById('updateForm').submit()" >Simpan Perubahan</button>
                 </div>
-                <div class="flex justify-end gap-2 items-center">
-                    <button class="text-primary-5  bg-primary-2 border border-primary-5 py-2 px-6 rounded-2xl">SignOut <i class="fa-solid fa-right-from-bracket"></i></button>
-                </div>
+                
+                <form class="flex justify-end gap-2 items-center" action="{{ route('logout') }}" method="GET">
+                    @csrf
+                    <button class="text-primary-5  bg-primary-2 border border-primary-5 py-2 px-6 rounded-2xl">Logout <i class="fa-solid fa-right-from-bracket"></i></button>
+                </form>
             </div>
         </div>
     </section>
 </div>
+@endsection
+@section('script')
+<script>     
+document.addEventListener('DOMContentLoaded', function(){
+    document.getElementsByClassName('password_baru').value = ''
+});
+</script>
 @endsection

@@ -14,7 +14,7 @@
                 </span>
                 <span class="text-white bg-primary-5 px-2 py-1 flex text-sm items-center gap-2 rounded-md">
                     <i class="fa-solid fa-expand"></i>
-                    Ukuran ruangan : <label id="lbl-panjang"></label> X <label id="lbl-lebar"></label> meter
+                    Ukuran ruangan :<input type="hidden" id="lbl-id"></input> <label id="lbl-panjang"></label> X <label id="lbl-lebar"></label> meter
                 </span>
             </div>
         </div>
@@ -34,35 +34,13 @@
             @endif
             
         </div>
-        <hr class="h-1 my-1 mx-4 bg-primary-5 border-0 dark:bg-gray-700">
+        <hr class="h-1 my-1 mx-4 bg-primary-5 border-0 dark:bg-primary-5">
         <div class="p-4">
             <p class="text-center deskripsi">Plataran artinya serambi atau halaman rumah. Plataran merupakan ruang
                 terbuka (outdoor) yang hijau dan sejuk, berlokasi di halaman Rumah
                 Anindhaloka. Plataran sangat sesuai untuk kegiatan kumpul keluarga,
                 komunitas, maupun bisnis, seperti ulang tahun, peluncuran produk, pertunjukan
                 musik, dan office gathering.</p>
-        </div>
-        <hr class="h-1 my-1 mx-4 bg-primary-5 border-0 dark:bg-gray-700">
-        <div class="p-4 justify-center flex flex-col text-primary-5">
-            <h2 class="w-full font-primary text-lg uppercase text-center">Fasilitas</h2>
-            <div class="grid grid-cols-2 gap-4">
-                <div class="flex justify-end items-center gap-2">
-                    <p class="text-right">Speaker</p>
-                    <i class="fa-solid fa-volume-high w-8 text-center"></i>
-                </div>
-                <div class="flex justify-start items-center gap-2">
-                    <i class="fa-solid fa-bolt w-8 text-center"></i>
-                    <p class="text-left">Listrik</p>
-                </div>
-                <div class="flex justify-end items-center gap-2">
-                    <p class="text-right">Mic</p>
-                    <i class="fa-solid fa-microphone w-8 text-center"></i> 
-                </div>
-                <div class="flex justify-start items-center gap-2">
-                    <i class="fa-solid fa-wifi w-8 text-center"></i>
-                    <p class="text-left">Internet</p>
-                </div>
-            </div>
         </div>
     </div>
 </div>
