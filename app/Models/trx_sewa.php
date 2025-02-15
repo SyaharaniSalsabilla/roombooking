@@ -36,7 +36,15 @@ class trx_sewa extends Model
         return $this->belongsTo(\App\Models\Ruangan::class, 'mst_ruangan_id');
     }
 
+    public function profile(){
+        return $this->belongsTo(\App\Models\profil::class, 'mst_profil_id');
+    }
+
     public function sewaFasilitas(){
         return $this->hasMany(sewa_fasilitas::class, 'trx_sewa_id');
+    }
+
+    public function totalFas($id){
+        return sewa_fasilitas::where('trx_sewa_id',$id)->get();
     }
 }

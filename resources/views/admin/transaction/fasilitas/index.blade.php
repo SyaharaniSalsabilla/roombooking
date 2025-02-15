@@ -5,6 +5,9 @@
 @endsection
 
 @section('content')
+@php
+    use Carbon\Carbon;
+@endphp
 <div class="container-fluid">
     <div class="row size-column">
         <div class="col-sm-12">
@@ -18,30 +21,67 @@
                     <table class="display" id="basic-12">
                         <thead>
                             <tr>
-                            <th>Nama Penyewa</th>
-                            <th>Fasilitas</th>
-                            <th>Kuantitas</th>
-                            <th>Satuan</th>
-                            <th>Action</th>
+                                <th>Nama Ruangan</th>
+                                <th>Durasi</th>
+                                <th>Nama Penyewa</th>
+                                <th>Tanggal Awal</th>
+                                <th>Tanggal Akhir</th>
+                                <th>Keperluan</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach($transaksi as $trx)
-                            <tr>
-                                <td>{{ $trx->sewa->profil->nama}}</td>
-                                <td>{{ $trx->fasilitas->nama_fasilitas }}</td>
-                                <td>{{ $trx->Kuantitas }}</td>
-                                <td>{{ $trx->fasilitas->satuan}}</td>
-                                <td> 
+                            @php
+                                $tanggalAwal = Carbon::parse($trx->tanggal_awal);
+                                $tanggalAkhir = Carbon::parse($trx->tanggal_akhir);
+
+                                $selisihJam = $tanggalAwal->diffInHours($tanggalAkhir);
+                            @endphp
+                            <tr style="background-color:#D3D3D3 !important">
+                                <td>{{ $trx->ruangan->nama_ruangan }}</td>
+                                <td>{{ round($selisihJam,2) }} Jam</td>
+                                <td>{{ $trx->profile->nama ?? '' }}</td>
+                                <td>{{ $trx->tanggal_awal }}</td>
+                                <td>{{ $trx->tanggal_akhir }}</td>
+                                <td>{{ $trx->keperluan }}</td>
+                                <td>
                                     <ul class="action"> 
-                                    <li class="edit"> <a href="#"><i class="icon-pencil-alt"></i></a></li>
-                                    <li class="delete"><a href="#"><i class="icon-trash"></i></a></li>
+                                        <li class="edit"><a href="#"><i class="icon-pencil-alt"></i></a></li>
+                                        <li class="delete"><a href="#"><i class="icon-trash"></i></a></li>
                                     </ul>
                                 </td>
                             </tr>
+                            @if(count($trx->totalFas($trx->id)) > 0)
+                            <tr>
+                                <td colspan="7">
+                                    <table border="1" width="100%">
+                                        <thead>
+                                            <tr>
+                                                <th>Nama</th>
+                                                <th>Jumlah</th>
+                                                <th>Satuan</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach($trx->totalFas($trx->id) as $fas)
+                                            @foreach($fas->fasilitas as $v)
+                                                <tr>
+                                                    <td>{{$v->nama_fasilitas ?? '-'}}</td>
+                                                    <td>{{$v->kuantitas ?? 0}}</td>
+                                                    <td>bundling</td>
+                                                </tr>
+                                            @endforeach
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                            @endif
                             @endforeach
-                        <tbody>
+                        </tbody>
                     </table>
+
                 </div>
                 </div>
             </div>

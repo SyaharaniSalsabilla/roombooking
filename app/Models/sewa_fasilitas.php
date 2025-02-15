@@ -4,11 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-<<<<<<< HEAD
-=======
-use App\Models\trx_sewa;
->>>>>>> b7be7ecf98961a36d10fa3d27a4ac9d5d52ef462
 use Illuminate\Notifications\Notifiable;
+use App\Models\fasilitas;
 
 class sewa_fasilitas extends Model
 {
@@ -33,5 +30,14 @@ class sewa_fasilitas extends Model
 
     public function sewa(){
         return $this->belongsTo(trx_sewa::class);
+    }
+
+    public function fasilitas(){
+        return $this->hasMany(fasilitas::class, 'id', 'mst_fasilitas_id');
+    }
+
+    public function totalFas($id){
+        $count = $this::where('trx_sewa_id',$id)->get();
+        return $count->count();
     }
 }

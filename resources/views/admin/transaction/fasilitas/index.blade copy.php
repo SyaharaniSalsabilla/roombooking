@@ -10,7 +10,7 @@
         <div class="col-sm-12">
             <div class="card">
                 <div class="card-header pb-0 card-no-border">
-                <h4>Sewa Ruangan</h4>
+                <h4>Sewa Fasilitas</h4>
                 </div>
                 <div class="card-body">
                 <!-- <button class="btn btn-outline-primary-2x" type="button" title="Tambah Data" data-bs-toggle="modal" data-bs-target="#tambahFasilitas">Tambah Fasilitas</button> -->
@@ -18,24 +18,27 @@
                     <table class="display" id="basic-12">
                         <thead>
                             <tr>
-                            <th>Nama Ruangan</th>
-                            <th>Durasi</th>
                             <th>Nama Penyewa</th>
-                            <th>Tanggal Awal</th>
-                            <th>Tanggal Akhir</th>
-                            <th>Keperluan</th>
+                            <th>Fasilitas</th>
+                            <th>Qty/Pack</th>
+                            <th>Satuan</th>
                             <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach($transaksi as $trx)
-                            <tr>
-                                <td>{{ $trx->ruangan->nama_ruangan}}</td>
-                                <td>{{ $trx->harga }}</td>
-                                <td>{{ $trx->profil ?? '' }}</td>
-                                <td>{{ $trx->tanggal_awal }}</td>
-                                <td>{{ $trx->tanggal_akhir }}</td>
-                                <td>{{ $trx->keperluan }}</td>
+                            <tr rowspan="{{ $trx->totalFas($trx->trx_sewa_id) }}">
+                                <td>{{ $trx->sewa->profil ?? ''}} {{ $trx->totalFas($trx->trx_sewa_id) }}</td>
+                                @if($trx->fasilitas)
+                                    @foreach($trx->fasilitas as $fas)
+                                    <td>{{ $fas->nama_fasilitas ?? '' }}</td>
+                                    <td>{{ $fas->kuantitas ?? 0 }}</td>
+                                    <td>{{ '-' }}</td>
+                                    @endforeach
+                                @else
+                                <td colspan="3">Tidak ada data tambahan</td>
+                                @endif
+                                
                                 <td> 
                                     <ul class="action"> 
                                     <li class="edit"> <a href="#"><i class="icon-pencil-alt"></i></a></li>
@@ -52,6 +55,7 @@
         </div>
     </div>
 </div>
+@include('admin.master.fasilitas.add')
 @endsection
 
 @section('js')

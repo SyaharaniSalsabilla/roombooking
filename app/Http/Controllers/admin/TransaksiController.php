@@ -30,8 +30,11 @@ class TransaksiController extends Controller
         $fasilitas = fasilitas::all();
         $profil = profil::all();
         $sewa = trx_sewa::all();
-        $transaksi = sewa_fasilitas::all();
-
-        return view('admin.transaction.fasilitas.index', compact(['fasilitas', 'profil', 'sewa', 'transaksi']));
+        // $transaksi = sewa_fasilitas::with('fasilitas')->get();
+        $ruangan = Ruangan::all();
+        $harga = harga_sewa::all();
+        $transaksi = trx_sewa::with(['ruangan','sewaFasilitas','sewaFasilitas.fasilitas'])->get();
+        // dd($transaksi[0]->totalFas(30)[0]->fasilitas);
+        return view('admin.transaction.fasilitas.index', compact(['ruangan', 'harga','fasilitas', 'profil', 'sewa', 'transaksi']));
     }
 }

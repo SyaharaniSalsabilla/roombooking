@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\fasilitas;
 use Illuminate\Support\Facades\Validator;
 
-class LoginsController extends Controller
+class LoginsController1 extends Controller
 {
 
     public function about()
@@ -340,16 +340,15 @@ class LoginsController extends Controller
                 ], $tgl_mulai, $tgl_sampai, $note, $metode_bayar);
             
                 // Simpan fasilitas tambahan
-                // if (!empty($data_tambahan)) {
-                //     foreach ($data_tambahan as $item) {
-                //         $trx_ruangan->sewaFasilitas()->create([
-                //             'trx_sewa_id' => $trx_ruangan->id,
-                //             'mst_fasilitas_id' => $item['id'],
-                //             'kuantitas' => $item['jumlah'],
-                //             'satuan' => $item['satuan'] ?? 0,
-                //         ]);
-                //     }
-                // }
+                if (!empty($data_tambahan)) {
+                    foreach ($data_tambahan as $item) {
+                        $trx_ruangan->sewaFasilitas()->create([
+                            'mst_fasilitas_id' => $item['id'],
+                            'kuantitas' => $item['jumlah'],
+                            'satuan' => $item['satuan'] ?? '',
+                        ]);
+                    }
+                }
             }            
 
             // Menyimpan data tambahan jika ada
@@ -359,7 +358,7 @@ class LoginsController extends Controller
                         'trx_sewa_id' => $trx_ruangan->id,
                         'mst_fasilitas_id' => $item['id'],
                         'kuantitas' => $item['jumlah'],
-                        'satuan' => 0,
+                        'satuan',
                     ]);
                 }
             }
@@ -369,16 +368,16 @@ class LoginsController extends Controller
         }
 
         // Menyimpan data tambahan jika ada
-        // if (!empty($data_tambahan)) {
-        //     foreach ($data_tambahan as $item) {
-        //         $trx_ruangan->sewaFasilitas()->create([
-        //             'trx_sewa_id' => $trx_ruangan->id,
-        //             'mst_fasilitas_id' => $item['id'],
-        //             'kuantitas' => $item['jumlah'],
-        //             'satuan',
-        //         ]);
-        //     }
-        // }
+        if (!empty($data_tambahan)) {
+            foreach ($data_tambahan as $item) {
+                $trx_ruangan->sewaFasilitas()->create([
+                    'trx_sewa_id' => $trx_ruangan->id,
+                    'mst_fasilitas_id' => $item['id'],
+                    'kuantitas' => $item['jumlah'],
+                    'satuan',
+                ]);
+            }
+        }
 
         session()->put('transfer', $returnsVal);
         return view('.front.transfer',$returnsVal);
