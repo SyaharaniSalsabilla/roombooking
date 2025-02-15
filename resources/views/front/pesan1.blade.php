@@ -104,15 +104,15 @@
                     <div class="items-center py-2 space-y-2 div-nr">
                         <div class="item-1 grid grid-cols-2 ">
                             <p class="text-primary-5 text-left text-2xl font-semibold px-4 py-1">Nama Ruangan</p>
-                            <p class="text-right px-4">IDR <label id="ruangan-harga">Harga</label></p>
+                            <p class="text-right px-4">IDR <label id="ruangan-harga">XXXXXX</label></p>
                         </div>
                     </div>
                     <div class="items-center py-2 space-y-2 px-4 div-na">
                         <div class="item-summary flex justify-between border-b py-2">
                             <p class="item-id text-primary-5 font-semibold default invisible" id="id-tambahan"></p>
-                            <p class="item-name text-primary-5 font-semibold default" id="nama-tambahan">Nama Item</p>
+                            <p class="item-name text-primary-5 text-left font-semibold default" id="nama-tambahan">Nama Item</p>
                             <p class="item-quantity text-sm font-semibold default"><label id="jumlah-tambahan">Jumlah</label></p>
-                            <p class="item-subtotal text-sm default">IDR <label id="harga-tambahan">Harga</label></p>
+                            <p class="item-subtotal text-sm default">IDR <label id="harga-tambahan">XXXXXX</label></p>
                         </div>
                     </div>
                     <div class="grid grid-cols-2 items-center py-2 div-tot">

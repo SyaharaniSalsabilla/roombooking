@@ -26,7 +26,7 @@ class trx_sewa extends Model
         'mst_harga_sewa_id',
         'mst_profil_id',
         'tanggal_awal',
-        'tangga_akhir',
+        'tanggal_akhir',
         'keperluan',
         'diskon',
         'deskripsi',
