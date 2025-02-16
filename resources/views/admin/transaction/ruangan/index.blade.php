@@ -5,6 +5,9 @@
 @endsection
 
 @section('content')
+@php
+    use Carbon\Carbon;
+@endphp
 <div class="container-fluid">
     <div class="row size-column">
         <div class="col-sm-12">
@@ -23,19 +26,25 @@
                             <th>Nama Penyewa</th>
                             <th>Tanggal Awal</th>
                             <th>Tanggal Akhir</th>
-                            <th>Keperluan</th>
+                            <th>Catatan</th>
                             <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach($transaksi as $trx)
+                            @php
+                                $tanggalAwal = Carbon::parse($trx->tanggal_awal);
+                                $tanggalAkhir = Carbon::parse($trx->tanggal_akhir);
+
+                                $selisihJam = $tanggalAwal->diffInHours($tanggalAkhir);
+                            @endphp
                             <tr>
                                 <td>{{ $trx->ruangan->nama_ruangan}}</td>
-                                <td>{{ $trx->harga }}</td>
-                                <td>{{ $trx->profil ?? '' }}</td>
+                                <td>{{ round($selisihJam,2) }} Jam</td>
+                                <td>{{ $trx->profile->nama ?? '' }}</td>
                                 <td>{{ $trx->tanggal_awal }}</td>
                                 <td>{{ $trx->tanggal_akhir }}</td>
-                                <td>{{ $trx->keperluan }}</td>
+                                <td>{{ $trx->catatan }}</td>
                                 <td> 
                                     <ul class="action"> 
                                     <li class="edit"> <a href="#"><i class="icon-pencil-alt"></i></a></li>

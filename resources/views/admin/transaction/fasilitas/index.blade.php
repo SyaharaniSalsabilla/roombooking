@@ -26,7 +26,7 @@
                                 <th>Nama Penyewa</th>
                                 <th>Tanggal Awal</th>
                                 <th>Tanggal Akhir</th>
-                                <th>Keperluan</th>
+                                <th>Catatan</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -44,7 +44,7 @@
                                 <td>{{ $trx->profile->nama ?? '' }}</td>
                                 <td>{{ $trx->tanggal_awal }}</td>
                                 <td>{{ $trx->tanggal_akhir }}</td>
-                                <td>{{ $trx->keperluan }}</td>
+                                <td>{{ $trx->catatan }}</td>
                                 <td>
                                     <ul class="action"> 
                                         <li class="edit"><a href="#"><i class="icon-pencil-alt"></i></a></li>
