@@ -1,6 +1,6 @@
 @extends('template.front.main')
 @section('content')
-<div id="app" class="bg-primary-2">
+<div id="app" class="">
     <section id="hiro" class=" mb-6">
         <div class="container flex flex-col justify-center py-8">
             <h2 class="w-full text-center font-primary font-semibold uppercase text-3xl text-primary-5 mb-4">Profile
@@ -11,6 +11,8 @@
                         <div class="flex flex-col">
                             <h2 class="text-xl text-primary-5 mb-2 font-primary font-bold">
                             {{Auth::user()->profile->nama ?? ''}}</h2>
+                            <h2 class="text-xl text-primary-5 mb-2 font-primary font-bold">
+                            Member</h2>
                             <p>{{Auth::user()->profile->telepon ?? ''}}</p>
                             <p>{{Auth::user()->profile->email ?? ''}}</p>
                             <p>{{Auth::user()->profile->alamat ?? ''}}</p>

@@ -19,7 +19,7 @@
             </div>
         </div>
         <!-- Konten Modal -->
-        <div class="p-4 flex justify-between">
+        <div class="p-4 flex justify-between shadow-md">
             <div class="flex flex-col">
                 <h2 class=" font-primary text-lg uppercase" ><label id="lbl-nama"></label></h2>
                 <h2 class=" font-primary text-base uppercase">IDR <label id="lbl-harga">XXXXX</label></h2>
@@ -42,5 +42,49 @@
                 komunitas, maupun bisnis, seperti ulang tahun, peluncuran produk, pertunjukan
                 musik, dan office gathering.</p>
         </div>
+
+        <hr class="h-1 my-1 mx-4 bg-primary-5 border-0 dark:bg-primary-5">
+        <div class="container flex flex-col justify-center py-8">
+                <h2 class="text-center font-primary uppercase text-lg text-primary-5 mb-4">
+                    fasilitas
+                </h2>
+                <div class="flex justify-center ">
+                    <div class="grid grid-cols-4 gap-2 text-primary-5 w-3/5">
+                        <div class="flex flex-col gap-2 items-center">
+                            <i class="fa-solid fa-car text-3xl"></i>
+                            <h2 class="text-center text-xs font-thin">Parkiran Luas</h2>
+                        </div>
+                        <div class="flex flex-col gap-2 items-center">
+                            <i class="fa-solid fa-wifi text-3xl"></i>
+                            <h2 class="text-center text-xs font-thin">Wifi</h2>
+                        </div>
+                        <div class="flex flex-col gap-2 items-center">
+                            <i class="fa-solid fa-building text-3xl"></i>
+                            <h2 class="text-center text-xs font-thin">Ruangan Terhubung</h2>
+                        </div>
+
+                        <div class="flex flex-col gap-2 items-center">
+                            <i class="fa-solid fa-joint text-3xl"></i>
+                            <h2 class="text-center text-xs font-thin">Ruangan Bebas Asap Rokok</h2>
+                        </div>
+                        <div class="flex flex-col gap-2 items-center">
+                            <i class="fa-solid fa-toilet text-3xl"></i>
+                            <h2 class="text-center text-xs font-thin">Toilet</h2>
+                        </div>
+                        <div class="flex flex-col gap-2 items-center">
+                            <i class="fa-solid fa-coffee text-3xl"></i>
+                            <h2 class="text-center text-xs font-thin">Caffe</h2>
+                        </div>
+                        <div class="flex flex-col gap-2 items-center">
+                            <i class="fa-solid fa-home text-3xl"></i>
+                            <h2 class="text-center text-xs font-thin">Balkon</h2>
+                        </div>
+                        <div class="flex flex-col gap-2 items-center">
+                            <i class="fa-solid fa-music text-3xl"></i>
+                            <h2 class="text-center text-xs font-thin">Ruang Musik</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
     </div>
 </div>

@@ -10,7 +10,7 @@
                             Ada yang bisa dibantu?
                         </h2>
                         <div class="flex flex-col">
-                            <label for="">Saya Punya Pertanyaan / Feedback</label>
+                            <label for="">Saya Punya Pertanyaan </label>
                             <textarea name="" id="" rows="5" class="bg-primary-1 p-3 rounded-md mt-2" placeholder="Tuliskan pesan anda disini"></textarea>
                         </div>
                         <button class="bg-primary-5 text-primary-2 px-6 py-3 rounded-lg text-center">Kirim</button>

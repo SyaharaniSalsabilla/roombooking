@@ -1,6 +1,6 @@
 @extends('template.front.main')
 @section('content')
-<div id="app" class="bg-primary-2">
+<div id="app" class="">
     <section id="hiro" class=" mb-6">
         <div class="container flex flex-col justify-center py-8">
             <h2 class="w-full text-center font-primary font-semibold uppercase text-3xl text-primary-5 mb-4">Ruangan
@@ -24,7 +24,6 @@
                                     </div>
                                 </div>
                                 <div class="flex justify-between py-2 items-center">
-                                
                                     <button class="bg-primary-2 openModal text-primary-5 px-4 py-1 rounded-lg btn-detail" 
                                     data-id="{{$Ruangan->id}}"
                                     data-kapasitas="{{$Ruangan->kapasitas}}"
