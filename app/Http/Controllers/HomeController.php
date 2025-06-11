@@ -14,6 +14,8 @@ class HomeController extends Controller
     {
         $data = Ruangan::orderBy('id','ASC')->get();
         $informasi = Informasi::orderBy('id','ASC')->get();
-        return view('.front.home')->with(["data" => $data, "informasi" => $informasi]);
+        $fasilitas_umum = Ruangan::with('cn_fasilitas')->get();
+        return view('.front.home')->with(["data" => $data, "informasi" => $informasi, "fasilitas_umum"=> $fasilitas_umum]);
+        
     }
 }

@@ -137,7 +137,7 @@
                             </div>
                             <div class="flex justify-between py-2 items-center">
                                 <h2 class=" font-primary text-lg uppercase">IDR {{ number_format($Ruangan->harga, 0, ',', '.') }}</h2>
-                                <a href="{{route('pesan1')}}" class="hover:text-red-500">
+                                <a href="{{route('pesan1', $Ruangan->id)}}" class="hover:text-red-500">
                                     <button class="bg-primary-2 text-primary-5 px-4 py-1 rounded-lg">Pesan Sekarang</button>
                                 </a>
                             </div>
@@ -183,6 +183,7 @@
                 document.getElementById('gambarModal').setAttribute('src', path + evt.target.getAttribute('data-image'));
                 document.querySelector(".deskripsi").innerHTML = evt.target.getAttribute("data-deskripsi");
                 // modal.classList.remove('hidden'); // Show modal
+                fetchFasilitas(evt.target.getAttribute("data-id"));
             });
         });
     });
@@ -200,5 +201,31 @@
             }
         });
     });
+     // fetch data
+    function fetchFasilitas(ruanganId) {
+        fetch(`/ruangan/${ruanganId}/fasilitas`)
+            .then(response => response.json())
+            .then(data => {
+                if (data) {
+                    
+                    // Tampilkan fasilitas di modal
+                    const container = document.getElementById('fasilitas-container');
+                    container.innerHTML = ''; // bersihkan konten lama
+                    
+                    if (Array.isArray(data.cn_fasilitas)) {
+                        data.cn_fasilitas.forEach(fas => {
+                            container.innerHTML += `
+                                <div class="flex flex-col items-center gap-2">
+                                    <i class="fa-solid ${fas.image || 'fa-circle-question'} text-2xl"></i>
+                                    <h2 class="text-xs">${fas.nama_fasilitas}</h2>
+                                </div>`;
+                        });
+                    } else {
+                        console.warn('cn_fasilitas tidak tersedia atau bukan array:', data.cn_fasilitas);
+                    }
+
+                }
+            });
+    }
 </script>
 @endsection

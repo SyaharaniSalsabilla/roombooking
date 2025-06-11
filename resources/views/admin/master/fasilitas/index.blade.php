@@ -10,7 +10,7 @@
         <div class="col-sm-12">
             <div class="card">
                 <div class="card-header pb-0 card-no-border">
-                <h4>Master Fasilitas</h4>
+                <h4>Fasilitas Tambahan</h4>
                 </div>
                 <div class="card-body">
                 <button class="btn btn-outline-primary-2x" type="button" title="Tambah Data" data-bs-toggle="modal" data-bs-target="#tambahFasilitas">Tambah Fasilitas</button>
@@ -22,7 +22,6 @@
                             <th>Kuantitas</th>
                             <th>Deskripsi</th>
                             <th>Harga Satuan</th>
-                            <!-- <th>Lebar</th> -->
                             <th>Action</th>
                             </tr>
                         </thead>
@@ -33,7 +32,6 @@
                                 <td>{{ $fasilitas->kuantitas }}</td>
                                 <td>{{ $fasilitas->deskripsi }}</td>
                                 <td>{{ $fasilitas->harga_satuan }}</td>
-                                <!-- <td>{{ $fasilitas->lebar_ruangan }}</td> -->
                                 <td> 
                                     <ul class="action"> 
                                     <li class="edit"> <a href="#"><i class="icon-pencil-alt"></i></a></li>
@@ -55,6 +53,13 @@
 
 @section('js')
 <script>
+    // $(document).ready(function () {
+    //     $('#basic-12').DataTable({
+    //         pageLength: 20,          // tampilkan 20 baris
+    //         lengthChange: false,     // hilangkan dropdown jumlah baris
+    //     });
+    // });
+
     function formatCurrency(input) {
         let value = input.value.replace(/[^0-9]/g, '');
 

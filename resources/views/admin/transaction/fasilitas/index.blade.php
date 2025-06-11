@@ -44,7 +44,7 @@
                                 <td>{{ $trx->profile->nama ?? '' }}</td>
                                 <td>{{ $trx->tanggal_awal }}</td>
                                 <td>{{ $trx->tanggal_akhir }}</td>
-                                <td>{{ $trx->catatan }}</td>
+                                <td>{{ $trx->keperluan }}</td>
                                 <td>
                                     <ul class="action"> 
                                         <li class="edit"><a href="#"><i class="icon-pencil-alt"></i></a></li>
@@ -60,7 +60,6 @@
                                             <tr>
                                                 <th>Nama</th>
                                                 <th>Jumlah</th>
-                                                <th>Satuan</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -69,7 +68,6 @@
                                                 <tr>
                                                     <td>{{$v->nama_fasilitas ?? '-'}}</td>
                                                     <td>{{$v->kuantitas ?? 0}}</td>
-                                                    <td>bundling</td>
                                                 </tr>
                                             @endforeach
                                             @endforeach
@@ -123,3 +121,4 @@
     }
 </script>
 @endsection
+

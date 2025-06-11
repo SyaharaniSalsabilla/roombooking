@@ -28,7 +28,7 @@
             $pointer = basename(url()->current())
             @endphp
             @if($pointer !== 'pesan1')
-            <a href="{{route('pesan1')}}" class="hover:text-red-500">
+            <a href="{{route('pesan1', $Ruangan->id)}}" class="hover:text-red-500">
                 <button class="bg-primary-5 text-white px-4 py-1 rounded-lg">Pesan Sekarang</button>
             </a>
             @endif
@@ -49,12 +49,18 @@
                     fasilitas
                 </h2>
                 <div class="flex justify-center ">
-                    <div class="grid grid-cols-4 gap-2 text-primary-5 w-3/5">
-                        <div class="flex flex-col gap-2 items-center">
-                            <i class="fa-solid fa-car text-3xl"></i>
-                            <h2 class="text-center text-xs font-thin">Parkiran Luas</h2>
-                        </div>
-                        <div class="flex flex-col gap-2 items-center">
+                    <div class="grid grid-cols-3 gap-2 text-primary-5 w-3/5" id="fasilitas-container">
+                        @foreach($fasilitas_umum as $ruangan)
+                            @if($ruangan->cn_fasilitas->isNotEmpty())
+                                @foreach($ruangan->cn_fasilitas as $f)
+                                    <div class="flex flex-col gap-2 items-center">
+                                        <i class="fa-solid {{$f->itemName->image ?? ''}} text-3xl"></i>
+                                        <h2 class="text-center text-xs font-thin">{{$f->itemName->nama_fasilitas ?? ''}}</h2>
+                                    </div>
+                                @endforeach
+                            @endif
+                        @endforeach
+                        <!-- <div class="flex flex-col gap-2 items-center">
                             <i class="fa-solid fa-wifi text-3xl"></i>
                             <h2 class="text-center text-xs font-thin">Wifi</h2>
                         </div>
@@ -82,7 +88,7 @@
                         <div class="flex flex-col gap-2 items-center">
                             <i class="fa-solid fa-music text-3xl"></i>
                             <h2 class="text-center text-xs font-thin">Ruang Musik</h2>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>

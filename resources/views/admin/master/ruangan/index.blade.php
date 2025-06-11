@@ -10,7 +10,7 @@
         <div class="col-sm-12">
             <div class="card">
                 <div class="card-header pb-0 card-no-border">
-                <h4>Master Ruangan</h4>
+                <h4>Ruangan</h4>
                 </div>
                 <div class="card-body">
                 <button class="btn btn-outline-primary-2x" type="button" title="Tambah Data" data-bs-toggle="modal" data-bs-target="#tambahRuangan">Tambah Ruangan</button>

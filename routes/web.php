@@ -24,7 +24,7 @@ Route::post('/room/search', [LoginsController::class, 'search_room'])->name('roo
 Route::get('/hasil/cari', [LoginsController::class, 'hasil_cari'])->name('hasil_cari'); 
 Route::get('/contact', [LoginsController::class, 'contact'])->name('contact');
 Route::get('/login/email', [LoginsController::class, 'login_email'])->name('login.email');
-Route::get('/pesan1', [LoginsController::class, 'pesan1'])->name('pesan1'); 
+Route::get('/pesan1/{id}', [LoginsController::class, 'pesan1'])->name('pesan1'); 
 Route::post('/pesan2', [LoginsController::class, 'pesan2'])->name('pesan2');
 Route::get('/pesan2', [LoginsController::class, 'pesan2'])->name('pesan2'); 
 Route::post('/pesan3', [LoginsController::class, 'pesan3'])->name('pesan3');
@@ -66,3 +66,7 @@ Route::post('/admin/fasilitas', [fasilitasController::class, 'store'])->name('ad
 Route::get('/admin/transaksiRuangan', [TransaksiController::class, 'indexRuangan'])->name('admin.transaksiRuangan');
 
 Route::get('/admin/transaksiFasilitas', [TransaksiController::class, 'indexFasilitas'])->name('admin.transaksiFasilitas');
+
+
+// API
+Route::get('/ruangan/{id}/fasilitas', [LoginsController::class, 'getFasilitasUmum']);

@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Models\fasilitas_ruangan;
 
 class Ruangan extends Authenticatable
 {
@@ -31,5 +32,10 @@ class Ruangan extends Authenticatable
 
     public function booked(){
         return $this->hasMany(\App\Models\trx_sewa::class, 'mst_ruangan_id');
+    }
+
+     public function cn_fasilitas(){
+        return $this->belongsToMany(Fasilitas::class, 'fasilitas_ruangan', 'ruangan_id', 'fasilitas_id');
+        return $data;
     }
 }

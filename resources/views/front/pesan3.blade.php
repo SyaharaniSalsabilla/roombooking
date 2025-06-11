@@ -11,6 +11,13 @@
                         <h2 class="w-full font-primary font-semibold text-3xl text-primary-5 mb-2">
                             Tinjau ulang dan konfirmasi
                         </h2>
+                        <div class="flex flex-col items-center bg-primary-1 rounded-lg p-8">
+                            <h2 class="w-full text-center font-primary font-semibold text-xl text-primary-5 mb-4">
+                                Tambah Catatan Pesanan
+                            </h2>
+                            <p for="" class="text-left">Sertakan komentar atau permintaan terkait pesanan</p>
+                            <textarea name="note" id="note" rows="5" id="" class="border border-primary-5 w-full rounded-lg bg-primary-1 p-3 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"></textarea>
+                        </div>
                         <div class="flex flex-col justify-center items-center bg-primary-1 rounded-lg p-8">
                             <h2 class="w-full text-center font-primary font-semibold text-xl text-primary-5 mb-4">
                                 Kebijakan Pembatalan
@@ -38,13 +45,7 @@
                                 </li>
                             </ul>
                         </div>
-                        <div class="flex flex-col items-center bg-primary-1 rounded-lg p-8">
-                            <h2 class="w-full text-center font-primary font-semibold text-xl text-primary-5 mb-4">
-                                Tambah Catatan Pesanan
-                            </h2>
-                            <p for="" class="text-left">Sertakan komentar atau permintaan terkait pesanan</p>
-                            <textarea name="note" id="note" rows="5" id="" class="border border-primary-5 w-full rounded-lg bg-primary-1 p-3 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"></textarea>
-                        </div>
+                        
                     </div>
                     <div class="col-span-1">
                         <form method="POST" id="prev" action="{{route('pesan2')}}">
@@ -57,8 +58,7 @@
                             <input type="hidden" name="data_tgl_sampai" id="data_tgl_sampai" value="{{$tgl_selesai}}">
                         </form>
                         <div class="flex flex-col mb-4">
-                            <button class="text-primary-2 bg-primary-5 rounded-xl py-2 px-4"
-                            onclick="document.getElementById('prev').submit()">Kembali</button>
+                            <a href="{{ route('pesan2') }}" class="text-primary-2 bg-primary-5 rounded-xl py-2 px-4 text-center">Kembali</a>
                         </div>
                         <div class="flex flex-col divide-y-2 divide-primary-5 bg-primary-1 rounded-lg">
                             <div class="flex justify-center items-center p-2">

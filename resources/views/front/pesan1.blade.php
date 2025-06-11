@@ -20,7 +20,7 @@
                                     class="checkbox-item before:content[''] peer relative h-5 w-5 cursor-pointer appearance-none rounded-full border 
                                     border-primary-5 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-12 
                                     before:w-12 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-red-500 before:opacity-0 
-                                    before:transition-opacity hover:before:opacity-10 checked:border-red-500 checked:before:bg-red-500" />
+                                    before:transition-opacity hover:before:opacity-10 checked:border-red-500 checked:before:bg-red-500" {{ $pesanan->id == $Ruangan->id ? "checked" : '' }}/>
                                 <div
                                     class="pointer-events-none absolute  top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 text-primary-5 opacity-0 transition-opacity peer-checked:opacity-100">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5"
@@ -41,7 +41,7 @@
                                 data-harga="{{ number_format($Ruangan->harga, 0, ',', '.') }}"
                                 data-deskripsi="{{$Ruangan->deskripsi}}"
                                 data-image="{{$Ruangan->image}}"
-                                data-nama="{{$Ruangan->nama_ruangan}}">
+                                data-nama="{{$Ruangan->nama_ruangan}}" data-fasilitas="{{$fasilitas_umum}}">
                                 Lebih Lengkap
                         </button>
                     </div>
@@ -93,7 +93,7 @@
             </div>
             <div class="col-span-1">
                 <div class="flex flex-col mb-4">
-                    <button class="text-primary-2 bg-primary-5 rounded-xl py-2 px-4">Kembali</button>
+                    <button class="text-primary-2 bg-primary-5 rounded-xl py-2 px-4" onclick="history.back()">Kembali</button>
                 </div>
                 <div class="flex flex-col divide-y-2 divide-primary-5 bg-primary-1 rounded-lg">
                     <div class="flex justify-center items-center p-2">
@@ -167,6 +167,7 @@ document.addEventListener('DOMContentLoaded', function(){
     const nm_tambahan = document.getElementById('nm_tambahan');
     const hrg_tambahan = document.getElementById('hrg_tambahan');
 
+
     var total_tambahan =0;
     var lastCount = 0;
 
@@ -183,6 +184,7 @@ document.addEventListener('DOMContentLoaded', function(){
                 document.getElementById('gambarModal').setAttribute('src', path + evt.target.getAttribute('data-image'));
                 document.querySelector(".deskripsi").innerHTML = evt.target.getAttribute("data-deskripsi");
                 // modal.classList.remove('hidden'); // Show modal
+                fetchFasilitas(evt.target.getAttribute("data-id"));
             });
         });
     }
@@ -191,7 +193,25 @@ document.addEventListener('DOMContentLoaded', function(){
     let names = [];
     let selected = [];
 
+    let pesanan_id = {{$pesanan ? $pesanan->id : 0}}
+
     if (terms && divNR) {
+        if(pesanan_id > 0){
+            selected = Array.from(document.querySelectorAll('.checkbox-item:checked')).map(checkbox => parseFloat(checkbox.value));
+                names = Array.from(document.querySelectorAll('.checkbox-item:checked')).map(checkbox => checkbox.getAttribute('data-nr'));
+                ids = Array.from(document.querySelectorAll('.checkbox-item:checked')).map(checkbox => checkbox.getAttribute('data-ir'));
+                const totalSum = selected.reduce((sum, value) => sum + value, 0);
+                lblRuanganHarga.innerHTML = totalSum.toLocaleString(); 
+                divNR.innerHTML = ''; 
+
+                names.forEach((name, index) => {
+                    const wrapperDiv = createComponent('div', ['items-center', 'div-nr'], '', divNR);
+                    const item1Div = createComponent('div', ['item-1', 'grid', 'grid-cols-2'], '', wrapperDiv);
+                    createComponent('p', ['text-primary-5', 'text-2xl', 'font-semibold', 'text-left', 'px-4', 'py-1'], name, item1Div);
+                    createComponent('p', ['text-center'], `IDR <label id="ruangan-harga">${selected[index].toLocaleString()}</label>`, item1Div);
+                });
+                updateTotal()
+        }
         terms.forEach(item => {
             item.addEventListener('click', (e) => {
                 selected = Array.from(document.querySelectorAll('.checkbox-item:checked')).map(checkbox => parseFloat(checkbox.value));
@@ -325,6 +345,33 @@ document.addEventListener('DOMContentLoaded', function(){
         }
     }
 
+    // fetch data
+    function fetchFasilitas(ruanganId) {
+        fetch(`/ruangan/${ruanganId}/fasilitas`)
+            .then(response => response.json())
+            .then(data => {
+                if (data) {
+                    
+                    // Tampilkan fasilitas di modal
+                    const container = document.getElementById('fasilitas-container');
+                    container.innerHTML = ''; // bersihkan konten lama
+                    
+                    if (Array.isArray(data.cn_fasilitas)) {
+                        data.cn_fasilitas.forEach(fas => {
+                            container.innerHTML += `
+                                <div class="flex flex-col items-center gap-2">
+                                    <i class="fa-solid ${fas.image || 'fa-circle-question'} text-2xl"></i>
+                                    <h2 class="text-xs">${fas.nama_fasilitas}</h2>
+                                </div>`;
+                        });
+                    } else {
+                        console.warn('cn_fasilitas tidak tersedia atau bukan array:', data.cn_fasilitas);
+                    }
+
+                }
+            });
+    }
+
 
 
     // Fungsi untuk mengupdate total harga (ruangan + item tambahan)
@@ -419,8 +466,8 @@ document.addEventListener('DOMContentLoaded', function(){
 <script>
     document.addEventListener('DOMContentLoaded', ()=>{
         const fasilitas_detail= document.getElementById('fasilitas_detail').addEventListener('click', function(event) {
-
         })
     })
+
 </script>
 @endsection

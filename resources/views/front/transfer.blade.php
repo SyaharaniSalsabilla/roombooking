@@ -40,6 +40,7 @@
                         <p class="text-gray-700 text-base">Nomer Rekening</p>
                         <h2 class="font-bold text-2xl">6030571906</h2>
                     </div>
+                    <button id="pay-button">Bayar Demo</button>
                 </div>
             </div>
         </section>
@@ -57,4 +58,29 @@
         document.getElementById('data_note').value = noteData;
     };
 </script>
+<script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="SB-Mid-client-2l8b5oqyv0apvQeQ"></script>
+<script>
+  var payButton = document.getElementById('pay-button');
+  
+  // Snap token demo yang dibuat untuk testing, token ini expire, biasanya kamu harus generate sendiri dari server
+  var demoSnapToken = 'dummy-snap-token-untuk-demo'; // <-- ini contoh, harus diganti token asli kalau mau bayar beneran
+
+  payButton.addEventListener('click', function() {
+    snap.pay(demoSnapToken, {
+      onSuccess: function(result){
+        alert('Pembayaran berhasil!');
+        console.log(result);
+      },
+      onPending: function(result){
+        alert('Pembayaran pending!');
+        console.log(result);
+      },
+      onError: function(result){
+        alert('Pembayaran gagal!');
+        console.log(result);
+      }
+    });
+  });
+</script>
+
 @endsection

@@ -12,6 +12,7 @@ use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\fasilitas;
+use App\Models\fasilitasRuangan;
 use Illuminate\Support\Facades\Validator;
 
 class LoginsController extends Controller
@@ -25,13 +26,16 @@ class LoginsController extends Controller
     public function promo()
     {
         $datas = \App\Models\Ruangan::orderBy('id','ASC')->get();
-        return view('.front.promo')->with('datas', $datas);
+        $fasilitas_umum = Ruangan::with('cn_fasilitas')->get();
+        $Ruangan = \App\Models\Ruangan::orderBy('id','ASC')->first();
+        return view('.front.promo')->with(['datas' => $datas, 'fasilitas_umum'=>$fasilitas_umum,'Ruangan' => $Ruangan]);
     }
 
     public function room()
     {
         $rooms = Ruangan::orderBy('id','ASC')->get();
-        return view('.front.room',['rooms' => $rooms]);
+        $fasilitas_umum = Ruangan::with('cn_fasilitas')->get();
+        return view('.front.room',['rooms' => $rooms, 'fasilitas_umum'=> $fasilitas_umum]);
     }
 
     public function search_room(Request $request)
@@ -125,12 +129,20 @@ class LoginsController extends Controller
 
 
     
-    public function pesan1()
+    public function pesan1($id)
     {
         $datas = Ruangan::orderBy('id','ASC')->get();
-        $fasilitas = fasilitas::orderBy('id','ASC')->get();
-        
-        return view('front.pesan1', ['datas' => $datas, 'fasilitas' => $fasilitas]);
+        $fasilitas = fasilitas::where('is_umum', false)->orderBy('id','ASC')->get();
+        $fasilitas_umum = Ruangan::with('cn_fasilitas')->get();
+        $pesanan = Ruangan::findOrFail($id);
+        return view('front.pesan1', ['datas' => $datas, 'fasilitas' => $fasilitas, 'fasilitas_umum' => $fasilitas_umum, 'pesanan' => $pesanan ]);
+    }
+
+    public function getFasilitasUmum($id){
+        $ruangan = Ruangan::with(['cn_fasilitas' => function($query) {
+            $query->where('is_umum', true);
+        }])->findOrFail($id);
+        return $ruangan;
     }
     
     public function pesan2(Request $request)
@@ -145,7 +157,8 @@ class LoginsController extends Controller
         $datas = [
             'ruangan' => $data['ruangan'] ?? [],
             'itemTambahan' => $data['itemTambahan'] ?? null,
-            'totalHarga' => $data['totalHarga'] ?? 0
+            'totalHarga' => $data['totalHarga'] ?? 0,
+            'pesanan' => $pesanan = $data['ruangan'][0]
         ];
         
         session()->put('pesan2', $datas);
@@ -219,11 +232,11 @@ class LoginsController extends Controller
             'tgl_selesai' => 'required|date|after:tgl_mulai',
         ], [
             'tgl_mulai.required' => 'Tanggal mulai harus diisi.',
-            'tgl_mulai.date' => 'Tanggal mulai harus berupa tanggal yang valid.',
-            'tgl_mulai.before' => 'Tanggal mulai harus lebih kecil dari tanggal selesai.',
+            'tgl_mulai.date' => 'Tanggal / jam mulai harus berupa tanggal yang valid.',
+            'tgl_mulai.before' => 'Tanggal / jam mulai harus lebih kecil dari tanggal selesai.',
             'tgl_selesai.required' => 'Tanggal selesai harus diisi.',
-            'tgl_selesai.date' => 'Tanggal selesai harus berupa tanggal yang valid.',
-            'tgl_selesai.after' => 'Tanggal selesai harus lebih besar dari tanggal mulai.',
+            'tgl_selesai.date' => 'Tanggal / jam selesai harus berupa tanggal yang valid.',
+            'tgl_selesai.after' => 'Tanggal / jam selesai harus lebih besar dari tanggal mulai.',
         ]);
         
 
