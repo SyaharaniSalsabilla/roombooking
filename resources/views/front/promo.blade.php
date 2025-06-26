@@ -36,7 +36,7 @@
                                 <div class="flex gap-2 items-center">
                                     <h2 class=" font-primary text-lg uppercase">IDR {{ number_format($Ruangan->harga, 0, ',', '.') }}</h2>
                                     <p class="line-through text-gray-300 font-primary">IDR {{ number_format($Ruangan->harga, 0, ',', '.') }}</p>
-                                    <h2 class=" font-primary text-lg uppercase">50% off</h2>
+                                    <h2 class=" font-primary text-lg uppercase">30% off</h2>
                                 </div>
                                 <a href="{{route('pesan1', ['id' => $Ruangan->id])}}" class="hover:text-red-500">
                                     <button class="bg-primary-2 text-primary-5 px-4 py-1 rounded-lg">Pesan Sekarang</button>

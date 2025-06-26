@@ -27,7 +27,8 @@ class Ruangan extends Authenticatable
         'lebar_ruangan',
         'deskripsi',
         'image',
-        'harga'
+        'harga',
+        'active'
     ];
 
     public function booked(){

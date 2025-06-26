@@ -71,8 +71,8 @@
                                 <td class="py-3 px-4 border border-slate-400">
                                     <div class="flex flex-col gap-1">
                                         <span>{{$fas->deskripsi}}</span>
-                                        <button class="bg-primary-5 openModal2 text-white px-3 py-1 rounded text-sm w-fit" id="fasilitas_detail" 
-                                        data-image="{{ url('/assets/front/image/') .'/'. $fas->image}}">Lihat Detail</button>
+                                        <!-- <button class="bg-primary-5 openModal2 text-white px-3 py-1 rounded text-sm w-fit" id="fasilitas_detail" 
+                                        data-image="{{ url('/assets/front/image/') .'/'. $fas->image}}">Lihat Detail</button> -->
                                     </div>
                                 </td>
                                 <td class="py-3 px-4 border border-slate-400"><label id="hrg_tambahan" value='{{ $fas->harga_satuan }}' data-id="{{$fas->id}}">
@@ -132,7 +132,7 @@
             </div>
         </div>
     </div>
-    <div id="modal2" class="fixed z-50 inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden">
+    <!-- <div id="modal2" class="fixed z-50 inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden">
         <div class="bg-primary-1 rounded-lg w-1/4 shadow-lg max-h-screen">
             <div class="w-full relative rounded-lg">
                 <img src="{{ url('../../../assets/front/image/'.'Sarapan.png') }}" class="rounded-xl z-0 relative" height="120%" alt="" id="img_fas">
@@ -142,7 +142,7 @@
                 </button>
             </div>
         </div>
-    </div>
+    </div> -->
 </section>
 @include('components.modal')
 @endsection

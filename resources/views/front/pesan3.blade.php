@@ -78,7 +78,7 @@
                                 <div class="grid grid-cols-2 items-center py-1 space-x-between">
                                 @foreach($ruangans as $r)
                                     <p class="text-primary-5 text-left text-2xl font-semibold px-4 py-1">{{ $r['nama'] }}</p>
-                                    <p class="text-right px-4">IDR {{ number_format($r['harga'], 0, ',', '.') }}</p>
+                                    <p class="text-right px-4">IDR {{ number_format($r['subtotal'], 0, ',', '.') }}</p>
                                 @endforeach
                                 </div>
                             @endif

@@ -40,4 +40,8 @@ class sewa_fasilitas extends Model
         $count = $this::where('trx_sewa_id',$id)->get();
         return $count->count();
     }
+
+    public function fs(){
+        return $this->belongsTo(\App\Models\fasilitas::class,'mst_fasilitas_id');
+    }
 }

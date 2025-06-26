@@ -45,7 +45,9 @@ Route::post('/login/post', [UsersController::class, 'login'])->name('login.post'
 Route::post('/login/customer', [UsersController::class, 'login_customer'])->name('login.post.customer');
 Route::get('/logout', [LoginsController::class, 'logout'])->name('logout'); 
 Route::post('/profil/update-password', [LoginsController::class, 'updatePassword'])->name('profil.updatePassword');
-
+Route::get('/riwayat/transaksi', [LoginsController::class, 'riwayat_transaksi'])->name('riwayat.transaksi');
+Route::get('/forgot-password', [LoginsController::class, 'showLinkRequestForm'])->name('password.request');
+Route::get('/reset-password/{token}', [LoginsController::class, 'showResetForm'])->name('password.reset');
 
 // Register
 Route::get('/register', [UsersController::class, 'register'])->name('register'); 
@@ -54,8 +56,18 @@ Route::post('/register', [UsersController::class, 'create'])->name('register.pos
 // Admin Dashboard
 Route::get('/admin', [DashboardController::class, 'index'])->name('admin.dashboard');
 
-Route::get('/admin/ruangan', [RuanganController::class, 'index'])->name('admin.ruangan');
-Route::post('/admin/ruangan', [RuanganController::class, 'store'])->name('admin.ruanganAdd');
+// Route::get('/admin/ruangan', [RuanganController::class, 'index'])->name('admin.ruangan');
+// Route::post('/admin/ruangan', [RuanganController::class, 'store'])->name('admin.ruanganAdd');
+
+Route::resource('admin/ruangan', RuanganController::class)->names([
+    'index'   => 'admin.ruangan',         // GET      /admin/ruangan
+    'create'  => 'admin.ruanganCreate',   // GET      /admin/ruangan/create
+    'store'   => 'admin.ruanganAdd',      // POST     /admin/ruangan
+    'show'    => 'admin.ruanganShow',     // GET      /admin/ruangan/{ruangan}
+    'edit'    => 'admin.ruanganEdit',     // GET      /admin/ruangan/{ruangan}/edit
+    'update'  => 'admin.ruanganUpdate',   // PUT/PATCH /admin/ruangan/{ruangan}
+    'destroy' => 'admin.ruanganDelete',   // DELETE   /admin/ruangan/{ruangan}
+]);
 
 Route::get('/admin/hargaRuangan', [RuanganController::class, 'indexHarga'])->name('admin.ruanganHarga');
 Route::post('/admin/hargaRuangan', [RuanganController::class, 'storeHarga'])->name('admin.ruanganHargaAdd');
@@ -67,6 +79,17 @@ Route::get('/admin/transaksiRuangan', [TransaksiController::class, 'indexRuangan
 
 Route::get('/admin/transaksiFasilitas', [TransaksiController::class, 'indexFasilitas'])->name('admin.transaksiFasilitas');
 
+Route::post('/reset-password', [UsersController::class, 'resetPassword'])->name('password.update');
+Route::post('/reset-find/{id}', [UsersController::class, 'resetPassword']);
 
 // API
 Route::get('/ruangan/{id}/fasilitas', [LoginsController::class, 'getFasilitasUmum']);
+Route::post('/api/user-find', [UsersController::class, 'findUser'])->name('user.find');
+Route::get('/reset/page', [UsersController::class, 'resetPage'])->name('reset.page');
+
+//Midtrans
+Route::post('/snap/token', [LoginsController::class, 'getSnapToken'])->name('snap.token');
+Route::post('/transfer', [LoginsController::class, 'transfer'])->name('transfer');
+
+// Dashboard
+// Route::post('/snap/token', [LoginsController::class, 'getSnapToken'])->name('snap.token');

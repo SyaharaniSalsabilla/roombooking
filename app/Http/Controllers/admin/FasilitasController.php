@@ -18,8 +18,7 @@ class FasilitasController extends Controller
     
     public function index()
     {
-        $fasilitas = fasilitas::all();
-
+        $fasilitas = fasilitas::where('is_umum', false)->get();
         return view('admin.master.fasilitas.index', compact('fasilitas'));
     }
 

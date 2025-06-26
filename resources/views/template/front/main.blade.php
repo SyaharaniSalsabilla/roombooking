@@ -4,13 +4,15 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Anindhaloka</title>
+    <title>NinSpace</title>
     {{-- @vite(['../../js/app.js']) --}} 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="icon" href="../assets/admin/images/Anindhaloka Logo.png" type="image/x-icon">
+    <link rel="shortcut icon" href="../assets/admin/images/Anindhaloka Logo.png" type="image/x-icon">
     <link
         href="https://fonts.googleapis.com/css2?family=El+Messiri:wght@400..700&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
         rel="stylesheet">
@@ -65,6 +67,23 @@
             });
         }
     </script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const btn = document.getElementById('profileDropdownBtn');
+        const menu = document.getElementById('profileDropdown');
+
+        btn.addEventListener('click', function () {
+            menu.classList.toggle('hidden');
+        });
+
+        // Optional: Klik di luar untuk menutup
+        document.addEventListener('click', function (e) {
+            if (!btn.contains(e.target) && !menu.contains(e.target)) {
+                menu.classList.add('hidden');
+            }
+        });
+    });
+</script>
 </body>
 
 </html>

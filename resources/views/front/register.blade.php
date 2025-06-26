@@ -25,20 +25,20 @@
         <form class="space-y-2" action="{{ route('register.post') }}" method="POST">
             @csrf
             <img src="../../../assets/front/image/Anindhaloka.png" class="mb-4" alt="">
-            <input type="text" placeholder="Nama Depan" name="nama_depan"
+            <input type="text" placeholder="Nama Depan" name="nama_depan" required
                 class="w-full text-center px-3 py-3 bg-primary-1 border border-primary-5  rounded-md text-primary-5 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent">
-            <input type="text" placeholder="Nama Belakang" name="nama_belakang"
+            <input type="text" placeholder="Nama Belakang" name="nama_belakang" required
                 class="w-full text-center px-3 py-3 bg-primary-1 border border-primary-5  rounded-md text-primary-5 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent">
-            <input type="email" placeholder="Email" name="email" 
+            <input type="email" placeholder="Email" name="email" required
                 class="w-full text-center px-3 py-3 bg-primary-1 border border-primary-5  rounded-md text-primary-5 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent">
             <span class="text-danger">{{ $errors->has('email') ? $errors->first('email') : ''}}</span>
-            <input type="password" placeholder="Password" name="password"
+            <input type="password" placeholder="Kata Sandi" name="password" required
                 class="w-full text-center px-3 py-3 bg-primary-1 border border-primary-5  rounded-md text-primary-5 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent">
             <span class="text-danger">{{ $errors->has('password') ? $errors->first('password') : ''}}</span>
-            <input type="password" placeholder="Konfirmasi Password" name="password_konfirmasi"
+            <input type="password" placeholder="Konfirmasi Kata Sandi" name="password_konfirmasi" required
                 class="w-full text-center px-3 py-3 bg-primary-1 border border-primary-5  rounded-md text-primary-5 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent">
 
-            <div class="flex mt-4">
+            <!-- <div class="flex mt-4">
                 <label class="flex items-start space-x-3 cursor-pointer group bg-red-50/50 p-4 rounded-md">
                     <div class="relative flex items-center">
                         <input type="radio" name="terms" required
@@ -57,7 +57,7 @@
                         kami.
                     </span>
                 </label>
-            </div>
+            </div> -->
 
             <button type="submit"
                 class="w-full bg-primary-5 text-primary-2 py-3 px-4 rounded-md font-medium hover:bg-red-700 transition-colors">

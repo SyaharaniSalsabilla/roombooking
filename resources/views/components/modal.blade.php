@@ -28,9 +28,10 @@
             $pointer = basename(url()->current())
             @endphp
             @if($pointer !== 'pesan1')
-            <a href="{{route('pesan1', $Ruangan->id)}}" class="hover:text-red-500">
-                <button class="bg-primary-5 text-white px-4 py-1 rounded-lg">Pesan Sekarang</button>
-            </a>
+            @if($Ruangan && $Ruangan->count() > 0)
+                <a href="{{route('pesan1', $Ruangan->id)}}" class="hover:text-red-500">
+                    <button class="bg-primary-5 text-white px-4 py-1 rounded-lg">Pesan Sekarang</button>
+                </a>@endif
             @endif
             
         </div>

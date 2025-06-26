@@ -45,7 +45,7 @@
                             <span class="divider text-center " >
                                 <div class="p-2">
                                     <label id="lbl_tanggal_awal" class="font-semibold">{{$tgl_mulai}}</label> 
-                                    <span class="text-primary-5">to</span>
+                                    <span class="text-primary-5">sampai</span>
                                     <label id="lbl_tanggal_akhir" class="font-semibold">{{ $tgl_selesai}}</label>
                                 </div>
                             </span>

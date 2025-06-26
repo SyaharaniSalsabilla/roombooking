@@ -7,15 +7,19 @@
     <meta name="description" content="Cuba admin is super flexible, powerful, clean &amp; modern responsive bootstrap 5 admin template with unlimited possibilities.">
     <meta name="keywords" content="admin template, Cuba admin template, dashboard template, flat admin template, responsive admin template, web app">
     <meta name="author" content="pixelstrap">
-    <link rel="icon" href="../assets/admin/images/favicon.png" type="image/x-icon">
-    <link rel="shortcut icon" href="../assets/admin/images/favicon.png" type="image/x-icon">
-    <title>Cuba - Premium Admin Template</title>
+    <link rel="icon" href="../assets/admin/images/Anindhaloka Logo.png" type="image/x-icon">
+    <link rel="shortcut icon" href="../assets/admin/images/Anindhaloka Logo.png" type="image/x-icon">
+    <title>NinSpace - Admin</title>
     <!-- Google font-->
     <link href="https://fonts.googleapis.com/css?family=Rubik:400,400i,500,500i,700,700i&amp;display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i,900&amp;display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="../assets/admin/css/font-awesome.css">
     <!-- ico-font-->
     <link rel="stylesheet" type="text/css" href="../assets/admin/css/vendors/icofont.css">
+    <!-- Font Awesome 5 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <!-- Themify icon-->
     <link rel="stylesheet" type="text/css" href="../assets/admin/css/vendors/themify.css">
     <!-- Flag icon-->
@@ -36,6 +40,7 @@
     <link id="color" rel="stylesheet" href="../assets/admin/css/color-1.css" media="screen">
     <!-- Responsive css-->
     <link rel="stylesheet" type="text/css" href="../assets/admin/css/responsive.css">
+    @yield('style')
   </head>
   <body> 
     <!-- loader starts-->

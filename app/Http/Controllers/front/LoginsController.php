@@ -14,6 +14,11 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\fasilitas;
 use App\Models\fasilitasRuangan;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Auth\Events\PasswordReset;
+use App\Models\User;
+use Midtrans\Snap;
+use Midtrans\Config;
 
 class LoginsController extends Controller
 {
@@ -44,6 +49,7 @@ class LoginsController extends Controller
         $rooms = Ruangan::with('booked');
         $keyword = strtolower($request->get('cari')) ?? '';
         $arryaDate = explode(' ', $request->get('tanggal'));
+         $fasilitas_umum = Ruangan::with('cn_fasilitas')->get();
         
         $arryaDate = array_filter($arryaDate, fn($item) => $item !== 'to');
         if (count($arryaDate) === 2) {
@@ -61,7 +67,7 @@ class LoginsController extends Controller
         }
         $rooms = $rooms->get();
         
-        return view('front.hasil_cari', ['rooms' => $rooms, 'dates' => $request->get('tanggal'),'cari' => $request->get('cari')]);
+        return view('front.hasil_cari', ['Ruangan' => $rooms, 'dates' => $request->get('tanggal'),'cari' => $request->get('cari'), 'fasilitas_umum' =>$fasilitas_umum]);
     }
 
     public function hasil_cari()
@@ -79,6 +85,45 @@ class LoginsController extends Controller
     public function login_email()
     {
         return view('.front.login_email');
+    }
+
+    public function sendResetLinkEmail(Request $request)
+    {
+        $request->validate(['email' => 'required|email']);
+
+        // Proses kirim reset link via Laravel built-in
+        $status = Password::sendResetLink(
+            $request->only('email')
+        );
+
+        return $status === Password::RESET_LINK_SENT
+                    ? back()->with(['status' => __($status)])
+                    : back()->withErrors(['email' => __($status)]);
+    }
+
+    public function reset(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required|confirmed',
+        ]);
+
+        $status = Password::reset(
+            $request->only('email', 'password', 'repassword'),
+            function ($user, $password) {
+                $user->forceFill([
+                    'password' => Hash::make($password)
+                ])->setRememberToken(Str::random(60));
+
+                $user->save();
+
+                event(new PasswordReset($user));
+            }
+        );
+        
+        return $status === Password::PASSWORD_RESET
+                    ? redirect()->route('login.email')->with('status', __($status))
+                    : back()->withErrors(['email' => [__($status)]]);
     }
 
     public function logout(Request $request)
@@ -121,12 +166,24 @@ class LoginsController extends Controller
             }
             $profile->$key  = $val;
         }
-        // dd($profile);
         $profile->save();
 
         return back()->with('success', 'Password berhasil diperbarui.');
     }
 
+
+    public function riwayat_transaksi()
+    {
+        // Ambil user yang sedang login
+        $user = Auth::user();
+
+        // Ambil riwayat transaksi milik user tersebut
+        $riwayatTransaksi = trx_sewa::with('ruangan')->where('mst_profil_id', $user->id)
+                                ->orderBy('created_at', 'desc')
+                                ->get();
+        // Kirim data ke view
+        return view('front.riwayat_transaksi', compact('riwayatTransaksi'));
+    }
 
     
     public function pesan1($id)
@@ -185,6 +242,7 @@ class LoginsController extends Controller
         $jam_Sampai = $request->input('data_jam_sampai');
         $tgl_jam_mulai =(String) $tgl_mulai . ' ' . $jam_mulai;
         $tgl_jam_selesai = $tgl_sampai . ' '. $jam_Sampai;
+
         $returnsVal = [
             'ruangans' => $data_ruangan,
             'tambahans' => $data_tambahan,
@@ -193,8 +251,39 @@ class LoginsController extends Controller
             'totalHarga' => $data_total
         ];
 
-        session()->put('pesan3', $returnsVal);
+         $validator = Validator::make($returnsVal, [
+            'tgl_mulai' => 'required|date|before:tgl_selesai',
+            'tgl_selesai' => 'required|date|after:tgl_mulai',
+        ], [
+            'tgl_mulai.required' => 'Tanggal mulai harus diisi.',
+            'tgl_mulai.date' => 'Tanggal / jam mulai harus berupa tanggal yang valid.',
+            'tgl_mulai.before' => 'Tanggal / jam mulai harus lebih kecil dari tanggal selesai.',
+            'tgl_selesai.required' => 'Tanggal selesai harus diisi.',
+            'tgl_selesai.date' => 'Tanggal / jam selesai harus berupa tanggal yang valid.',
+            'tgl_selesai.after' => 'Tanggal / jam selesai harus lebih besar dari tanggal mulai.',
+        ]);
+
+        // Cek pesanan
+        $trx_ruangan = null;
+        if(is_array($returnsVal['ruangans'])){
+            foreach ($returnsVal['ruangans'] as $ruangan) {
+                if ($this->checkPesanan($ruangan['id'], [$returnsVal['tgl_mulai'], $returnsVal['tgl_selesai']])) {
+                    $namaRuangan = Ruangan::find($ruangan['id'])->nama_ruangan;
+                    return back()
+                        ->withErrors(['message' => "Ruangan $namaRuangan sudah dipesan pada tanggal {$returnsVal['tgl_mulai']} - {$returnsVal['tgl_selesai']}"])
+                        ->withInput();
+                }
+            }   
+        }
         
+
+        if ($validator->fails()) {
+            return back()
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+        
+        session()->put('pesan3', $returnsVal);
         return view('.front.pesan3',$returnsVal);
     }
 
@@ -255,7 +344,9 @@ class LoginsController extends Controller
     {
         if($request->method() == 'GET'){
             $datas = session()->get('pesan4');
-            return view('.front.pesan4',$datas);
+            if($datas){
+                return view('.front.pesan4',$datas);
+            }
         }
 
         $data_ruangan = json_decode($request->input('data_ruangan'), true);
@@ -274,7 +365,7 @@ class LoginsController extends Controller
             'totalHarga' => $data_total,
             'notes' => $note
         ];
-
+        
         session()->put('pesan4', $returnsVal);
         
         return view('.front.pesan4',$returnsVal);
@@ -282,10 +373,11 @@ class LoginsController extends Controller
 
     public function transfer(Request $request)
     {
-        
         if($request->method() == 'GET'){
             $datas = session()->get('transfer');
-            return view('.front.transfer',$datas);
+            if($datas){
+                return view('.front.transfer',$datas);
+            }
         }
 
         $data_ruangan = json_decode($request->input('data_ruangan'), true);
@@ -308,6 +400,7 @@ class LoginsController extends Controller
             'kode' => $kode,
             'metode_bayar' => $metode_bayar
         ];
+        
         $valid = Validator::make($returnsVal,[
             'ruangans' => 'required',
             'tambahans' => 'nullable',
@@ -337,6 +430,7 @@ class LoginsController extends Controller
         
         // Menyimpan data trx_ruangan
         $trx_ruangan = null;
+        
         if(is_array($returnsVal['ruangans'])){
             foreach ($returnsVal['ruangans'] as $ruangan) {
                 if ($this->checkPesanan($ruangan['id'], [$returnsVal['tgl_mulai'], $returnsVal['tgl_selesai']])) {
@@ -351,7 +445,7 @@ class LoginsController extends Controller
                     "id"=> $ruangan["id"],
                     "totalHarga" => $returnsVal["totalHarga"],
                 ], $tgl_mulai, $tgl_sampai, $note, $metode_bayar);
-            
+                
                 // Simpan fasilitas tambahan
                 // if (!empty($data_tambahan)) {
                 //     foreach ($data_tambahan as $item) {
@@ -368,7 +462,7 @@ class LoginsController extends Controller
             // Menyimpan data tambahan jika ada
             if (!empty($data_tambahan)) {
                 foreach ($data_tambahan as $item) {
-                    $trx_ruangan->sewaFasilitas()->create([
+                    $trx_stat =$trx_ruangan->sewaFasilitas()->create([
                         'trx_sewa_id' => $trx_ruangan->id,
                         'mst_fasilitas_id' => $item['id'],
                         'kuantitas' => $item['jumlah'],
@@ -422,5 +516,35 @@ class LoginsController extends Controller
             'diskon' => 0,
             'deskripsi' => $metode_bayar,
         ]);
+    }
+
+    public function showLinkRequestForm(){
+        return view('front.find_user');
+    }
+
+    public function getSnapToken(Request $request)
+    {
+        Config::$serverKey = env('MIDTRANS_SERVER_KEY');
+        Config::$isProduction = false;
+
+        $orderId = 'TRX-' . time();
+
+        $params = [
+            'transaction_details' => [
+                'order_id' => $orderId,
+                'gross_amount' => (int) $request->total, // pastikan 'total' dikirim dari JS
+            ],
+            'customer_details' => [
+                'first_name' => Auth::user()->profile->nama ?? 'User',
+                'email' => Auth::user()->email,
+            ]
+        ];
+
+        try {
+            $snapToken = Snap::getSnapToken($params);
+            return response()->json(['snap_token' => $snapToken]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
 }

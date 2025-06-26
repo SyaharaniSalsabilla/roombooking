@@ -3,7 +3,7 @@
 <div id="app" class="">
     <section id="hiro" class=" mb-6">
         <div class="container flex flex-col justify-center py-8">
-            <h2 class="w-full text-center font-primary font-semibold uppercase text-3xl text-primary-5 mb-4">Profile
+            <h2 class="w-full text-center font-primary font-semibold uppercase text-3xl text-primary-5 mb-4">Profil
             </h2>
             <div class="flex flex-col divide-y-2 divide-primary-5 gap-6">
                 <div class="grid grid-cols-2">
@@ -11,8 +11,6 @@
                         <div class="flex flex-col">
                             <h2 class="text-xl text-primary-5 mb-2 font-primary font-bold">
                             {{Auth::user()->profile->nama ?? ''}}</h2>
-                            <h2 class="text-xl text-primary-5 mb-2 font-primary font-bold">
-                            Member</h2>
                             <p>{{Auth::user()->profile->telepon ?? ''}}</p>
                             <p>{{Auth::user()->profile->email ?? ''}}</p>
                             <p>{{Auth::user()->profile->alamat ?? ''}}</p>
@@ -67,7 +65,7 @@
                 <div class="flex flex-col gap-2 py-6">
                     <div class="grid grid-cols-2 gap-2">
                         <div class="flex flex-col gap-2">
-                            <label for="" class="text-primary-5">Password</label>
+                            <label for="" class="text-primary-5">Kata Sandi</label>
                             <div class="relative">
                                 <input type="password" name="password" value="{{Auth::user()->profile->password ?? ''}}" disabled
                                     class="w-full pl-10 pr-4 py-3 bg-primary-1 border border-primary-5  rounded-md text-primary-5 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent">
@@ -77,16 +75,16 @@
                             </div>
                         </div>
                         <div class="flex flex-col gap-2">
-                            <label for="password_baru" class="text-primary-5">Password Baru</label>
+                            <label for="password_baru" class="text-primary-5">Kata Sandi Baru</label>
                             <div class="relative">
-                                <input type="password" name="password_baru" placeholder="Password Perubahan"
+                                <input type="password" name="password_baru" placeholder="Kata Sandi Perubahan"
                                     class="w-full pl-10 pr-4 py-3 bg-primary-1 border 
                                     border-primary-5  rounded-md text-primary-5 placeholder-gray-500 
                                     focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent">
                                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                     <i class="fa-solid fa-key h-5 w-5 text-primary-5"></i>
                                 </div>
-                            </div>
+                            </div> 
                         </div>
                     </div>
                 </div>
@@ -111,5 +109,38 @@
 document.addEventListener('DOMContentLoaded', function(){
     document.getElementsByClassName('password_baru').value = ''
 });
+
+document.addEventListener('DOMContentLoaded', function () {
+    const btn = document.getElementById('profileDropdownBtn');
+    const menu = document.getElementById('profileDropdown');
+
+    if (btn && menu) {
+        btn.addEventListener('click', function (e) {
+            e.stopPropagation();
+            menu.classList.toggle('hidden');
+        });
+
+        document.addEventListener('click', function () {
+            menu.classList.add('hidden');
+        });
+    }
+});
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const btn = document.getElementById('profileDropdownBtn');
+        const menu = document.getElementById('profileDropdown');
+
+        btn.addEventListener('click', function () {
+            menu.classList.toggle('hidden');
+        });
+
+        // Optional: Klik di luar untuk menutup
+        document.addEventListener('click', function (e) {
+            if (!btn.contains(e.target) && !menu.contains(e.target)) {
+                menu.classList.add('hidden');
+            }
+        });
+    });
 </script>
 @endsection

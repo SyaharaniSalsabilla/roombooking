@@ -7,7 +7,8 @@
             </h2>
             <div class="grid grid-cols-2 gap-6 py-2">
                 <div class="flex flex-col gap-6">
-                    @foreach($rooms as $Ruangan)
+                    @if($Ruangan)
+                    @foreach($Ruangan as $Ruangan)
                         <div class="relative rounded-lg text-white mb-12">
                             <img src="{{ url('/assets/front/image/'.$Ruangan->image) }}" class="rounded-xl z-0 relative h-full" alt="">
                             <div
@@ -39,13 +40,14 @@
                                         <h2 class=" font-primary text-lg uppercase">IDR {{$Ruangan->harga}}</h2>
                                     </div>
                                     <form id="pesanan" action="{{route('transaksi.pesan',[12,1])}}" method="POST">@csrf</form>
-                                    <a href="{{route('pesan1')}}" class="hover:text-red-500">
+                                    <a href="{{route('pesan1', $Ruangan->id)}}" class="hover:text-red-500">
                                         <button class="bg-primary-2 text-primary-5 px-4 py-1 rounded-lg">Pesan Sekarang</button>
                                     </a>
                                 </div>
                             </div>
                         </div>
                     @endforeach
+                    @endif
                 </div>
                 <form method="POST" action="{{ route('room.search') }}" class="justify-center ">
                     <div>

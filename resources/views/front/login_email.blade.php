@@ -41,7 +41,7 @@
 
             <!-- Password Input -->
             <div class="relative">
-                <input type="password" placeholder="Password" name="password"
+                <input type="password" placeholder="Kata Sandi" name="password"
                     class="w-full pl-10 pr-4 py-3 bg-primary-1 border border-primary-5 
                     rounded-md text-primary-5 placeholder-gray-500 focus:outline-none 
                     focus:ring-2 focus:ring-red-500 focus:border-transparent form-control">
@@ -61,7 +61,9 @@
                 MASUK
             </button>
             <div class="flex justify-end">
-                <p class="text-xs text-left flex text-gray-500">lupa password?</p>
+                <a href="{{ route('password.request') }}" class="text-xs text-left flex text-gray-500 hover:underline">
+                    Lupa kata sandi?
+                </a>
             </div>
         </form>
     </div>

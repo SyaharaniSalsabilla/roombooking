@@ -23,21 +23,45 @@
                             <th>Lokasi</th>
                             <th>Panjang</th>
                             <th>Lebar</th>
-                            <th>Action</th>
+                            <th>Harga</th>
+                            <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($ruangan as $ruangan)
+                            @foreach($ruangans as $ruangan)
                             <tr>
                                 <td>{{ $ruangan->nama_ruangan}}</td>
                                 <td>{{ $ruangan->kapasitas }}</td>
                                 <td>{{ $ruangan->lokasi }}</td>
                                 <td>{{ $ruangan->panjang_ruangan }}</td>
                                 <td>{{ $ruangan->lebar_ruangan }}</td>
+                                <td>{{ $ruangan->harga }}</td>
                                 <td> 
                                     <ul class="action"> 
-                                    <li class="edit"> <a href="#"><i class="icon-pencil-alt"></i></a></li>
-                                    <li class="delete"><a href="#"><i class="icon-trash"></i></a></li>
+                                    <li class="edit">
+                                        <a href="javascript:void(0);" 
+                                        data-bs-toggle="modal" 
+                                        data-bs-target="#editRuangan{{ $ruangan->id }}">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                    </li>
+                                    <li class="delete">
+                                       <form action="{{ route('admin.ruanganDelete', $ruangan->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Yakin ingin menghapus ruangan ini?')">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" style="background:none; border:none; color:red; cursor:pointer;padding:0px;">
+                                                <i class="fa-solid fa-trash"></i>
+                                            </button>
+                                        </form>
+                                    </li>
+                                    <!-- <li class="delete">
+                                        <button type="button" class="btn-delete text-danger" 
+                                            data-bs-toggle="modal" 
+                                            data-bs-target="#modalDeleteRuangan" 
+                                            data-id="{{ $ruangan->id }}">
+                                            <i class="fa-solid fa-trash"></i>
+                                        </button>
+                                    </li> -->
                                     </ul>
                                 </td>
                             </tr>
@@ -50,8 +74,35 @@
         </div>
     </div>
 </div>
+@foreach($ruangans as $ruangan)
+    @include('admin.master.ruangan.edit', ['ruangan' => $ruangan])
+@endforeach
 @include('admin.master.ruangan.add')
 @endsection
+
+<!-- Modal Hapus Ruangan -->
+<div class="modal fade" id="modalDeleteRuangan" tabindex="-1" aria-labelledby="modalDeleteLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <form id="formDeleteRuangan" method="POST">
+        @csrf
+        @method('DELETE')
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalDeleteLabel">Konfirmasi Hapus</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+        </div>
+        <div class="modal-body">
+          <p>Yakin ingin menghapus ruangan ini?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+          <button type="submit" class="btn btn-danger">Hapus</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
 
 @section('js')
 <script>
@@ -83,5 +134,18 @@
             imagePreview.style.display = 'none';
         }
     }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const modalDelete = document.getElementById('modalDeleteRuangan');
+        const formDelete = document.getElementById('formDeleteRuangan');
+
+        modalDelete.addEventListener('show.bs.modal', function (event) {
+            const button = event.relatedTarget;
+            const id = button.getAttribute('data-id');
+            const url = `{{ url('admin/ruangan') }}/${id}`;
+
+            formDelete.setAttribute('action', url);
+        });
+    });
 </script>
 @endsection

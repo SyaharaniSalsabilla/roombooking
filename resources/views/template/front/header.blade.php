@@ -1,6 +1,6 @@
 <header class="sticky top-0 z-50 w-full border-b border-neutral-200">
         <div class="text-primary-5 bg-primary-1 py-4">
-            <div class="container grid grid-cols-3 justify-between items-center font-primary">
+            <div class="container grid grid-cols-3 justify-between items-center font-primary  overflow-auto">
                 <div class="flex justify-start space-x-2">
                     <i class="fas fa-headphones"></i>
                     <span>24/7 +62 856-9565-8645</span>
@@ -20,7 +20,27 @@
                         <i class="fas fa-user"></i>
                     </span>
                 @else
-                <a class="flex justify-end space-x-2 hover:text-red-500 gap-2" href="{{ route('profil') }}"> {{ Auth::user()->profile->nama ?? '' }} <i class="fas fa-user"></i></a>
+                <div  class="relative flex justify-end space-x-2 hover:text-red-500 gap-2">
+                    <button id="profileDropdownBtn"> 
+                        {{ Auth::user()->profile->nama ?? '' }} 
+                        <i class="fas fa-user"></i>
+                    </button>
+                    
+                    <ul id="profileDropdown" class="absolute right-2 mt-8 w-48 bg-primary-1 border border-primary-5 rounded-md shadow-lg z-50 hidden">
+                        <li>
+                            <a href="{{ route('profil') }}" class="block px-4 py-2 text-primary-5 hover:bg-primary-2 hover:text-red-500">Profil</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('riwayat.transaksi') }}" class="block px-4 py-2 text-primary-5 hover:bg-primary-2 hover:text-red-500">Riwayat Transaksi</a>
+                        </li>
+                        <li>
+                            <form action="{{ route('logout') }}" method="GET">
+                                @csrf
+                                <button type="submit" class="w-full text-left px-4 py-2 text-primary-5 hover:bg-primary-2 hover:text-red-500">Logout</button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
                 @endif
             </div>
         </div>
@@ -51,3 +71,23 @@
             </div>
         </div>
     </header>
+
+@section('script')
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const btn = document.getElementById('profileDropdownBtn');
+        const menu = document.getElementById('profileDropdown');
+
+        btn.addEventListener('click', function () {
+            menu.classList.toggle('hidden');
+        });
+
+        // Optional: Klik di luar untuk menutup
+        document.addEventListener('click', function (e) {
+            if (!btn.contains(e.target) && !menu.contains(e.target)) {
+                menu.classList.add('hidden');
+            }
+        });
+    });
+</script>
+@endsection
