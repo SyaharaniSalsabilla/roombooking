@@ -50,7 +50,7 @@
                     </svg><span>Penyewaan Ruangan</span></a></li> -->
                 <li class="sidebar-list">
                     <a class="sidebar-link sidebar-title link-nav" href="{{route('admin.transaksiFasilitas')}}">
-                    </svg><span>Penyewaan Fasilitas</span>
+                    </svg><span>Penyewaan Ruangan</span>
                     </a>
                 </li>
             </ul>   
