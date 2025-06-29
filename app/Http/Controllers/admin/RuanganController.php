@@ -28,26 +28,29 @@ class RuanganController extends Controller
             'deskripsi' => 'required',
             'gambar_ruangan' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'harga' => 'required',
+            'diskon' => 'nullable|numeric|min:0|max:100',
         ]);
 
         $imagePath = null;
         if ($request->hasFile('gambar_ruangan')) {
             $image = $request->file('gambar_ruangan');
             $imageName = time() . '_' . $image->getClientOriginalName();
-            $imagePath = $image->move(public_path('front/image/ruangan', $imageName));
+            $image->move(public_path('assets/front/image'), $imageName);
         }
 
         $harga = str_replace('.', '', $request->harga);
 
-        Ruangan::create([
+        $ruangan = Ruangan::create([
             'nama_ruangan' => $request->nama_ruangan,
             'kapasitas' => $request->kapasitas,
             'lokasi' => $request->lokasi,
             'panjang_ruangan' => $request->panjang,
             'lebar_ruangan' => $request->lebar,
             'deskripsi' => $request->deskripsi,
-            'image' => $imagePath,
-            'harga' => $harga
+            'image' => $imageName,
+            'harga' => $harga,
+            'active' => true, // Set active to true by default
+            'diskon' => $request->diskon ?? 0, // Default to 0 if not provided
         ]);
 
         return redirect()->route('admin.ruangan')->with('success', 'Ruangan berhasil ditambahkan!');
@@ -70,23 +73,22 @@ class RuanganController extends Controller
             'deskripsi' => 'required',
             'gambar_ruangan' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'harga' => 'required',
+            'diskon' => 'nullable|numeric|min:0|max:100',
         ]);
 
         $ruangan = Ruangan::findOrFail($id);
         $harga = str_replace('.', '', $request->harga);
 
         if ($request->hasFile('gambar_ruangan')) {
-            if ($ruangan->image && public_path('front/image/ruangan',$ruangan->image)) {
-                File::delete(public_path('assets/front/image'.$ruangan->image));
+            // Optional: hapus gambar lama jika ada
+            if ($ruangan->image && file_exists(public_path('assets/front/image/' . $ruangan->image))) {
+                unlink(public_path('assets/front/image/' . $ruangan->image));
             }
-
             $image = $request->file('gambar_ruangan');
             $imageName = time() . '_' . $image->getClientOriginalName();
-            $imagePath = $image->move(public_path('assets/front/image'), $imageName);
-
-            $ruangan->image = basename($imagePath);
+            $image->move(public_path('assets/front/image'), $imageName);
+            $ruangan->image = $imageName; // Update the image name
         }
-        
         $ruangan->update([
             'nama_ruangan' => $request->nama_ruangan,
             'kapasitas' => $request->kapasitas,
@@ -95,6 +97,7 @@ class RuanganController extends Controller
             'lebar_ruangan' => $request->lebar,
             'deskripsi' => $request->deskripsi,
             'harga' => $harga,
+            'diskon' => $request->diskon ?? 0, // Default to 0 if not provided
         ]);
 
         return redirect()->route('admin.ruangan')->with('success', 'Ruangan berhasil diperbarui!');
@@ -104,13 +107,13 @@ class RuanganController extends Controller
     // {
     //     $ruangan = Ruangan::findOrFail($id);
 
-        
+
     //     if ($ruangan->gambar && Storage::disk('public')->exists($ruangan->gambar)) {
     //         Storage::disk('public')->delete($ruangan->gambar);
     //     }
 
     //     $ruangan->update(["active" => false]);
-        
+
     //     return redirect()->route('admin.ruangan')->with('success', 'Ruangan berhasil dihapus!');
     // }
 
@@ -119,11 +122,11 @@ class RuanganController extends Controller
         $ruangan = Ruangan::findOrFail($id);
 
         // Optional: hapus gambar juga
-        if ($ruangan->gambar && file_exists(public_path($ruangan->gambar))) {
-            unlink(public_path($ruangan->gambar));
+        if ($ruangan->image && file_exists(public_path('assets/front/image/' . $ruangan->image))) {
+            unlink(public_path('assets/front/image/' . $ruangan->image));
         }
-
-        $ruangan->delete();
+        // Set active to false instead of deleting
+        $ruangan->update(['active' => false]);
 
         return redirect()->route('admin.ruangan')->with('success', 'Ruangan berhasil dihapus.');
     }

@@ -16,10 +16,10 @@
                     <div class="flex bg-primary-1 rounded-lg justify-between items-center">
                         <label class="flex items-center space-x-3 cursor-pointer group p-4 rounded-md">
                             <div class="relative flex items-center">
-                                <input type="checkbox" name="terms[]" value="{{$Ruangan->harga}}" data-ir="{{$Ruangan->id}}" data-nr="{{$Ruangan->nama_ruangan}}"
-                                    class="checkbox-item before:content[''] peer relative h-5 w-5 cursor-pointer appearance-none rounded-full border 
-                                    border-primary-5 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-12 
-                                    before:w-12 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-red-500 before:opacity-0 
+                                <input type="checkbox" name="terms[]" value="{{$Ruangan->harga}}" data-ir="{{$Ruangan->id}}" data-nr="{{$Ruangan->nama_ruangan}}" data-diskon="{{$Ruangan->diskon}}"
+                                    class="checkbox-item before:content[''] peer relative h-5 w-5 cursor-pointer appearance-none rounded-full border
+                                    border-primary-5 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-12
+                                    before:w-12 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-red-500 before:opacity-0
                                     before:transition-opacity hover:before:opacity-10 checked:border-red-500 checked:before:bg-red-500" {{ $pesanan->id == $Ruangan->id ? "checked" : '' }}/>
                                 <div
                                     class="pointer-events-none absolute  top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 text-primary-5 opacity-0 transition-opacity peer-checked:opacity-100">
@@ -71,7 +71,7 @@
                                 <td class="py-3 px-4 border border-slate-400">
                                     <div class="flex flex-col gap-1">
                                         <span>{{$fas->deskripsi}}</span>
-                                        <!-- <button class="bg-primary-5 openModal2 text-white px-3 py-1 rounded text-sm w-fit" id="fasilitas_detail" 
+                                        <!-- <button class="bg-primary-5 openModal2 text-white px-3 py-1 rounded text-sm w-fit" id="fasilitas_detail"
                                         data-image="{{ url('/assets/front/image/') .'/'. $fas->image}}">Lihat Detail</button> -->
                                     </div>
                                 </td>
@@ -147,7 +147,7 @@
 @include('components.modal')
 @endsection
 @section('script')
-<script>     
+<script>
 document.addEventListener('DOMContentLoaded', function(){
     const btnDetails = document.querySelectorAll(".btn-detail");
     const lblKapasitas = document.getElementById('lbl-kapasitas');
@@ -158,8 +158,8 @@ document.addEventListener('DOMContentLoaded', function(){
     const plusButtons = document.querySelectorAll('.plus');
     const terms = document.querySelectorAll('.checkbox-item');
     const lblRuanganHarga = document.getElementById('ruangan-harga');
-    const divNR = document.getElementsByClassName('div-nr')[0]; 
-    const divNA = document.getElementsByClassName('div-na')[0]; 
+    const divNR = document.getElementsByClassName('div-nr')[0];
+    const divNA = document.getElementsByClassName('div-na')[0];
     const harga_tambahan = document.getElementById('harga-tambahan');
     //
     const id_tambahan = document.getElementById('id_tambahan');
@@ -192,6 +192,7 @@ document.addEventListener('DOMContentLoaded', function(){
     let ids= [];
     let names = [];
     let selected = [];
+    let diskons = [];
 
     let pesanan_id = {{$pesanan ? $pesanan->id : 0}}
 
@@ -200,15 +201,22 @@ document.addEventListener('DOMContentLoaded', function(){
             selected = Array.from(document.querySelectorAll('.checkbox-item:checked')).map(checkbox => parseFloat(checkbox.value));
                 names = Array.from(document.querySelectorAll('.checkbox-item:checked')).map(checkbox => checkbox.getAttribute('data-nr'));
                 ids = Array.from(document.querySelectorAll('.checkbox-item:checked')).map(checkbox => checkbox.getAttribute('data-ir'));
+                diskons = Array.from(document.querySelectorAll('.checkbox-item:checked')).map(checkbox => checkbox.getAttribute('data-diskon'));
+
+                    selected = selected.map((value, index) => {
+                        const diskon = parseFloat(diskons[index]) || 0;
+                        return value - (value * diskon / 100);
+                    });
+
                 const totalSum = selected.reduce((sum, value) => sum + value, 0);
-                lblRuanganHarga.innerHTML = totalSum.toLocaleString(); 
-                divNR.innerHTML = ''; 
+                lblRuanganHarga.innerHTML = totalSum.toLocaleString();
+                divNR.innerHTML = '';
 
                 names.forEach((name, index) => {
                     const wrapperDiv = createComponent('div', ['items-center', 'div-nr'], '', divNR);
                     const item1Div = createComponent('div', ['item-1', 'grid', 'grid-cols-2'], '', wrapperDiv);
                     createComponent('p', ['text-primary-5', 'text-2xl', 'font-semibold', 'text-left', 'px-4', 'py-1'], name, item1Div);
-                    createComponent('p', ['text-center'], `IDR <label id="ruangan-harga">${selected[index].toLocaleString()}</label>`, item1Div);
+                    createComponent('p', ['text-right','px-4'], `IDR <label id="ruangan-harga">${selected[index].toLocaleString()}</label>`, item1Div);
                 });
                 updateTotal()
         }
@@ -217,15 +225,21 @@ document.addEventListener('DOMContentLoaded', function(){
                 selected = Array.from(document.querySelectorAll('.checkbox-item:checked')).map(checkbox => parseFloat(checkbox.value));
                 names = Array.from(document.querySelectorAll('.checkbox-item:checked')).map(checkbox => checkbox.getAttribute('data-nr'));
                 ids = Array.from(document.querySelectorAll('.checkbox-item:checked')).map(checkbox => checkbox.getAttribute('data-ir'));
+                diskons = Array.from(document.querySelectorAll('.checkbox-item:checked')).map(checkbox => checkbox.getAttribute('data-diskon'));
+
+                selected = selected.map((value, index) => {
+                    const diskon = parseFloat(diskons[index]) || 0;
+                    return value - (value * diskon / 100);
+                });
                 const totalSum = selected.reduce((sum, value) => sum + value, 0);
-                lblRuanganHarga.innerHTML = totalSum.toLocaleString(); 
-                divNR.innerHTML = ''; 
+                lblRuanganHarga.innerHTML = totalSum.toLocaleString();
+                divNR.innerHTML = '';
 
                 names.forEach((name, index) => {
                     const wrapperDiv = createComponent('div', ['items-center', 'div-nr'], '', divNR);
                     const item1Div = createComponent('div', ['item-1', 'grid', 'grid-cols-2'], '', wrapperDiv);
                     createComponent('p', ['text-primary-5', 'text-2xl', 'font-semibold', 'text-left', 'px-4', 'py-1'], name, item1Div);
-                    createComponent('p', ['text-center'], `IDR <label id="ruangan-harga">${selected[index].toLocaleString()}</label>`, item1Div);
+                    createComponent('p', ['text-right', 'px-4'], `IDR <label id="ruangan-harga">${selected[index].toLocaleString()}</label>`, item1Div);
                 });
                 updateTotal()
             });
@@ -237,7 +251,7 @@ document.addEventListener('DOMContentLoaded', function(){
             button.addEventListener('click', (evt) => {
                 var img = evt.target.getAttribute('data-image');
                 document.getElementById('img_fas').setAttribute('src', img);
-                
+
                 modal2.classList.remove('hidden');
             });
         });
@@ -261,13 +275,13 @@ document.addEventListener('DOMContentLoaded', function(){
                 let quantity = parseInt(quantityElement.textContent);
                 const row = this.closest('tr');
                 const id = row.querySelector('#id_tambahan').getAttribute('value');
-                
+
                 const nama = row.querySelector('#nm_tambahan').getAttribute('value');
                 let hrgSatuan = parseInt( row.querySelector('#hrg_tambahan').getAttribute('value'));
-                let idFasilitas = parseInt( row.querySelector('#hrg_tambahan').getAttribute('value')); 
+                let idFasilitas = parseInt( row.querySelector('#hrg_tambahan').getAttribute('value'));
 
                 if(quantity < 1){
-                    
+
                 }
 
                 if (quantity > 0) {
@@ -276,7 +290,7 @@ document.addEventListener('DOMContentLoaded', function(){
                     quantityElement.textContent = quantity; // Update jumlah
                     quantityElement.setAttribute('value', quantity); // Update value
                     let harga = hrgSatuan * quantity;
-                    
+
                     hargaCalculate(divNA, nama, quantity, hrgSatuan,id);
 
                     harga_tambahan.textContent = 'IDR ' + harga;
@@ -285,7 +299,7 @@ document.addEventListener('DOMContentLoaded', function(){
                 }
             });
         });
-        
+
         plusButtons.forEach(button => {
             button.addEventListener('click', function (evt) {
                 const quantityElement = this.previousElementSibling;
@@ -298,7 +312,7 @@ document.addEventListener('DOMContentLoaded', function(){
                 const nama = row.querySelector('#nm_tambahan').getAttribute('value');
                 let hrgSatuan = row.querySelector('#hrg_tambahan').getAttribute('value');
                 // Cek apakah divNA sudah terisi atau belum
-                
+
                 const defaultcontent = divNA.querySelectorAll('.default')[0];
                 if (defaultcontent) {
                     divNA.innerHTML = ''
@@ -316,12 +330,12 @@ document.addEventListener('DOMContentLoaded', function(){
         newElement.innerHTML = content;
         newElement.classList.add(...classes);
         container.appendChild(newElement);
-        return newElement; 
+        return newElement;
     }
 
     function hargaCalculate(container, nama, quantity, satuan, id) {
         // Cari item berdasarkan nama
-        let existingItem = Array.from(container.children).find(child => 
+        let existingItem = Array.from(container.children).find(child =>
             child.querySelector('.item-name')?.textContent === nama
         );
 
@@ -334,7 +348,7 @@ document.addEventListener('DOMContentLoaded', function(){
         } else {
             // Buat elemen baru untuk item
             const wrapperDiv = createComponent('div', ['item-summary', 'flex', 'justify-between', 'border-b', 'py-2'], '', container);
-            
+
             // Tambahkan atribut data-id ke wrapper
             wrapperDiv.dataset.id = id; // Pastikan id diset di sini
             console.log(id)
@@ -351,11 +365,11 @@ document.addEventListener('DOMContentLoaded', function(){
             .then(response => response.json())
             .then(data => {
                 if (data) {
-                    
+
                     // Tampilkan fasilitas di modal
                     const container = document.getElementById('fasilitas-container');
                     container.innerHTML = ''; // bersihkan konten lama
-                    
+
                     if (Array.isArray(data.cn_fasilitas)) {
                         data.cn_fasilitas.forEach(fas => {
                             container.innerHTML += `
@@ -377,7 +391,7 @@ document.addEventListener('DOMContentLoaded', function(){
     // Fungsi untuk mengupdate total harga (ruangan + item tambahan)
     function updateTotal() {
         const totalRuangan = selected.reduce((sum, value) => sum + value, 0);
-        
+
         let additionalTotal = 0;
         const additionalItems = Array.from(document.querySelectorAll('.item-summary'));
         additionalItems.forEach(item => {
@@ -387,7 +401,7 @@ document.addEventListener('DOMContentLoaded', function(){
                 additionalTotal += itemPrice;
             }
         });
-        
+
         let grandTotal = totalRuangan;
 
         if (additionalTotal > 0) {
@@ -405,9 +419,10 @@ document.addEventListener('DOMContentLoaded', function(){
         const ruanganData = selected.map((value, index) => ({
             id: ids[index],
             nama: names[index],
-            harga: value
+            harga: value,
+            diskon: parseFloat(diskons[index]) || 0 // Pastikan diskon
         }));
-        
+
         // Hitung total harga semua ruangan
         const totalRuangan = selected.reduce((sum, value) => sum + value, 0);
 
@@ -455,7 +470,7 @@ document.addEventListener('DOMContentLoaded', function(){
         event.preventDefault();
 
         const dataToSend = prepareDataForController();
-        
+
         document.getElementById('data_json').value = JSON.stringify(dataToSend);
         document.getElementById('orderForm').submit();
     });

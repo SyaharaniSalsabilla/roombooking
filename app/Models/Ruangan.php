@@ -28,6 +28,7 @@ class Ruangan extends Authenticatable
         'deskripsi',
         'image',
         'harga',
+        'diskon',
         'active'
     ];
 

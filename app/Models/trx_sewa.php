@@ -30,6 +30,8 @@ class trx_sewa extends Model
         'keperluan',
         'diskon',
         'deskripsi',
+        'kode_transaksi',
+        'status',
     ];
 
     public function ruangan(){
@@ -38,6 +40,10 @@ class trx_sewa extends Model
 
     public function profile(){
         return $this->belongsTo(\App\Models\profil::class, 'mst_profil_id');
+    }
+
+    public function user(){
+        return $this->belongsTo(\App\Models\User::class, 'mst_profil_id');
     }
 
     public function sewaFasilitas(){

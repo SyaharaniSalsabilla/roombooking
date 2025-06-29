@@ -31,12 +31,12 @@
                     </div>
                     <div class="mb-3">
                         <label for="gambar_ruangan" class="form-label">Gambar</label>
-                        <input 
-                            type="file" 
-                            class="form-control" 
-                            id="gambar_ruangan" 
-                            name="gambar_ruangan" 
-                            accept="image/*" 
+                        <input
+                            type="file"
+                            class="form-control"
+                            id="gambar_ruangan"
+                            name="gambar_ruangan"
+                            accept="image/*"
                             onchange="previewImage(event)">
                         <div class="mt-3">
                             <img id="productImagePreview" src="#" alt="Image Preview" style="max-width: 200px; display: none;">
@@ -45,14 +45,18 @@
                     </div>
                     <div class="mb-3">
                         <label for="harga" class="form-label">Harga Sewa</label>
-                        <input 
-                            type="text" 
-                            class="form-control" 
-                            id="harga" 
-                            name="harga" 
-                            placeholder="Masukkan Harga Sewa" 
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="harga"
+                            name="harga"
+                            placeholder="Masukkan Harga Sewa"
                             required
                             oninput="formatCurrency(this)">
+                    </div>
+                    <div class="mb-3">
+                        <label for="diskon" class="form-label">Diskon (%)</label>
+                        <input type="number" class="form-control" id="diskon" name="diskon" min="0" max="100">
                     </div>
                     <div class="mb-3">
                         <label for="deskripsi" class="form-label">Deskripsi</label>

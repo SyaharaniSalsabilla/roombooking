@@ -29,22 +29,22 @@ class UsersController extends Controller
             'email'     => 'required',
             'password'  => 'required'
         ]);
-        
+
         $login = [
             'email'     =>$request->email,
             'password'  =>$request->password,
             // 'active'    =>1,
         ];
-        
+
         $userFromDB = User::where('email', $request->email)->get();
 
         if(Auth::attempt($login)){
             if(Auth::user()->role == 1){
-                return view('admin.dashboard');
+                return redirect()->route('admin.dashboard');
             }else{
                 return redirect()->route('home');
             }
-            
+
         } else {
             return redirect('login')->withErrors('Email dan Password tidak valid');
         }
@@ -67,7 +67,7 @@ class UsersController extends Controller
         if($request->input('password') != $request->input('password_konfirmasi')){
             return back()->withErrors(['message' => 'Konfirmasi password tidak sesuai']);
         }
-        
+
         $validator = Validator::make($request->all(), [
             'email'      => 'required|unique:users|max:255',
             'password'   => 'required',
@@ -91,7 +91,7 @@ class UsersController extends Controller
         ];
 
         $newUser = User::insertGetId($user);
-        
+
         $data_profile = [
             'email' => $request->input('email'),
             'nama' => $request->input('nama_depan') . ' ' . $request->input('nama_belakang'),
@@ -112,7 +112,7 @@ class UsersController extends Controller
                 }else{
                     return redirect()->route('home');
                 }
-                
+
             }
             // if($usr->role != 1){
             //     return redirect()->route("home");
@@ -136,13 +136,13 @@ class UsersController extends Controller
             'email'     => 'required',
             'password'  => 'required'
         ]);
-        
+
         $login = [
             'email'     =>$request->email,
             'password'  =>$request->password,
             // 'active'    =>1,
         ];
-        
+
         $userFromDB = User::where('email', $request->email)->get();
 
         if(Auth::attempt($login)){
@@ -163,8 +163,8 @@ class UsersController extends Controller
 
     // public function bayar(Request $request)
     // {
-    
-    //     $items = $request->items; 
+
+    //     $items = $request->items;
     //     $total = collect($items)->sum(fn($item) => $item['price'] * $item['quantity']);
 
     //     $params = [
@@ -249,19 +249,19 @@ class UsersController extends Controller
     }
 
     public function resetPage(Request $request){
-        
+
         $email = session('email');
         if (!$email){
              return back()->withErrors(['message' => 'Email tidak ditemukan']);
         }
-        
+
         $user = User::where('email',$email)->first();
         $dtreturn = json_decode($user, true);
 
         if(!$user){
             return back()->withErrors(['message' => 'Email tidak ditemukan']);
         }
-        
+
         return view('front.reset_password')->with(['user' => $user]);
     }
 
@@ -284,8 +284,8 @@ class UsersController extends Controller
                             ->withErrors($validator)
                             ->withInput();
         }
-        
-        
+
+
         // Simpan password baru jika valid
         $user = User::where('email', $request->email)->first();
         if ($user) {

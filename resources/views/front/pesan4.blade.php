@@ -34,16 +34,16 @@
                                 </div>
                             </div>
                         </div> -->
-                        
-                        <!-- <div class="flex flex-col justify-center items-center bg-primary-1 rounded-lg p-8 "> 
+
+                        <!-- <div class="flex flex-col justify-center items-center bg-primary-1 rounded-lg p-8 ">
                             @if($errors->has('metode_bayar'))
-                            <span class=" text-md m-4 text-primary-5 font-semibold"> 
-                                {{ $errors->first('metode_bayar') }} 
+                            <span class=" text-md m-4 text-primary-5 font-semibold">
+                                {{ $errors->first('metode_bayar') }}
                             </span>
-                        
+
                             @endif
                             @if ($errors->has('message'))
-                                <span class=" text-md m-4 text-primary-5 font-semibold"> 
+                                <span class=" text-md m-4 text-primary-5 font-semibold">
                                     {!! $errors->first('message') !!}
                                 </span>
                             @endif
@@ -53,11 +53,11 @@
                     <div class="col-span-1">
                         <form method="POST" id="prev" action="{{route('pesan3')}}">
                             @csrf
-                            <input type="hidden" name="data_ruangan" id="data_ruangan" value="{{ json_encode($ruangans)}}"> 
+                            <input type="hidden" name="data_ruangan" id="data_ruangan" value="{{ json_encode($ruangans)}}">
                             <input type="hidden" name="data_tambahan" id="data_tambahan" value="{{json_encode($tambahans)}}">
-                            <input type="hidden" name="data_total" id="data_total" value="{{$totalHarga}}">  
+                            <input type="hidden" name="data_total" id="data_total" value="{{$totalHarga}}">
 
-                            <input type="hidden" name="data_tgl_mulai" id="data_tgl_mulai" value="{{$tgl_mulai}}">  
+                            <input type="hidden" name="data_tgl_mulai" id="data_tgl_mulai" value="{{$tgl_mulai}}">
                             <input type="hidden" name="data_tgl_sampai" id="data_tgl_sampai" value="{{$tgl_selesai}}">
                             <input type="hidden" name="data_note" id="data_note" value="{{$notes}}">
                         </form>
@@ -77,17 +77,22 @@
                             </div>
                             <span class="divider text-center " >
                                 <div class="p-2">
-                                    <label id="lbl_tanggal_awal" class="font-semibold">{{str_replace(['&amp;quot;', '"'], '',$tgl_mulai)}}</label> 
+                                    <label id="lbl_tanggal_awal" class="font-semibold">{{str_replace(['&amp;quot;', '"'], '',$tgl_mulai)}}</label>
                                     <span class="text-primary-5">sampai</span>
                                     <label id="lbl_tanggal_akhir" class="font-semibold">{{ str_replace(['&quot;', '"'], '',$tgl_selesai)}}</label>
                                 </div>
                             </span>
 
                             @if($ruangans)
-                                <div class="grid grid-cols-2 items-center py-1 space-x-between">
+                                <div class="grid grid-cols-3 items-center py-1 space-x-between">
                                 @foreach($ruangans as $r)
-                                    <p class="text-primary-5 text-left text-2xl font-semibold px-4 py-1">{{ $r['nama'] }}</p>
-                                    <p class="text-right px-4">IDR {{ number_format($r['subtotal'], 0, ',', '.') }}</p>
+                                    <p class="text-primary-5 col-span-2 text-left text-2xl font-semibold px-4 py-1">
+                                        {{ $r['nama'] }}
+                                        @if($r['diskon'] > 0)
+                                            <span class="text-red-500 text-xs">(Diskon : {{ $r['diskon'] }}% )</span>
+                                        @endif
+                                    </p>
+                                    <p class="text-right px-4 col-span-1">IDR {{ number_format($r['subtotal'], 0, ',', '.') }}</p>
                                 @endforeach
                                 </div>
                             @endif
@@ -117,18 +122,18 @@
                             </div>
                             <form id="orderForm" method="POST">
                                 @csrf
-                                <input type="hidden" name="data_ruangan" id="data_ruangan" value="{{ json_encode($ruangans)}}"> 
+                                <input type="hidden" name="data_ruangan" id="data_ruangan" value="{{ json_encode($ruangans)}}">
                                 <input type="hidden" name="data_tambahan" id="data_tambahan" value="{{json_encode($tambahans)}}">
-                                <input type="hidden" name="data_total" id="data_total" value="{{$totalHarga}}">  
+                                <input type="hidden" name="data_total" id="data_total" value="{{$totalHarga}}">
 
-                                <input type="hidden" name="data_tgl_mulai" id="data_tgl_mulai" value="{{$tgl_mulai}}">  
+                                <input type="hidden" name="data_tgl_mulai" id="data_tgl_mulai" value="{{$tgl_mulai}}">
                                 <input type="hidden" name="data_tgl_sampai" id="data_tgl_sampai" value="{{$tgl_selesai}}">
-                                <input type="hidden" name="data_note" id="data_note" value="{{$notes}}"> 
+                                <input type="hidden" name="data_note" id="data_note" value="{{$notes}}">
                                 <input type="hidden" name="data_metode_bayar" id="data_metode_bayar">
-                                <input type="hidden" name="data_kode" id="data_kode">
-                                
+                                <input type="hidden" name="data_kode" id="data_kode" value="{{$kode}}">
+
                             </form>
-                            <a class="hover:text-red-500">   
+                            <a class="hover:text-red-500">
                                     <div class="grid grid-cols-1 items-center p-4">
                                         <button id="btn_submit" class="text-primary-2 bg-primary-5 rounded-xl py-2 px-4">Selesaikan Pembayaran</button>
                                     </div>
@@ -150,8 +155,8 @@
         var tgl_mulai = "{{str_replace(['&amp;quot;', '"'], '',$tgl_mulai)}}";
         var tgl_selesai = "{{$tgl_selesai}}";
         var note = "{{$notes}}" ;
-        var kode = '';
-        
+        var kode = '{{ $kode }}';
+
         btn.addEventListener('click', function(event) {
                 event.preventDefault();
                 document.getElementById('data_ruangan').value = JSON.stringify(ruangans);
@@ -161,7 +166,7 @@
                 document.getElementById('data_total').value = totalHarga;
                 document.getElementById('data_note').value  = note;
                 document.getElementById('data_kode').value  = kode;
-                
+
                 document.getElementById('orderForm').setAttribute('action', "{{route('transfer')}}")
         });
 
@@ -188,8 +193,8 @@ document.getElementById('btn_submit').addEventListener('click', function (e) {
     var tgl_mulai = "{{str_replace(['&amp;quot;', '"'], '',$tgl_mulai)}}";
     var tgl_selesai = "{{$tgl_selesai}}";
     var note = "{{$notes}}" ;
-    var kode = '';
-    
+    var kode = '{{ $kode }}';
+
     btn.addEventListener('click', function(event) {
         event.preventDefault();
         document.getElementById('data_ruangan').value = JSON.stringify(ruangans);
@@ -199,7 +204,7 @@ document.getElementById('btn_submit').addEventListener('click', function (e) {
         document.getElementById('data_total').value = totalHarga;
         document.getElementById('data_note').value  = note;
         document.getElementById('data_kode').value  = kode;
-        
+
         document.getElementById('orderForm').setAttribute('action', "{{route('transfer')}}")
         document.getElementById('orderForm').setAttribute('method', "POST")
     });
@@ -232,9 +237,10 @@ document.getElementById('btn_submit').addEventListener('click', function (e) {
             window.snap.pay(data.snap_token, {
                 onSuccess: function(result){
                     // Tambahkan kode transaksi ke form sebelum submit
-                    document.getElementById("data_kode").value = result.order_id;
+                    console.log(result);
+
                     document.getElementById("data_metode_bayar").value = "midtrans";
-                    
+
                     // Submit form setelah pembayaran berhasil
                     document.getElementById("orderForm").submit();
                     console.log("success");
