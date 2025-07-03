@@ -289,7 +289,7 @@ class UsersController extends Controller
         // Simpan password baru jika valid
         $user = User::where('email', $request->email)->first();
         if ($user) {
-            $user->passsword = Hash::make($request->password);
+            $user->password = Hash::make($request->password);
             $user->save();
 
             return redirect()->route('login')->with('status', 'Password berhasil direset');
