@@ -92,5 +92,8 @@ Route::get('/reset/page', [UsersController::class, 'resetPage'])->name('reset.pa
 Route::post('/snap/token', [LoginsController::class, 'getSnapToken'])->name('snap.token');
 Route::post('/transfer', [LoginsController::class, 'transfer'])->name('transfer');
 
+// Kontak
+Route::post('/contact', [LoginsController::class, 'kirim'])->name('kontak.kirim');
+
 // Dashboard
 // Route::post('/snap/token', [LoginsController::class, 'getSnapToken'])->name('snap.token');

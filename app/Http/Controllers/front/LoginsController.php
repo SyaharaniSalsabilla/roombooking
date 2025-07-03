@@ -19,6 +19,7 @@ use Illuminate\Auth\Events\PasswordReset;
 use App\Models\User;
 use Midtrans\Snap;
 use Midtrans\Config;
+use Illuminate\Support\Facades\Mail;
 
 class LoginsController extends Controller
 {
@@ -80,6 +81,26 @@ class LoginsController extends Controller
     public function contact()
     {
         return view('.front.contact');
+    }
+
+    public function kirim(Request $request)
+    {
+        $request->validate([
+        'nama' => 'required|string|max:100',
+        'email' => 'required|email',
+        'pesan' => 'required|string|max:1000',
+        ]);
+
+        $data = $request->only(['nama', 'email', 'pesan']);
+
+        // Kirim email ke pengelola
+        Mail::raw("Pesan dari: {$data['nama']} ({$data['email']})\n\n{$data['pesan']}", function ($message) use ($data) {
+            $message->to('ninspacecenter@gmail.com')
+                    ->subject('Pesan dari Form Kontak NinSpace');
+        });
+
+        return redirect()->back()->with('success', 'Pesan berhasil dikirim. Terima kasih telah menghubungi kami! 
+        Kami akan membalas pesan Anda maksimal dalam 1×24 jam.');
     }
 
     public function login_email()
@@ -168,7 +189,7 @@ class LoginsController extends Controller
         }
         $profile->save();
 
-        return back()->with('success', 'Password berhasil diperbarui.');
+        return back()->with('success', 'Kata sandi berhasil diperbarui.');
     }
 
 

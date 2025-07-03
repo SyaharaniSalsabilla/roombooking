@@ -9,11 +9,27 @@
                         <h2 class="w-full font-primary font-semibold text-3xl text-primary-5 mb-2">
                             Ada yang bisa dibantu?
                         </h2>
-                        <div class="flex flex-col">
-                            <label for="">Saya Punya Pertanyaan </label>
-                            <textarea name="" id="" rows="5" class="bg-primary-1 p-3 rounded-md mt-2" placeholder="Tuliskan pesan anda disini"></textarea>
-                        </div>
-                        <button class="bg-primary-5 text-primary-2 px-6 py-3 rounded-lg text-center">Kirim</button>
+                        @if(session('success'))
+                            <div class="text-green-600 font-semibold mb-4">
+                                {{ session('success') }}
+                            </div>
+                        @endif
+                        <form action="{{ route('kontak.kirim') }}" method="POST">
+                            @csrf
+                            <div class="flex flex-col">
+                                <label for="nama">Nama</label>
+                                <input type="text" name="nama" id="nama" required class="bg-primary-1 p-3 rounded-md mt-2" placeholder="Nama lengkap">
+                            </div>
+                            <div class="flex flex-col">
+                                <label for="email">Email</label>
+                                <input type="email" name="email" id="email" required class="bg-primary-1 p-3 rounded-md mt-2" placeholder="Email aktif">
+                            </div>
+                            <div class="flex flex-col">
+                                <label for="pesan">Saya Punya Pertanyaan </label>
+                                <textarea name="pesan" id="pesan" rows="5" class="bg-primary-1 p-3 rounded-md mt-2" placeholder="Tuliskan pesan anda disini"></textarea>
+                            </div>
+                            <button type="submit" class="w-full bg-primary-5 text-primary-2 px-6 py-3 rounded-lg text-center mt-4">Kirim</button>
+                        </form>
                         <button class="bg-primary-5 text-primary-2 px-6 py-3 rounded-lg text-center">
                             <a href="">
                                 <i class="fa-solid fa-phone mx-2"></i>

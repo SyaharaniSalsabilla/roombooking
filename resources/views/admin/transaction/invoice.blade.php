@@ -18,7 +18,7 @@
                     <!-- Header -->
                     <tr>
                         <td style="text-align: center; padding: 20px; background-color: #ffffff; border-bottom: 2px solid #991b1b;">
-                            <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('assets/front/image/Anindhaloka Logo.png'))) }}" alt="Nin Space Logo" style="height: 40px; max-width: 200px; display: block; margin: 0 auto;">
+                            <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('assets/front/image/Anindhaloka.png'))) }}" alt="Nin Space Logo" style="height: 40px; max-width: 200px; display: block; margin: 0 auto;">
                         </td>
                     </tr>
 
