@@ -74,6 +74,8 @@ Route::post('/admin/hargaRuangan', [RuanganController::class, 'storeHarga'])->na
 
 Route::get('/admin/fasilitas', [fasilitasController::class, 'index'])->name('admin.fasilitas');
 Route::post('/admin/fasilitas', [fasilitasController::class, 'store'])->name('admin.fasilitasAdd');
+Route::post('/admin/fasilitas/update/{id}', [fasilitasController::class, 'update'])->name('admin.fasilitasUpdate');
+Route::delete('/admin/fasilitas/delete/{id}', [fasilitasController::class, 'destroy'])->name('admin.fasilitasDelete');
 
 Route::get('/admin/transaksiRuangan', [TransaksiController::class, 'indexRuangan'])->name('admin.transaksiRuangan');
 

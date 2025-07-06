@@ -26,5 +26,7 @@ class fasilitas extends Model
         'deskripsi',
         'harga_satuan',
         'image',
+        'is_umum',
+        'active'
     ];
 }

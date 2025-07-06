@@ -186,10 +186,6 @@
                 fetchFasilitas(evt.target.getAttribute("data-id"));
             });
         });
-    });
-</script>
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
         flatpickr("#date-range", {
             mode: "range",
             dateFormat: "d/m/Y",
@@ -201,6 +197,7 @@
             }
         });
     });
+
      // fetch data
     function fetchFasilitas(ruanganId) {
         fetch(`/ruangan/${ruanganId}/fasilitas`)
