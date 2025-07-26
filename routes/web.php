@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SpaceController;
 use App\Http\Controllers\UsersController;
+use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\front\LoginsController;
 use App\Http\Controllers\front\TransactionController;
 use App\Http\Controllers\Admin\DashboardController;
@@ -18,6 +19,7 @@ Route::redirect('/', '/home');
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/about', [LoginsController::class, 'about'])->name('about');
 Route::get('/profil', [LoginsController::class, 'profile'])->name('profil');
+Route::post('/profil/update', [LoginsController::class, 'updateProfile'])->name('profil.updateProfile');
 Route::get('/promo', [LoginsController::class, 'promo'])->name('promo');
 Route::get('/room', [LoginsController::class, 'room'])->name('room');
 Route::post('/room/search', [LoginsController::class, 'search_room'])->name('room.search');
@@ -84,6 +86,15 @@ Route::get('/admin/transaksiFasilitas/{kode}/{status}', [TransaksiController::cl
 
 Route::post('/reset-password', [UsersController::class, 'resetPassword'])->name('password.update');
 Route::post('/reset-find/{id}', [UsersController::class, 'resetPassword']);
+
+// Invoice
+Route::get('/invoice/download/{id}', [InvoiceController::class, 'download'])
+    ->middleware('signed')
+    ->name('invoice.download');
+
+Route::get('/invoice/kirim/{id}', [LoginsController::class, 'kirimInvoice'])
+    ->middleware('auth')
+    ->name('invoice.kirim');
 
 // API
 Route::get('/ruangan/{id}/fasilitas', [LoginsController::class, 'getFasilitasUmum']);

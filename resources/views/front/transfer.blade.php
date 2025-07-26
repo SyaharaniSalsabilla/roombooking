@@ -71,7 +71,11 @@
                             </div>
                             <div class="items-center py-2 space-y-2 px-4 div-na">
                                 <div class="item-summary flex justify-between border-b py-1 pr-4">
-                                    <p class="item-name text-primary-5 text-left font-semibold"><span class="item-name text-primary-5 text-left font-semibold">Notes: </span>{{ $notes }}</p>
+                                    <p class="item-name text-primary-5 text-left font-semibold">
+                                        <span class="item-name text-primary-5 text-left font-semibold">
+                                            Notes: 
+                                        </span>{{ $notes }}
+                                    </p>
                                 </div>
                             </div>
                             <form id="orderForm" method="POST">

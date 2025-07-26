@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\MasterSpace;
 use App\Models\Ruangan;
 use App\Models\trx_sewa;
+use App\Notifications\ProfileUpdated;
 use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -20,6 +21,8 @@ use App\Models\User;
 use Midtrans\Snap;
 use Midtrans\Config;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\URL;
+use App\Mail\InvoiceMail;
 
 class LoginsController extends Controller
 {
@@ -192,6 +195,33 @@ class LoginsController extends Controller
         return back()->with('success', 'Kata sandi berhasil diperbarui.');
     }
 
+    public function updateProfile(Request $request)
+    {
+        $user = Auth::user();
+        $profile = $user->profile;
+
+        // Validasi (untuk semua perubahan profil, bukan hanya password)
+        $request->validate([
+            'nama' => 'required|string|max:255',
+            'email' => 'required|email',
+            'telepon' => 'nullable|string|max:20',
+            'alamat' => 'nullable|string|max:255',
+        ]);
+
+        // Update data profil
+        $profile->update([
+            'nama' => $request->nama,
+            'email' => $request->email,
+            'telepon' => $request->telepon,
+            'alamat' => $request->alamat,
+        ]);
+
+        // Kirim notifikasi email bahwa profil telah diubah
+        $user->notify(new ProfileUpdated($user));
+
+
+        return redirect()->back()->with('success', 'Profil berhasil diperbarui.');
+    }
 
     public function riwayat_transaksi()
     {
@@ -210,7 +240,7 @@ class LoginsController extends Controller
     public function pesan1($id)
     {
         $datas = Ruangan::where('active',true)->orderBy('id','ASC')->get();
-        $fasilitas = fasilitas::where('is_umum', false)->orderBy('id','ASC')->get();
+        $fasilitas = fasilitas::where('is_umum', false)->where('active', true)->orderBy('id','ASC')->get();
         $fasilitas_umum = Ruangan::with('cn_fasilitas')->get();
         $pesanan = Ruangan::findOrFail($id);
         return view('front.pesan1', ['datas' => $datas, 'fasilitas' => $fasilitas, 'fasilitas_umum' => $fasilitas_umum, 'pesanan' => $pesanan ]);
@@ -588,6 +618,39 @@ class LoginsController extends Controller
 
     public function showLinkRequestForm(){
         return view('front.find_user');
+    }
+
+    public function konfirmasiPembayaran($id)
+    {
+        $pemesanan = Pemesanan::with(['ruangan', 'fasilitas.fs'])->findOrFail($id);
+        $pemesanan->status = 'Pembayaran diterima';
+        $pemesanan->save();
+
+        // === 1. Buat data invoice
+        $data = [
+            'kode_transaksi' => $pemesanan->kode_transaksi,
+            'tanggal_awal' => $pemesanan->tgl_mulai,
+            'tanggal_akhir' => $pemesanan->tgl_selesai,
+            'status' => $pemesanan->status,
+            'ruangan' => $pemesanan->ruangan,
+            'fasilitas' => $pemesanan->fasilitas,
+            'waktu' => $pemesanan->durasi_jam,
+            'harga_t' => $pemesanan->total_harga,
+            'note' => $pemesanan->catatan,
+        ];
+
+        // === 2. Generate dan simpan PDF
+        $filename = 'invoice_' . $pemesanan->kode_transaksi . '.pdf';
+        $pdf = Pdf::loadView('invoice-pdf', $data); // atau 'invoice' jika kamu pakai view yg sama
+        Storage::put('public/invoices/' . $filename, $pdf->output());
+
+        // === 3. Buat link download
+        $downloadLink = asset('storage/invoices/' . $filename);
+
+        // === 4. Kirim email
+        Mail::to($pemesanan->user->email)->send(new InvoiceMail($pemesanan, $downloadLink));
+
+        return redirect()->back()->with('success', 'Pembayaran dikonfirmasi dan invoice dikirim.');
     }
 
     public function getSnapToken(Request $request)

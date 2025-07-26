@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\profil;
+use App\Notifications\UserRegistered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -99,7 +100,10 @@ class UsersController extends Controller
         ];
         if($newUser ){
             profil::create($data_profile);
-            $usr = User::find($newUser)->first();
+            $usr = User::find($newUser);
+
+            // Kirim notifikasi email
+            $usr->notify(new \App\Notifications\UserRegistered($usr));
 
             $login = [
                 'email'     =>$request->email,
@@ -151,6 +155,33 @@ class UsersController extends Controller
             return redirect('login')->withErrors('Email dan Password tidak valid');
         }
     }
+
+    // public function updateProfile(Request $request)
+    // {
+    //     $user = Auth::user();
+    //     $profile = $user->profile;
+
+    //     // Validasi (untuk semua perubahan profil, bukan hanya password)
+    //     $request->validate([
+    //         'nama' => 'required|string|max:255',
+    //         'email' => 'required|email',
+    //         'telepon' => 'nullable|string|max:20',
+    //         'alamat' => 'nullable|string|max:255',
+    //     ]);
+
+    //     // Update data profil
+    //     $profile->update([
+    //         'nama' => $request->nama,
+    //         'email' => $request->email,
+    //         'telepon' => $request->telepon,
+    //         'alamat' => $request->alamat,
+    //     ]);
+
+    //     // Kirim notifikasi email bahwa profil telah diubah
+    //     $user->notify(new ProfileUpdated());
+
+    //     return redirect()->back()->with('success', 'Profil berhasil diperbarui.');
+    // }
 
     // public function __construct()
     // {

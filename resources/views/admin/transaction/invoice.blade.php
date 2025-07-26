@@ -175,9 +175,22 @@
                             </table>
                         </td>
                     </tr>
-
                 </table>
 
+                <!-- Tombol Download -->
+                @if(isset($downloadLink))
+                <table align="center" style="margin-top: 20px;">
+                    <tr>
+                        <td align="center">
+                            <a href="{{ $downloadLink }}" target="_blank" 
+                                style="background-color: #991b1b; color: white; padding: 12px 24px;
+                                text-decoration: none; border-radius: 6px; font-weight: bold;">
+                                Download Invoice PDF
+                            </a>
+                        </td>
+                    </tr>
+                </table>
+                @endif
             </td>
         </tr>
     </table>

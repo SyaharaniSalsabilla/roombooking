@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\trx_sewa;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 
 class DashboardController extends Controller
@@ -16,8 +17,14 @@ class DashboardController extends Controller
     {
         $oneWeekAgo = Carbon::now()->subWeek();
         $oneMonth = Carbon::now()->subMonth();
-        $customers = User::where('role',2)->get();
-        $totalAmount = trx_sewa::sum('mst_harga_sewa_id');
+        $customers = User::where('role', 2)
+                    ->withCount(['trx_sewa']) // hitung jumlah pemesanan
+                    ->orderByDesc('trx_sewa_count') // urutkan dari terbanyak
+                    ->take(3) // ambil 3 teratas
+                    ->get();
+        $totalAmount = trx_sewa::whereMonth('created_at', Carbon::now()->month)
+                       ->whereYear('created_at', Carbon::now()->year)
+                       ->sum('mst_harga_sewa_id');
         $totalAmount = number_format($totalAmount, 0, ',', '.');
         $newOrdersCount = trx_sewa::where('created_at', '>=', $oneWeekAgo)->count();
         $newOrdersCount = trx_sewa::where('created_at', '>=', $oneWeekAgo)->count();

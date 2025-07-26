@@ -49,4 +49,10 @@ class User extends Authenticatable
     public function profile(){
         return $this->hasOne(Profil::class, 'email', 'email');
     }
+
+    public function trx_sewa()
+    {
+        return $this->hasMany(\App\Models\trx_sewa::class, 'id');
+    }
+
 }

@@ -36,7 +36,6 @@
                                             IDR <span class=""> {{ $total_amount }} </span>
                                             <!-- <span class="f-light f-14 f-w-400 ms-1">at Total</span> -->
                                         </h4>
-
                                     </div>
                                 </div>
                             </div>
@@ -112,14 +111,14 @@
                             <div class="card">
                                 <div class="card-header card-no-border">
                                     <div class="header-top">
-                                        <h5 class="m-0">Daftar Pelanggan</h5>
+                                        <h5 class="m-0">Pemesanan Terbanyak</h5>
                                         <!-- <div class="card-header-right-icon">
-                            <div class="dropdown icon-dropdown">
-                            <button class="btn dropdown-toggle" id="dropdownMenuButton" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="icon-more-alt"></i></button>
-                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton"><a class="dropdown-item" href="#">Today</a><a class="dropdown-item" href="#">
-                                Tomorrow</a><a class="dropdown-item" href="#">Yesterday</a></div>
-                            </div>
-                        </div> -->
+                                            <div class="dropdown icon-dropdown">
+                                            <button class="btn dropdown-toggle" id="dropdownMenuButton" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="icon-more-alt"></i></button>
+                                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton"><a class="dropdown-item" href="#">Today</a><a class="dropdown-item" href="#">
+                                                Tomorrow</a><a class="dropdown-item" href="#">Yesterday</a></div>
+                                            </div>
+                                        </div> -->
                                     </div>
                                 </div>
                                 <div class="card-body pt-0">

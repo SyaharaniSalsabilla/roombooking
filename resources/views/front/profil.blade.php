@@ -17,7 +17,7 @@
                         </div>
                     </div>
                 </div>
-                <form action="{{ route('profil.updatePassword') }}" method="POST" id="updateForm">
+                <form action="{{ route('profil.updateProfile') }}" method="POST" id="updateForm">
                     @csrf
                 <div class="flex flex-col gap-2 py-6">
                     <label for="" class="text-primary-5">Nama</label>
