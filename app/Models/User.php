@@ -21,6 +21,7 @@ class User extends Authenticatable
     protected $fillable = [
         'email',
         'password',
+        'telepon',
     ];
 
     /**
@@ -55,4 +56,8 @@ class User extends Authenticatable
         return $this->hasMany(\App\Models\trx_sewa::class, 'id');
     }
 
+    public function pemesanan()
+    {
+        return $this->hasMany(\App\Models\Pemesanan::class, 'user_id', 'id');
+    }
 }

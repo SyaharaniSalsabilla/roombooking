@@ -96,6 +96,7 @@ class UsersController extends Controller
         $data_profile = [
             'email' => $request->input('email'),
             'nama' => $request->input('nama_depan') . ' ' . $request->input('nama_belakang'),
+            'telepon' => $request->input('telepon'),
             'password' => $request->input('password'),
         ];
         if($newUser ){
@@ -334,4 +335,34 @@ class UsersController extends Controller
         return view('auth.reset-password', ['token' => $token, 'email' => $request->email]);
     }
 
+    public function dataCustomer()
+    {
+        $pelanggans = \App\Models\profil::all();
+        return view('admin.master.pelanggan.index', compact('pelanggans'));
+    }
+
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'nama' => 'required|string|max:255',
+            'email' => 'required|email|unique:master_profil_customer,email',
+            'telepon' => 'required|string|max:20',
+            'alamat' => 'required|string|max:255',
+            'password' => 'required|string|min:6',
+        ]);
+
+        $validated['password'] = bcrypt($validated['password']);
+
+        \App\Models\Profil::create($validated);
+
+        return redirect()->route('pelanggan.index')->with('success', 'Data pelanggan berhasil ditambahkan.');
+    }
+
+    public function destroy($id)
+    {
+        $pelanggan = \App\Models\Profil::findOrFail($id);
+        $pelanggan->delete();
+
+        return redirect()->route('admin.pelanggan')->with('success', 'Data pelanggan berhasil dihapus.');
+    }
 }

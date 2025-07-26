@@ -125,12 +125,13 @@
                                     <div class="appointment-table customer-table table-responsive">
                                         <table class="table table-bordernone">
                                             <tbody>
-                                                @foreach ($customers as $cust)
+                                                @foreach ($customers as $customer)
                                                     <tr>
-                                                        <td><i class="fas fa-user"> </i></td>
-                                                        <td class="img-content-box"><a
-                                                                class="f-w-500">{{ $cust->profile->nama }}</a>
-                                                            <span class="f-light">{{ $cust->profile->email }}</span>
+                                                        <td><i class="fas fa-user"></i></td>
+                                                        <td class="img-content-box">
+                                                            <a class="f-w-500">{{ optional($customer->profile)->nama ?? '-' }}</a>
+                                                            <span>{{ optional($customer->profile)->email ?? '-' }}</span>
+                                                            <span><small><strong>{{ $customer->pemesanan_count }}pemesanan</strong></small></span>
                                                         </td>
                                                     </tr>
                                                 @endforeach

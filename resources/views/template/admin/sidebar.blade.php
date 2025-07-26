@@ -34,13 +34,9 @@
                 <li class="sidebar-list">
                     <a class="sidebar-link sidebar-title link-nav" href="{{route('admin.fasilitas')}}">
                     </svg><span>Fasilitas Tambahan</span></a></li>
-                <!-- <li class="sidebar-list"><i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title link-nav" href="{{route('admin.ruanganHarga')}}">
-                    <svg class="stroke-icon">
-                    <use href="../assets/admin/svg/icon-sprite.svg#stroke-calendar"></use>
-                    </svg>
-                    <svg class="fill-icon">
-                    <use href="../assets/admin/svg/icon-sprite.svg#fill-calender"></use>
-                    </svg><span>Harga Ruangan</span></a></li> -->
+                <li class="sidebar-list">
+                    <a class="sidebar-link sidebar-title link-nav" href="{{route('admin.pelanggan')}}">
+                    </svg><span>Pelanggan</span></a></li>
                 <!-- <li class="sidebar-list"><i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title link-nav" href="{{route('admin.transaksiRuangan')}}">
                     <svg class="stroke-icon">
                     <use href="../assets/admin/svg/icon-sprite.svg#stroke-contact"></use>

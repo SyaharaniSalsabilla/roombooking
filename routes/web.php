@@ -79,6 +79,12 @@ Route::post('/admin/fasilitas', [fasilitasController::class, 'store'])->name('ad
 Route::post('/admin/fasilitas/update/{id}', [fasilitasController::class, 'update'])->name('admin.fasilitasUpdate');
 Route::delete('/admin/fasilitas/delete/{id}', [fasilitasController::class, 'destroy'])->name('admin.fasilitasDelete');
 
+Route::get('/admin/pelanggan', [UsersController::class, 'dataCustomer'])->name('admin.pelanggan');
+Route::post('/admin/pelanggan', [UsersController::class, 'store'])->name('pelanggan.store');
+Route::put('/admin/pelanggan/{id}', [UsersController::class, 'update'])->name('pelanggan.update');
+Route::delete('/admin/pelanggan/{id}', [UsersController::class, 'destroy'])->name('pelanggan.destroy');
+
+
 Route::get('/admin/transaksiRuangan', [TransaksiController::class, 'indexRuangan'])->name('admin.transaksiRuangan');
 
 Route::get('/admin/transaksiFasilitas', [TransaksiController::class, 'indexFasilitas'])->name('admin.transaksiFasilitas');
