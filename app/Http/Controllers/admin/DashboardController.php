@@ -17,11 +17,11 @@ class DashboardController extends Controller
     {
         $oneWeekAgo = Carbon::now()->subWeek();
         $oneMonth = Carbon::now()->subMonth();
-        $customers = User::where('role', 2)
-                    ->withCount(['trx_sewa']) // hitung jumlah pemesanan
-                    ->orderByDesc('trx_sewa_count') // urutkan dari terbanyak
-                    ->take(3) // ambil 3 teratas
-                    ->get();
+        // $customers = User::where('role', 2)
+        //             ->withCount(['trx_sewa']) // hitung jumlah pemesanan
+        //             ->orderByDesc('trx_sewa_count') // urutkan dari terbanyak
+        //             ->take(3) // ambil 3 teratas
+        //             ->get();
         $totalAmount = trx_sewa::whereMonth('created_at', Carbon::now()->month)
                        ->whereYear('created_at', Carbon::now()->year)
                        ->sum('mst_harga_sewa_id');
@@ -29,11 +29,37 @@ class DashboardController extends Controller
         $newOrdersCount = trx_sewa::where('created_at', '>=', $oneWeekAgo)->count();
         $newOrdersCount = trx_sewa::where('created_at', '>=', $oneWeekAgo)->count();
         $newUsers = User::where('created_at', '>=', $oneMonth)->count();
+        $totalCust = DB::table('master_profil_customer')->count();
         $newOrdersThisWeek = trx_sewa::with(['profile', 'ruangan'])->where('created_at', '>=', $oneWeekAgo)->get();
-        
-        return view('admin.dashboard', ['customers' => $customers, 'total_amount' => $totalAmount, 'weekly_orders_count' => $newOrdersCount, 
+        $customers = DB::table('trx_sewa')
+            ->select(
+                'master_profil_customer.nama',
+                'master_profil_customer.email',
+                DB::raw('COUNT(trx_sewa.id) as total_pemesanan')
+            )
+            ->join('master_profil_customer', DB::raw('CAST(trx_sewa.mst_profil_id AS BIGINT)'), '=', 'master_profil_customer.id')
+            ->groupBy('master_profil_customer.id', 'master_profil_customer.nama', 'master_profil_customer.email')
+            ->orderByDesc('total_pemesanan')
+            ->limit(3)
+            ->get();
+        $room = DB::table('trx_sewa')
+            ->join('mst_harga_sewa', 'trx_sewa.mst_harga_sewa_id', '=', 'mst_harga_sewa.id')
+            ->join(DB::raw('mst_ruangan'), DB::raw('CAST(mst_harga_sewa.ruangan_id AS BIGINT)'), '=', 'mst_ruangan.id')
+            ->select('mst_ruangan.nama_ruangan', DB::raw('COUNT(trx_sewa.id) as jumlah_pemesanan'))
+            ->whereMonth('trx_sewa.created_at', Carbon::now()->month)
+            ->whereYear('trx_sewa.created_at', Carbon::now()->year)
+            ->groupBy('mst_ruangan.id', 'mst_ruangan.nama_ruangan')
+            ->orderByDesc('jumlah_pemesanan')
+            ->first();
+
+        return view('admin.dashboard', 
+        ['customers' => $customers, 
+        'total_amount' => $totalAmount, 
+        'weekly_orders_count' => $newOrdersCount, 
         'recent_monthly_users' => $newUsers,
         'this_week_orders' => $newOrdersThisWeek,
+        'total_users' => $totalCust,
+        'room' => $room,
     ]);
     }
 

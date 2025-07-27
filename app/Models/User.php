@@ -58,6 +58,13 @@ class User extends Authenticatable
 
     public function pemesanan()
     {
-        return $this->hasMany(\App\Models\Pemesanan::class, 'user_id', 'id');
+        return $this->hasManyThrough(
+            \App\Models\trx_sewa::class,
+            \App\Models\Profil::class,
+            'email',           // foreign key di profil mengarah ke users.email
+            'mst_profil_id',   // foreign key di trx_sewa mengarah ke profil.id
+            'email',           // local key di users
+            'id'               // local key di profil
+        );
     }
 }

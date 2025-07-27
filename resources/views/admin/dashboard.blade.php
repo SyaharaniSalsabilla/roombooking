@@ -31,7 +31,7 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="card ">
-                                    <div class="card-body primary"> <span class="f-light">Total Saldo</span>
+                                    <div class="card-body primary"> <span class="f-light">Total Saldo Bulan Ini</span>
                                         <h4 class="mb-3 mt-1 f-w-500 mb-0 f-22">
                                             IDR <span class=""> {{ $total_amount }} </span>
                                             <!-- <span class="f-light f-14 f-w-400 ms-1">at Total</span> -->
@@ -75,34 +75,75 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="width-full col-6">
+                                <div class="card small-widget">
+                                    <div class="card-body primary">
+                                        <span class="f-light">Ruangan Paling Sering Dipesan</span>
+                                        <div class="d-flex align-items-end gap-1">
+                                            @if ($room)
+                                                <h4>{{ $room->nama_ruangan }}</h4>
+                                                <small>{{ $room->jumlah_pemesanan }} pemesanan</small>
+                                            @else
+                                                <h4>-</h4>
+                                            @endif
+                                            <span class="font-primary f-12 f-w-500">
+                                                <!-- icon atau lainnya -->
+                                            </span>
+                                        </div>
+                                        <div class="bg-gradient">
+                                            <svg class="stroke-icon svg-fill">
+                                                <use href="../assets/admin/svg/icon-sprite.svg#new-order"></use>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="width-full col-6">
+                                <div class="card small-widget">
+                                    <div class="card-body warning"><span class="f-light">Total Pelanggan</span>
+                                        <div class="d-flex align-items-end gap-1">
+                                            <h4>{{ $total_users }}</h4>
+                                            <span class="font-warning f-12 f-w-500">
+                                                <!-- <i class="icon-arrow-up"></i>
+                                    <span></span> -->
+                                            </span>
+                                        </div>
+                                        <div class="bg-gradient">
+                                            <svg class="stroke-icon svg-fill">
+                                                <use href="../assets/admin/svg/icon-sprite.svg#customers"></use>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <!-- <div class="col-6">
-                    <div class="card small-widget">
-                        <div class="card-body secondary"><span class="f-light">Average Sale</span>
-                        <div class="d-flex align-items-end gap-1">
-                            <h4>$389k</h4><span class="font-secondary f-12 f-w-500"><i class="icon-arrow-down"></i><span>-10%</span></span>
-                        </div>
-                        <div class="bg-gradient">
-                            <svg class="stroke-icon svg-fill">
-                            <use href="../assets/svg/icon-sprite.svg#sale"></use>
-                            </svg>
-                        </div>
-                        </div>
-                    </div>
-                    </div>-->
-                            <!--<div class="col-6">
-                     <div class="card small-widget">
-                        <div class="card-body success"><span class="f-light">Gross Profit</span>
-                        <div class="d-flex align-items-end gap-1">
-                            <h4>$3,908</h4><span class="font-success f-12 f-w-500"><i class="icon-arrow-up"></i><span>+80%</span></span>
-                        </div>
-                        <div class="bg-gradient">
-                            <svg class="stroke-icon svg-fill">
-                            <use href="../assets/admin/svg/icon-sprite.svg#profit"></use>
-                            </svg>
-                        </div>
-                        </div>
-                    </div>
-                    </div>-->
+                                <div class="card small-widget">
+                                    <div class="card-body secondary"><span class="f-light">Average Sale</span>
+                                    <div class="d-flex align-items-end gap-1">
+                                        <h4>$389k</h4><span class="font-secondary f-12 f-w-500"><i class="icon-arrow-down"></i><span>-10%</span></span>
+                                    </div>
+                                    <div class="bg-gradient">
+                                        <svg class="stroke-icon svg-fill">
+                                        <use href="../assets/svg/icon-sprite.svg#sale"></use>
+                                        </svg>
+                                    </div>
+                                    </div>
+                                </div>
+                                </div>-->
+                                        <!--<div class="col-6">
+                                <div class="card small-widget">
+                                    <div class="card-body success"><span class="f-light">Gross Profit</span>
+                                    <div class="d-flex align-items-end gap-1">
+                                        <h4>$3,908</h4><span class="font-success f-12 f-w-500"><i class="icon-arrow-up"></i><span>+80%</span></span>
+                                    </div>
+                                    <div class="bg-gradient">
+                                        <svg class="stroke-icon svg-fill">
+                                        <use href="../assets/admin/svg/icon-sprite.svg#profit"></use>
+                                        </svg>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>-->
                         </div>
                     </div>
                     <div class="col-xxl-7 col-md-5 col-sm-6 box-col-5">
@@ -111,7 +152,7 @@
                             <div class="card">
                                 <div class="card-header card-no-border">
                                     <div class="header-top">
-                                        <h5 class="m-0">Pemesanan Terbanyak</h5>
+                                        <h5 class="m-0">Pemesan Terbanyak</h5>
                                         <!-- <div class="card-header-right-icon">
                                             <div class="dropdown icon-dropdown">
                                             <button class="btn dropdown-toggle" id="dropdownMenuButton" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="icon-more-alt"></i></button>
@@ -129,9 +170,9 @@
                                                     <tr>
                                                         <td><i class="fas fa-user"></i></td>
                                                         <td class="img-content-box">
-                                                            <a class="f-w-500">{{ optional($customer->profile)->nama ?? '-' }}</a>
-                                                            <span>{{ optional($customer->profile)->email ?? '-' }}</span>
-                                                            <span><small><strong>{{ $customer->pemesanan_count }}pemesanan</strong></small></span>
+                                                            <a class="f-w-500">{{ $customer->nama }}</a><br>
+                                                            <span>{{ $customer->email }}</span>
+                                                            <small><strong>{{ $customer->total_pemesanan }} pemesanan</strong></small>
                                                         </td>
                                                     </tr>
                                                 @endforeach
