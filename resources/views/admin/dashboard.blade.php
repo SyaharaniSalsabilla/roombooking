@@ -27,157 +27,152 @@
         <div class="row size-column">
             <div class="col-xxl-10 col-md-12 box-col-8 grid-ed-12">
                 <div class="row">
-                    <div class="col-xxl-5 col-md-7 box-col-7">
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <div class="card ">
-                                    <div class="card-body primary"> <span class="f-light">Total Saldo Bulan Ini</span>
-                                        <h4 class="mb-3 mt-1 f-w-500 mb-0 f-22">
-                                            IDR <span class=""> {{ $total_amount }} </span>
-                                            <!-- <span class="f-light f-14 f-w-400 ms-1">at Total</span> -->
-                                        </h4>
-                                    </div>
+                    <div class="row">
+                        <!-- Card: Total Saldo -->
+                        <div class="col-xl-4 col-md-12 mb-0 d-flex flex-column">
+                            <div class="card h-100">
+                                <div class="card-body primary d-flex flex-column justify-content-center align-items-center text-center">
+                                    <span class="f-light">Total Saldo Bulan Ini</span>
+                                    <h3 class="mb-3 mt-1 f-w-500 mb-0">
+                                        IDR <span>{{ $total_amount }}</span>
+                                    </h3>
                                 </div>
                             </div>
-                            <div class="width-full col-6">
-                                <div class="card small-widget">
-                                    <div class="card-body primary"> <span class="f-light">Pesanan Baru Minggu Ini</span>
-                                        <div class="d-flex align-items-end gap-1">
-                                            <h4>{{ $weekly_orders_count }}</h4>
-                                            <span class="font-primary f-12 f-w-500">
-                                                <!-- <i class="icon-arrow-up"></i>
-                                    <span></span> -->
-                                            </span>
-                                        </div>
-                                        <div class="bg-gradient">
-                                            <svg class="stroke-icon svg-fill">
-                                                <use href="../assets/admin/svg/icon-sprite.svg#new-order"></use>
-                                            </svg>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="width-full col-6">
-                                <div class="card small-widget">
-                                    <div class="card-body warning"><span class="f-light">Pelanggan Baru Bulan Ini</span>
-                                        <div class="d-flex align-items-end gap-1">
-                                            <h4>{{ $recent_monthly_users }}</h4>
-                                            <span class="font-warning f-12 f-w-500">
-                                                <!-- <i class="icon-arrow-up"></i>
-                                    <span></span> -->
-                                            </span>
-                                        </div>
-                                        <div class="bg-gradient">
-                                            <svg class="stroke-icon svg-fill">
-                                                <use href="../assets/admin/svg/icon-sprite.svg#customers"></use>
-                                            </svg>
+                        </div>
+
+                        <!-- Card kecil: 2 per baris -->
+                        <div class="col-xl-8 d-flex flex-column justify-content-between">
+                            <div class="row">
+                                <div class="col-md-6 mb-0">
+                                    <div class="card small-widget">
+                                        <div class="card-body primary">
+                                            <span class="f-light">Pesanan Baru Minggu Ini</span>
+                                            <div class="d-flex align-items-end gap-1">
+                                                <h4>{{ $weekly_orders_count }}</h4>
+                                            </div>
+                                            <div class="bg-gradient">
+                                                <svg class="stroke-icon svg-fill">
+                                                    <use href="../assets/admin/svg/icon-sprite.svg#new-order"></use>
+                                                </svg>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="width-full col-6">
-                                <div class="card small-widget">
-                                    <div class="card-body primary">
-                                        <span class="f-light">Ruangan Paling Sering Dipesan</span>
-                                        <div class="d-flex align-items-end gap-1">
-                                            @if ($room)
-                                                <h4>{{ $room->nama_ruangan }}</h4>
-                                                <small>{{ $room->jumlah_pemesanan }} pemesanan</small>
-                                            @else
-                                                <h4>-</h4>
-                                            @endif
-                                            <span class="font-primary f-12 f-w-500">
-                                                <!-- icon atau lainnya -->
-                                            </span>
-                                        </div>
-                                        <div class="bg-gradient">
-                                            <svg class="stroke-icon svg-fill">
-                                                <use href="../assets/admin/svg/icon-sprite.svg#new-order"></use>
-                                            </svg>
+
+                                <div class="col-md-6 mb-0">
+                                    <div class="card small-widget">
+                                        <div class="card-body warning">
+                                            <span class="f-light">Pelanggan Baru Bulan Ini</span>
+                                            <div class="d-flex align-items-end gap-1">
+                                                <h4>{{ $recent_monthly_users }}</h4>
+                                            </div>
+                                            <div class="bg-gradient">
+                                                <svg class="stroke-icon svg-fill">
+                                                    <use href="../assets/admin/svg/icon-sprite.svg#customers"></use>
+                                                </svg>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="width-full col-6">
-                                <div class="card small-widget">
-                                    <div class="card-body warning"><span class="f-light">Total Pelanggan</span>
-                                        <div class="d-flex align-items-end gap-1">
-                                            <h4>{{ $total_users }}</h4>
-                                            <span class="font-warning f-12 f-w-500">
-                                                <!-- <i class="icon-arrow-up"></i>
-                                    <span></span> -->
-                                            </span>
+
+                                <div class="col-md-6 mb-0">
+                                    <div class="card small-widget">
+                                        <div class="card-body primary">
+                                            <span class="f-light">Ruangan Terlaris</span>
+                                            <div class="d-flex align-items-end gap-1">
+                                                @if ($room)
+                                                    <h4>{{ $room->nama_ruangan }}</h4>
+                                                    <small>{{ $room->jumlah_pemesanan }} pemesanan</small>
+                                                @else
+                                                    <h4>-</h4>
+                                                @endif
+                                            </div>
+                                            <div class="bg-gradient">
+                                                <svg class="stroke-icon svg-fill">
+                                                    <use href="../assets/admin/svg/icon-sprite.svg#new-order"></use>
+                                                </svg>
+                                            </div>
                                         </div>
-                                        <div class="bg-gradient">
-                                            <svg class="stroke-icon svg-fill">
-                                                <use href="../assets/admin/svg/icon-sprite.svg#customers"></use>
-                                            </svg>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 mb-0">
+                                    <div class="card small-widget">
+                                        <div class="card-body warning">
+                                            <span class="f-light">Total Pelanggan</span>
+                                            <div class="d-flex align-items-end gap-1">
+                                                <h4>{{ $total_users }}</h4>
+                                            </div>
+                                            <div class="bg-gradient">
+                                                <svg class="stroke-icon svg-fill">
+                                                    <use href="../assets/admin/svg/icon-sprite.svg#customers"></use>
+                                                </svg>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <!-- <div class="col-6">
-                                <div class="card small-widget">
-                                    <div class="card-body secondary"><span class="f-light">Average Sale</span>
-                                    <div class="d-flex align-items-end gap-1">
-                                        <h4>$389k</h4><span class="font-secondary f-12 f-w-500"><i class="icon-arrow-down"></i><span>-10%</span></span>
-                                    </div>
-                                    <div class="bg-gradient">
-                                        <svg class="stroke-icon svg-fill">
-                                        <use href="../assets/svg/icon-sprite.svg#sale"></use>
-                                        </svg>
-                                    </div>
-                                    </div>
-                                </div>
-                                </div>-->
-                                        <!--<div class="col-6">
-                                <div class="card small-widget">
-                                    <div class="card-body success"><span class="f-light">Gross Profit</span>
-                                    <div class="d-flex align-items-end gap-1">
-                                        <h4>$3,908</h4><span class="font-success f-12 f-w-500"><i class="icon-arrow-up"></i><span>+80%</span></span>
-                                    </div>
-                                    <div class="bg-gradient">
-                                        <svg class="stroke-icon svg-fill">
-                                        <use href="../assets/admin/svg/icon-sprite.svg#profit"></use>
-                                        </svg>
-                                    </div>
-                                    </div>
-                                </div>
-                            </div>-->
                         </div>
                     </div>
-                    <div class="col-xxl-7 col-md-5 col-sm-6 box-col-5">
-                        <!-- col-xxl-10 col-md-12 box-col-8 grid-ed-12 -->
-                        <div class="appointment">
-                            <div class="card">
-                                <div class="card-header card-no-border">
-                                    <div class="header-top">
-                                        <h5 class="m-0">Pemesan Terbanyak</h5>
-                                        <!-- <div class="card-header-right-icon">
-                                            <div class="dropdown icon-dropdown">
-                                            <button class="btn dropdown-toggle" id="dropdownMenuButton" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="icon-more-alt"></i></button>
-                                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton"><a class="dropdown-item" href="#">Today</a><a class="dropdown-item" href="#">
-                                                Tomorrow</a><a class="dropdown-item" href="#">Yesterday</a></div>
-                                            </div>
-                                        </div> -->
+
+                    <div class="row">
+                        <div class="col-xxl-6 col-md-6 col-sm-12 box-col-6">
+                            <!-- CARD PERTAMA: xxxxxxxxxx -->
+                            <div class="appointment">
+                                <div class="card">
+                                    <div class="card-header card-no-border">
+                                        <div class="header-top">
+                                            <h5 class="m-0">xxxxxxxxxx</h5>
+                                        </div>
+                                    </div>
+                                    <div class="card-body pt-0">
+                                        <div class="appointment-table customer-table table-responsive">
+                                            <table class="table table-bordernone">
+                                                <tbody>
+                                                    @foreach ($customers as $customer)
+                                                        <tr>
+                                                            <td><i class="fas fa-user"></i></td>
+                                                            <td class="img-content-box">
+                                                                <a class="f-w-500">{{ $customer->nama }}</a><br>
+                                                                <span>{{ $customer->email }}</span>
+                                                                <small><strong>{{ $customer->total_pemesanan }} pemesanan</strong></small>
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="card-body pt-0">
-                                    <div class="appointment-table customer-table table-responsive">
-                                        <table class="table table-bordernone">
-                                            <tbody>
-                                                @foreach ($customers as $customer)
-                                                    <tr>
-                                                        <td><i class="fas fa-user"></i></td>
-                                                        <td class="img-content-box">
-                                                            <a class="f-w-500">{{ $customer->nama }}</a><br>
-                                                            <span>{{ $customer->email }}</span>
-                                                            <small><strong>{{ $customer->total_pemesanan }} pemesanan</strong></small>
-                                                        </td>
-                                                    </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
+                            </div>
+                        </div>
+
+                        <div class="col-xxl-6 col-md-6 col-sm-12 box-col-6">
+                            <!-- CARD KEDUA: Pemesan Terbanyak -->
+                            <div class="appointment">
+                                <div class="card">
+                                    <div class="card-header card-no-border">
+                                        <div class="header-top">
+                                            <h5 class="m-0">Pemesan Terbanyak</h5>
+                                        </div>
+                                    </div>
+                                    <div class="card-body pt-0">
+                                        <div class="appointment-table customer-table table-responsive">
+                                            <table class="table table-bordernone">
+                                                <tbody>
+                                                    @foreach ($customers as $customer)
+                                                        <tr>
+                                                            <td><i class="fas fa-user"></i></td>
+                                                            <td class="img-content-box">
+                                                                <a class="f-w-500">{{ $customer->nama }}</a><br>
+                                                                <span>{{ $customer->email }}</span>
+                                                                <small><strong>{{ $customer->total_pemesanan }} pemesanan</strong></small>
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -256,7 +251,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xxl-2 col-xl-3 col-md-4 grid-ed-none box-col-4e d-xxl-block d-none">
+            <!-- <div class="col-xxl-2 col-xl-3 col-md-4 grid-ed-none box-col-4e d-xxl-block d-none">
                 <div class="card">
                     <div class="card-header card-no-border">
                         <h5>Top Categories</h5>
@@ -264,7 +259,7 @@
                     <div class="card-body pt-0">
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 @endsection

@@ -5,7 +5,7 @@
 -- Dumped from database version 16.3
 -- Dumped by pg_dump version 17.2
 
--- Started on 2025-07-04 13:09:15
+-- Started on 2025-07-27 19:35:00
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -21,7 +21,7 @@ SET row_security = off;
 
 DROP DATABASE room_booking2;
 --
--- TOC entry 5010 (class 1262 OID 26407)
+-- TOC entry 5011 (class 1262 OID 26407)
 -- Name: room_booking2; Type: DATABASE; Schema: -; Owner: -
 --
 
@@ -51,7 +51,7 @@ CREATE SCHEMA public;
 
 
 --
--- TOC entry 5011 (class 0 OID 0)
+-- TOC entry 5012 (class 0 OID 0)
 -- Dependencies: 4
 -- Name: SCHEMA public; Type: COMMENT; Schema: -; Owner: -
 --
@@ -117,7 +117,7 @@ CREATE SEQUENCE public.failed_jobs_id_seq
 
 
 --
--- TOC entry 5012 (class 0 OID 0)
+-- TOC entry 5013 (class 0 OID 0)
 -- Dependencies: 218
 -- Name: failed_jobs_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
@@ -152,7 +152,7 @@ CREATE SEQUENCE public.fasilitas_ruangan_id_seq
 
 
 --
--- TOC entry 5013 (class 0 OID 0)
+-- TOC entry 5014 (class 0 OID 0)
 -- Dependencies: 220
 -- Name: fasilitas_ruangan_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
@@ -187,7 +187,7 @@ CREATE SEQUENCE public.informasi_id_seq
 
 
 --
--- TOC entry 5014 (class 0 OID 0)
+-- TOC entry 5015 (class 0 OID 0)
 -- Dependencies: 222
 -- Name: informasi_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
@@ -244,7 +244,7 @@ CREATE SEQUENCE public.jobs_id_seq
 
 
 --
--- TOC entry 5015 (class 0 OID 0)
+-- TOC entry 5016 (class 0 OID 0)
 -- Dependencies: 225
 -- Name: jobs_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
@@ -285,7 +285,7 @@ CREATE SEQUENCE public.master_profil_customer_id_seq
 
 
 --
--- TOC entry 5016 (class 0 OID 0)
+-- TOC entry 5017 (class 0 OID 0)
 -- Dependencies: 227
 -- Name: master_profil_customer_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
@@ -320,7 +320,7 @@ CREATE SEQUENCE public.migrations_id_seq
 
 
 --
--- TOC entry 5017 (class 0 OID 0)
+-- TOC entry 5018 (class 0 OID 0)
 -- Dependencies: 229
 -- Name: migrations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
@@ -342,7 +342,8 @@ CREATE TABLE public.mst_fasilitas (
     image character varying(255) NOT NULL,
     created_at timestamp(0) without time zone,
     updated_at timestamp(0) without time zone,
-    is_umum boolean
+    is_umum boolean,
+    active boolean DEFAULT true
 );
 
 
@@ -360,7 +361,7 @@ CREATE SEQUENCE public.mst_fasilitas_id_seq
 
 
 --
--- TOC entry 5018 (class 0 OID 0)
+-- TOC entry 5019 (class 0 OID 0)
 -- Dependencies: 231
 -- Name: mst_fasilitas_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
@@ -397,7 +398,7 @@ CREATE SEQUENCE public.mst_harga_sewa_id_seq
 
 
 --
--- TOC entry 5019 (class 0 OID 0)
+-- TOC entry 5020 (class 0 OID 0)
 -- Dependencies: 233
 -- Name: mst_harga_sewa_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
@@ -443,7 +444,7 @@ CREATE SEQUENCE public.mst_ruangan_id_seq
 
 
 --
--- TOC entry 5020 (class 0 OID 0)
+-- TOC entry 5021 (class 0 OID 0)
 -- Dependencies: 235
 -- Name: mst_ruangan_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
@@ -479,7 +480,7 @@ CREATE SEQUENCE public.orders_id_seq
 
 
 --
--- TOC entry 5021 (class 0 OID 0)
+-- TOC entry 5022 (class 0 OID 0)
 -- Dependencies: 237
 -- Name: orders_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
@@ -567,7 +568,7 @@ CREATE SEQUENCE public.trx_sewa_fasilitas_id_seq
 
 
 --
--- TOC entry 5022 (class 0 OID 0)
+-- TOC entry 5023 (class 0 OID 0)
 -- Dependencies: 242
 -- Name: trx_sewa_fasilitas_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
@@ -589,7 +590,7 @@ CREATE SEQUENCE public.trx_sewa_id_seq
 
 
 --
--- TOC entry 5023 (class 0 OID 0)
+-- TOC entry 5024 (class 0 OID 0)
 -- Dependencies: 243
 -- Name: trx_sewa_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
@@ -630,7 +631,7 @@ CREATE SEQUENCE public.users_id_seq
 
 
 --
--- TOC entry 5024 (class 0 OID 0)
+-- TOC entry 5025 (class 0 OID 0)
 -- Dependencies: 245
 -- Name: users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
@@ -695,7 +696,7 @@ ALTER TABLE ONLY public.mst_fasilitas ALTER COLUMN id SET DEFAULT nextval('publi
 
 
 --
--- TOC entry 4776 (class 2604 OID 26581)
+-- TOC entry 4777 (class 2604 OID 26581)
 -- Name: mst_harga_sewa id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -703,7 +704,7 @@ ALTER TABLE ONLY public.mst_harga_sewa ALTER COLUMN id SET DEFAULT nextval('publ
 
 
 --
--- TOC entry 4777 (class 2604 OID 26582)
+-- TOC entry 4778 (class 2604 OID 26582)
 -- Name: mst_ruangan id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -711,7 +712,7 @@ ALTER TABLE ONLY public.mst_ruangan ALTER COLUMN id SET DEFAULT nextval('public.
 
 
 --
--- TOC entry 4779 (class 2604 OID 26583)
+-- TOC entry 4780 (class 2604 OID 26583)
 -- Name: orders id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -719,7 +720,7 @@ ALTER TABLE ONLY public.orders ALTER COLUMN id SET DEFAULT nextval('public.order
 
 
 --
--- TOC entry 4780 (class 2604 OID 26584)
+-- TOC entry 4781 (class 2604 OID 26584)
 -- Name: trx_sewa id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -727,7 +728,7 @@ ALTER TABLE ONLY public.trx_sewa ALTER COLUMN id SET DEFAULT nextval('public.trx
 
 
 --
--- TOC entry 4781 (class 2604 OID 26585)
+-- TOC entry 4782 (class 2604 OID 26585)
 -- Name: trx_sewa_fasilitas id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -735,7 +736,7 @@ ALTER TABLE ONLY public.trx_sewa_fasilitas ALTER COLUMN id SET DEFAULT nextval('
 
 
 --
--- TOC entry 4782 (class 2604 OID 26586)
+-- TOC entry 4783 (class 2604 OID 26586)
 -- Name: users id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -743,7 +744,7 @@ ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_
 
 
 --
--- TOC entry 4974 (class 0 OID 26408)
+-- TOC entry 4975 (class 0 OID 26408)
 -- Dependencies: 215
 -- Data for Name: cache; Type: TABLE DATA; Schema: public; Owner: -
 --
@@ -751,7 +752,7 @@ ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_
 
 
 --
--- TOC entry 4975 (class 0 OID 26413)
+-- TOC entry 4976 (class 0 OID 26413)
 -- Dependencies: 216
 -- Data for Name: cache_locks; Type: TABLE DATA; Schema: public; Owner: -
 --
@@ -759,7 +760,7 @@ ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_
 
 
 --
--- TOC entry 4976 (class 0 OID 26418)
+-- TOC entry 4977 (class 0 OID 26418)
 -- Dependencies: 217
 -- Data for Name: failed_jobs; Type: TABLE DATA; Schema: public; Owner: -
 --
@@ -767,7 +768,7 @@ ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_
 
 
 --
--- TOC entry 4978 (class 0 OID 26425)
+-- TOC entry 4979 (class 0 OID 26425)
 -- Dependencies: 219
 -- Data for Name: fasilitas_ruangan; Type: TABLE DATA; Schema: public; Owner: -
 --
@@ -847,7 +848,7 @@ INSERT INTO public.fasilitas_ruangan VALUES (72, 10, 22, true);
 
 
 --
--- TOC entry 4980 (class 0 OID 26429)
+-- TOC entry 4981 (class 0 OID 26429)
 -- Dependencies: 221
 -- Data for Name: informasi; Type: TABLE DATA; Schema: public; Owner: -
 --
@@ -860,7 +861,7 @@ INSERT INTO public.informasi VALUES (10, 'Workshop Ramu Pangan Sirkular: Oleh Ol
 
 
 --
--- TOC entry 4982 (class 0 OID 26435)
+-- TOC entry 4983 (class 0 OID 26435)
 -- Dependencies: 223
 -- Data for Name: job_batches; Type: TABLE DATA; Schema: public; Owner: -
 --
@@ -868,7 +869,7 @@ INSERT INTO public.informasi VALUES (10, 'Workshop Ramu Pangan Sirkular: Oleh Ol
 
 
 --
--- TOC entry 4983 (class 0 OID 26440)
+-- TOC entry 4984 (class 0 OID 26440)
 -- Dependencies: 224
 -- Data for Name: jobs; Type: TABLE DATA; Schema: public; Owner: -
 --
@@ -876,21 +877,22 @@ INSERT INTO public.informasi VALUES (10, 'Workshop Ramu Pangan Sirkular: Oleh Ol
 
 
 --
--- TOC entry 4985 (class 0 OID 26446)
+-- TOC entry 4986 (class 0 OID 26446)
 -- Dependencies: 226
 -- Data for Name: master_profil_customer; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-INSERT INTO public.master_profil_customer VALUES (7, 'ranibilla@gmail.com', 'Billa Rani', '081234567770', 'Jalan Karangasem no 11 rt 2/3', '123', '123', NULL, '2024-12-27 04:09:38', '2024-12-27 15:24:27');
 INSERT INTO public.master_profil_customer VALUES (1, 'syaharanibilla1@gmail.com', 'Billa', '081234567770', 'Bintaro, Jakarta Selatan', '123456', '123456', NULL, NULL, '2024-12-29 20:24:01');
 INSERT INTO public.master_profil_customer VALUES (8, 'caro@gmail.com', 'caro sama', NULL, NULL, 'password', NULL, NULL, '2025-06-28 04:23:42', '2025-06-28 04:23:42');
 INSERT INTO public.master_profil_customer VALUES (9, 'catur.21048@mhs.unesa.ac.id', 'catur hendra', NULL, NULL, 'password', NULL, NULL, '2025-06-28 13:41:42', '2025-06-28 13:41:42');
-INSERT INTO public.master_profil_customer VALUES (10, 'ssalasbilla32@gmail.com', 'Billa Bil', NULL, NULL, '12345', NULL, NULL, '2025-06-29 13:12:50', '2025-06-29 13:12:50');
 INSERT INTO public.master_profil_customer VALUES (11, 'atafarisa@gmail.com', 'Ni''mah Athafarisya', NULL, NULL, '12345678', NULL, NULL, '2025-07-03 09:12:17', '2025-07-03 09:12:17');
+INSERT INTO public.master_profil_customer VALUES (12, 'anjar.dosen@gmail.com', 'Syaharani Salsabilla', NULL, NULL, '12345678', NULL, NULL, '2025-07-21 03:22:55', '2025-07-21 03:22:55');
+INSERT INTO public.master_profil_customer VALUES (16, 'isengbilla@gmail.com', 'Billa Iseng', '085781617890', NULL, '87654321', '87654321', NULL, '2025-07-25 16:31:34', '2025-07-25 18:14:37');
+INSERT INTO public.master_profil_customer VALUES (19, 'greenyjastul@gmail.com', 'Jastul Greeny', '085781617810', NULL, '12345678', NULL, NULL, '2025-07-26 16:40:20', '2025-07-26 16:40:20');
 
 
 --
--- TOC entry 4987 (class 0 OID 26452)
+-- TOC entry 4988 (class 0 OID 26452)
 -- Dependencies: 228
 -- Data for Name: migrations; Type: TABLE DATA; Schema: public; Owner: -
 --
@@ -910,46 +912,48 @@ INSERT INTO public.migrations VALUES (12, '2024_12_26_082621_tabel_informasi', 4
 
 
 --
--- TOC entry 4989 (class 0 OID 26456)
+-- TOC entry 4990 (class 0 OID 26456)
 -- Dependencies: 230
 -- Data for Name: mst_fasilitas; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-INSERT INTO public.mst_fasilitas VALUES (37, 'Sanganan 1', '15', 'Kue Sus, Donat Gula, Lemper, Minuman Panas', 450000, 'Sarapan.png', NULL, NULL, false);
-INSERT INTO public.mst_fasilitas VALUES (38, 'Sanganan 2', '30', '100 Jajan Pasar Mini (8 Macam), 1 Macam Keripik, Minuman Panas, Minuman Dingin', 800000, 'Sarapan.png', NULL, NULL, false);
-INSERT INTO public.mst_fasilitas VALUES (34, 'Gayatri - Sundari', '1', 'Nasi Putih, Sop, Sayuran, Olahan Ayam/Ikan, Telur Balado, Kerupuk Udang, Buah Potong (3 Macam), Teh Sereh Pandan', 65000, 'Sarapan.png', NULL, NULL, false);
-INSERT INTO public.mst_fasilitas VALUES (8, 'Parkir Luas', '1', '', 0, 'fa-solid fa-car', NULL, NULL, true);
-INSERT INTO public.mst_fasilitas VALUES (35, 'Gayatri - Bhavya', '1', 'Nasi Putih, Nasi Goreng Paon, Sop, Sayuran, Olahan Ayam/Ikan, Olahan Daging, Kerupuk Udang, Buah Potong (3 Macam), Tek Sereh Pandan', 75000, 'Sarapan.png', NULL, NULL, false);
-INSERT INTO public.mst_fasilitas VALUES (11, 'Wifi', '1', 'Wifi', 0, 'fa-solid fa-wifi', NULL, NULL, true);
-INSERT INTO public.mst_fasilitas VALUES (12, 'Full Band Equipment', '1', 'Full Band Equipment', 0, 'fa-solid fa-music', NULL, NULL, true);
-INSERT INTO public.mst_fasilitas VALUES (13, 'Mics 1000W 32 Channels', '1', 'Mics 1000W 32 Channels', 0, 'fa-solid fa-microphone', NULL, NULL, true);
-INSERT INTO public.mst_fasilitas VALUES (14, 'Mixer', '1', 'Mixer', 0, 'fa-solid fa-sliders', NULL, NULL, true);
-INSERT INTO public.mst_fasilitas VALUES (10, 'Ruangan Terhubung', '1', 'ruangan terhubung', 0, 'fa-solid fa-door-open', NULL, NULL, true);
-INSERT INTO public.mst_fasilitas VALUES (36, 'Gayatri - Devi', '1', 'Nasi Putih, Olahan Nasi/Mie, Sop, Sayuran, Olahan Ayam/Ikan, Olahan Daging, Kerupuk Udang, Buah Potong (3 Macam), Teh Sereh Pandan', 85000, 'Sarapan.png', NULL, NULL, false);
-INSERT INTO public.mst_fasilitas VALUES (5, 'Kursi & Meja', '1', 'Kursi & Meja', 0, 'fa-solid fa-chair', NULL, NULL, true);
-INSERT INTO public.mst_fasilitas VALUES (4, 'Microphone', '1', 'microphone', 0, 'fa-solid fa-microphone', NULL, NULL, true);
-INSERT INTO public.mst_fasilitas VALUES (39, 'Sanganan 3', '50', '200 Jajan Pasar Mini (12 Macam), 2 Macam Keripik, Minuman Panas, Minuman Dingin', 1300000, 'Sarapan.png', NULL, NULL, false);
-INSERT INTO public.mst_fasilitas VALUES (15, 'Kangen Water', '1', 'Kangen Water', 0, 'fa-solid fa-mug-saucer', NULL, NULL, true);
-INSERT INTO public.mst_fasilitas VALUES (22, 'Pemanas Teh', '1', 'Pemanas Teh', 0, 'fa-solid fa-mug-hot', NULL, NULL, true);
-INSERT INTO public.mst_fasilitas VALUES (20, 'Speaker', '1', 'Speaker', 0, 'fa-solid fa-volume-high', NULL, NULL, true);
-INSERT INTO public.mst_fasilitas VALUES (16, 'Teknisi Audio', '1', 'Teknisi Audio', 0, 'fa-solid fa-person', NULL, NULL, true);
-INSERT INTO public.mst_fasilitas VALUES (21, 'AC', '1', 'AC', 0, 'fa-solid fa-fan', NULL, NULL, true);
-INSERT INTO public.mst_fasilitas VALUES (24, 'Proyektor', '1', 'Proyektor', 0, 'fa-solid fa-video', NULL, NULL, true);
-INSERT INTO public.mst_fasilitas VALUES (23, 'Papan Tulis', '1', 'Papan Tulis', 0, 'fa-solid fa-chalkboard', NULL, NULL, true);
-INSERT INTO public.mst_fasilitas VALUES (1, 'Sarapan Pagi 1', '1', 'Bajigur, Pisang Rebus, Singkong Goreng', 25000, 'Sarapan.png', NULL, NULL, false);
-INSERT INTO public.mst_fasilitas VALUES (3, 'Sarapan Pagi 3', '1', 'Risoles, Roti Bakar Manis, Teh Panas/Kopi Hitam', 25000, 'Sarapan.png', NULL, NULL, false);
-INSERT INTO public.mst_fasilitas VALUES (2, 'Sarapan Pagi 2', '1', 'Sekoteng/Susu Jahe, Pisang Goreng', 25000, 'Pasar Bahagia (1).jpg', NULL, NULL, false);
-INSERT INTO public.mst_fasilitas VALUES (26, 'Mentari 1', '1', 'Lontong Sayur, Es/Panas Teh Lemon ', 30000, 'Sarapan.png', NULL, NULL, false);
-INSERT INTO public.mst_fasilitas VALUES (28, 'Mentari 2', '1', 'Bubur Ayam/Kornet Sapi, Teh Panas/Kopi Susu', 30000, 'Sarapan.png', NULL, NULL, false);
-INSERT INTO public.mst_fasilitas VALUES (29, 'Mentari 3', '1', 'Omelet Keju, Teh Tarik/Kopi Susu', 30000, 'Sarapan.png', NULL, NULL, false);
-INSERT INTO public.mst_fasilitas VALUES (31, 'Amboja Soto Betawi', '1', 'Soto Betawi, Semangka, Teh Sereh Pandan', 45000, 'Sarapan.png', NULL, NULL, false);
-INSERT INTO public.mst_fasilitas VALUES (32, 'Amboja Soto Mie Bogor', '1', 'Soto Mie Bogor, Melon, Teh Sereh Pandan', 45000, 'Sarapan.png', NULL, NULL, false);
-INSERT INTO public.mst_fasilitas VALUES (30, 'Amboja Soto Ayam', '1', 'Soto Ayam, Semangka & Melon, Teh Sereh Pandan', 45000, 'Sarapan.png', NULL, NULL, false);
-INSERT INTO public.mst_fasilitas VALUES (33, 'Gayatri - Prasaja', '1', 'Nasi Putih, Sop, Sayuran, Olahan Ayam/Ikan, Kerupuk Udang, Semangka, Puding, Teh Sereh Pandan', 55000, 'Sarapan.png', NULL, NULL, false);
+INSERT INTO public.mst_fasilitas VALUES (37, 'Sanganan 1', '15', 'Kue Sus, Donat Gula, Lemper, Minuman Panas', 450000, 'Sarapan.png', NULL, NULL, false, true);
+INSERT INTO public.mst_fasilitas VALUES (38, 'Sanganan 2', '30', '100 Jajan Pasar Mini (8 Macam), 1 Macam Keripik, Minuman Panas, Minuman Dingin', 800000, 'Sarapan.png', NULL, NULL, false, true);
+INSERT INTO public.mst_fasilitas VALUES (34, 'Gayatri - Sundari', '1', 'Nasi Putih, Sop, Sayuran, Olahan Ayam/Ikan, Telur Balado, Kerupuk Udang, Buah Potong (3 Macam), Teh Sereh Pandan', 65000, 'Sarapan.png', NULL, NULL, false, true);
+INSERT INTO public.mst_fasilitas VALUES (8, 'Parkir Luas', '1', '', 0, 'fa-solid fa-car', NULL, NULL, true, true);
+INSERT INTO public.mst_fasilitas VALUES (35, 'Gayatri - Bhavya', '1', 'Nasi Putih, Nasi Goreng Paon, Sop, Sayuran, Olahan Ayam/Ikan, Olahan Daging, Kerupuk Udang, Buah Potong (3 Macam), Tek Sereh Pandan', 75000, 'Sarapan.png', NULL, NULL, false, true);
+INSERT INTO public.mst_fasilitas VALUES (11, 'Wifi', '1', 'Wifi', 0, 'fa-solid fa-wifi', NULL, NULL, true, true);
+INSERT INTO public.mst_fasilitas VALUES (12, 'Full Band Equipment', '1', 'Full Band Equipment', 0, 'fa-solid fa-music', NULL, NULL, true, true);
+INSERT INTO public.mst_fasilitas VALUES (13, 'Mics 1000W 32 Channels', '1', 'Mics 1000W 32 Channels', 0, 'fa-solid fa-microphone', NULL, NULL, true, true);
+INSERT INTO public.mst_fasilitas VALUES (14, 'Mixer', '1', 'Mixer', 0, 'fa-solid fa-sliders', NULL, NULL, true, true);
+INSERT INTO public.mst_fasilitas VALUES (10, 'Ruangan Terhubung', '1', 'ruangan terhubung', 0, 'fa-solid fa-door-open', NULL, NULL, true, true);
+INSERT INTO public.mst_fasilitas VALUES (36, 'Gayatri - Devi', '1', 'Nasi Putih, Olahan Nasi/Mie, Sop, Sayuran, Olahan Ayam/Ikan, Olahan Daging, Kerupuk Udang, Buah Potong (3 Macam), Teh Sereh Pandan', 85000, 'Sarapan.png', NULL, NULL, false, true);
+INSERT INTO public.mst_fasilitas VALUES (5, 'Kursi & Meja', '1', 'Kursi & Meja', 0, 'fa-solid fa-chair', NULL, NULL, true, true);
+INSERT INTO public.mst_fasilitas VALUES (4, 'Microphone', '1', 'microphone', 0, 'fa-solid fa-microphone', NULL, NULL, true, true);
+INSERT INTO public.mst_fasilitas VALUES (39, 'Sanganan 3', '50', '200 Jajan Pasar Mini (12 Macam), 2 Macam Keripik, Minuman Panas, Minuman Dingin', 1300000, 'Sarapan.png', NULL, NULL, false, true);
+INSERT INTO public.mst_fasilitas VALUES (15, 'Kangen Water', '1', 'Kangen Water', 0, 'fa-solid fa-mug-saucer', NULL, NULL, true, true);
+INSERT INTO public.mst_fasilitas VALUES (22, 'Pemanas Teh', '1', 'Pemanas Teh', 0, 'fa-solid fa-mug-hot', NULL, NULL, true, true);
+INSERT INTO public.mst_fasilitas VALUES (20, 'Speaker', '1', 'Speaker', 0, 'fa-solid fa-volume-high', NULL, NULL, true, true);
+INSERT INTO public.mst_fasilitas VALUES (16, 'Teknisi Audio', '1', 'Teknisi Audio', 0, 'fa-solid fa-person', NULL, NULL, true, true);
+INSERT INTO public.mst_fasilitas VALUES (21, 'AC', '1', 'AC', 0, 'fa-solid fa-fan', NULL, NULL, true, true);
+INSERT INTO public.mst_fasilitas VALUES (24, 'Proyektor', '1', 'Proyektor', 0, 'fa-solid fa-video', NULL, NULL, true, true);
+INSERT INTO public.mst_fasilitas VALUES (23, 'Papan Tulis', '1', 'Papan Tulis', 0, 'fa-solid fa-chalkboard', NULL, NULL, true, true);
+INSERT INTO public.mst_fasilitas VALUES (1, 'Sarapan Pagi 1', '1', 'Bajigur, Pisang Rebus, Singkong Goreng', 25000, 'Sarapan.png', NULL, NULL, false, true);
+INSERT INTO public.mst_fasilitas VALUES (3, 'Sarapan Pagi 3', '1', 'Risoles, Roti Bakar Manis, Teh Panas/Kopi Hitam', 25000, 'Sarapan.png', NULL, NULL, false, true);
+INSERT INTO public.mst_fasilitas VALUES (2, 'Sarapan Pagi 2', '1', 'Sekoteng/Susu Jahe, Pisang Goreng', 25000, 'Pasar Bahagia (1).jpg', NULL, NULL, false, true);
+INSERT INTO public.mst_fasilitas VALUES (26, 'Mentari 1', '1', 'Lontong Sayur, Es/Panas Teh Lemon ', 30000, 'Sarapan.png', NULL, NULL, false, true);
+INSERT INTO public.mst_fasilitas VALUES (28, 'Mentari 2', '1', 'Bubur Ayam/Kornet Sapi, Teh Panas/Kopi Susu', 30000, 'Sarapan.png', NULL, NULL, false, true);
+INSERT INTO public.mst_fasilitas VALUES (29, 'Mentari 3', '1', 'Omelet Keju, Teh Tarik/Kopi Susu', 30000, 'Sarapan.png', NULL, NULL, false, true);
+INSERT INTO public.mst_fasilitas VALUES (31, 'Amboja Soto Betawi', '1', 'Soto Betawi, Semangka, Teh Sereh Pandan', 45000, 'Sarapan.png', NULL, NULL, false, true);
+INSERT INTO public.mst_fasilitas VALUES (32, 'Amboja Soto Mie Bogor', '1', 'Soto Mie Bogor, Melon, Teh Sereh Pandan', 45000, 'Sarapan.png', NULL, NULL, false, true);
+INSERT INTO public.mst_fasilitas VALUES (30, 'Amboja Soto Ayam', '1', 'Soto Ayam, Semangka & Melon, Teh Sereh Pandan', 45000, 'Sarapan.png', NULL, NULL, false, true);
+INSERT INTO public.mst_fasilitas VALUES (33, 'Gayatri - Prasaja', '1', 'Nasi Putih, Sop, Sayuran, Olahan Ayam/Ikan, Kerupuk Udang, Semangka, Puding, Teh Sereh Pandan', 55000, 'Sarapan.png', NULL, NULL, false, true);
+INSERT INTO public.mst_fasilitas VALUES (42, 'abc', '1', 'abc', 10000, '', '2025-07-06 10:57:27', '2025-07-06 10:57:27', NULL, true);
+INSERT INTO public.mst_fasilitas VALUES (44, 'cek', '2', 'oke', 6666, '', '2025-07-06 13:42:35', '2025-07-06 13:42:44', false, false);
 
 
 --
--- TOC entry 4991 (class 0 OID 26462)
+-- TOC entry 4992 (class 0 OID 26462)
 -- Dependencies: 232
 -- Data for Name: mst_harga_sewa; Type: TABLE DATA; Schema: public; Owner: -
 --
@@ -969,7 +973,7 @@ INSERT INTO public.mst_harga_sewa VALUES (12, '22', 1, 150000, NULL, NULL);
 
 
 --
--- TOC entry 4993 (class 0 OID 26466)
+-- TOC entry 4994 (class 0 OID 26466)
 -- Dependencies: 234
 -- Data for Name: mst_ruangan; Type: TABLE DATA; Schema: public; Owner: -
 --
@@ -1025,10 +1029,14 @@ Agawe merupakan coworking space, terdiri dari 4 islands yang bisa menjadi
 tempat bekerja bersama.', 'Agawe.png', 100000, NULL, '2025-06-28 14:02:32', NULL, true, 3, 5);
 INSERT INTO public.mst_ruangan VALUES (32, 'cek2', '30', 'alsad', 4, 5, 'hjsagdjsakd', '1751099841_tas2.jpeg', 90000, '2025-06-28 08:37:21', '2025-06-29 03:46:12', NULL, false, NULL, 13);
 INSERT INTO public.mst_ruangan VALUES (33, 'ruangan b', '10', 'dsf', 5, 5, 'kksdf', '1751119332_4ou0e2gj.png', 200000, '2025-06-28 14:02:12', '2025-06-29 03:50:41', NULL, false, NULL, 20);
+INSERT INTO public.mst_ruangan VALUES (34, 'abcdef', '21', 'Lantai 1', 12, 12, 'bgfbfgb', '1751723473_1 (20).png', 700000, '2025-07-05 13:51:13', '2025-07-05 13:51:41', NULL, false, NULL, 0);
+INSERT INTO public.mst_ruangan VALUES (35, 'abcdef', '21', 'Lantai 1', 12, 12, 'bgfbfgb', '1751723475_1 (20).png', 700000, '2025-07-05 13:51:15', '2025-07-05 13:51:53', NULL, false, NULL, 0);
+INSERT INTO public.mst_ruangan VALUES (36, 'abcdef', '21', 'Lantai 1', 12, 12, 'bgfbfgb', '1751723480_1 (20).png', 700000, '2025-07-05 13:51:20', '2025-07-05 13:52:09', NULL, false, NULL, 0);
+INSERT INTO public.mst_ruangan VALUES (37, 'Rajawali', '10', 'Lantai 1', 12, 10, 'Ruangan rapat', '1753067099_Screenshot 2024-02-04 191153.png', 700000, '2025-07-21 03:04:59', '2025-07-24 18:00:11', NULL, false, NULL, 10);
 
 
 --
--- TOC entry 4995 (class 0 OID 26473)
+-- TOC entry 4996 (class 0 OID 26473)
 -- Dependencies: 236
 -- Data for Name: orders; Type: TABLE DATA; Schema: public; Owner: -
 --
@@ -1040,7 +1048,7 @@ INSERT INTO public.orders VALUES (5, 'fdgdfg', NULL, 'Pengguna 4', NULL);
 
 
 --
--- TOC entry 4997 (class 0 OID 26479)
+-- TOC entry 4998 (class 0 OID 26479)
 -- Dependencies: 238
 -- Data for Name: password_reset_tokens; Type: TABLE DATA; Schema: public; Owner: -
 --
@@ -1048,17 +1056,16 @@ INSERT INTO public.orders VALUES (5, 'fdgdfg', NULL, 'Pengguna 4', NULL);
 
 
 --
--- TOC entry 4998 (class 0 OID 26484)
+-- TOC entry 4999 (class 0 OID 26484)
 -- Dependencies: 239
 -- Data for Name: sessions; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-INSERT INTO public.sessions VALUES ('CLMyLX46MJAezzagt17shYkuphud4mrq40H9GSKS', 19, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoicW9MWmxBUE9XNUV5TlV1RjUzWVdISjkzUTNMcGs2WmNmVUNwbTg0WiI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mjc6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9hZG1pbiI7fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjE5O30=', 1751534191);
-INSERT INTO public.sessions VALUES ('20p6QDVlXX58nWknSsOyZZuqDaFbTrpQuSIq9J4B', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36', 'YTo4OntzOjY6Il90b2tlbiI7czo0MDoiUUtsdnhxOGloVjZ2OU1rVjR1cWozZzZMamRGcVVwNnhnMUlZWkd4RyI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzE6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9wZXNhbjEvMTAiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aToxO3M6NjoicGVzYW4yIjthOjQ6e3M6NzoicnVhbmdhbiI7YToyOntpOjA7YTo0OntzOjI6ImlkIjtzOjI6IjEzIjtzOjQ6Im5hbWEiO3M6NzoiQnJhbWFyYSI7czo1OiJoYXJnYSI7aTo0MDAwMDA7czo2OiJkaXNrb24iO2k6MDt9aToxO2E6NDp7czoyOiJpZCI7czoyOiIxNyI7czo0OiJuYW1hIjtzOjc6Ik5pcm1hbmEiO3M6NToiaGFyZ2EiO2k6OTAwMDAwO3M6NjoiZGlza29uIjtpOjA7fX1zOjEyOiJpdGVtVGFtYmFoYW4iO2E6MTp7aTowO2E6NDp7czoyOiJpZCI7czoxOiIxIjtzOjQ6Im5hbWEiO3M6MTQ6IlNhcmFwYW4gUGFnaSAxIjtzOjY6Imp1bWxhaCI7aToxO3M6ODoic3VidG90YWwiO2k6MjUwMDA7fX1zOjEwOiJ0b3RhbEhhcmdhIjtpOjEzMjUwMDA7czo3OiJwZXNhbmFuIjthOjQ6e3M6MjoiaWQiO3M6MjoiMTMiO3M6NDoibmFtYSI7czo3OiJCcmFtYXJhIjtzOjU6ImhhcmdhIjtpOjQwMDAwMDtzOjY6ImRpc2tvbiI7aTowO319czo2OiJwZXNhbjMiO2E6NTp7czo4OiJydWFuZ2FucyI7YToyOntpOjA7YTo1OntzOjI6ImlkIjtzOjI6IjEzIjtzOjQ6Im5hbWEiO3M6NzoiQnJhbWFyYSI7czo1OiJoYXJnYSI7aTo0MDAwMDA7czo2OiJkaXNrb24iO2k6MDtzOjg6InN1YnRvdGFsIjtpOjE2MDAwMDA7fWk6MTthOjU6e3M6MjoiaWQiO3M6MjoiMTciO3M6NDoibmFtYSI7czo3OiJOaXJtYW5hIjtzOjU6ImhhcmdhIjtpOjkwMDAwMDtzOjY6ImRpc2tvbiI7aTowO3M6ODoic3VidG90YWwiO2k6MzYwMDAwMDt9fXM6OToidGFtYmFoYW5zIjthOjE6e2k6MDthOjQ6e3M6MjoiaWQiO3M6MToiMSI7czo0OiJuYW1hIjtzOjE0OiJTYXJhcGFuIFBhZ2kgMSI7czo2OiJqdW1sYWgiO2k6MTtzOjg6InN1YnRvdGFsIjtpOjI1MDAwO319czo5OiJ0Z2xfbXVsYWkiO3M6MTY6IjIwMjUtMDctMDQgMDg6MDAiO3M6MTE6InRnbF9zZWxlc2FpIjtzOjE2OiIyMDI1LTA3LTA0IDEyOjAwIjtzOjEwOiJ0b3RhbEhhcmdhIjtpOjUyMjUwMDA7fXM6NjoicGVzYW40IjthOjc6e3M6ODoicnVhbmdhbnMiO2E6Mjp7aTowO2E6NTp7czoyOiJpZCI7czoyOiIxMyI7czo0OiJuYW1hIjtzOjc6IkJyYW1hcmEiO3M6NToiaGFyZ2EiO2k6NDAwMDAwO3M6NjoiZGlza29uIjtpOjA7czo4OiJzdWJ0b3RhbCI7aToxNjAwMDAwO31pOjE7YTo1OntzOjI6ImlkIjtzOjI6IjE3IjtzOjQ6Im5hbWEiO3M6NzoiTmlybWFuYSI7czo1OiJoYXJnYSI7aTo5MDAwMDA7czo2OiJkaXNrb24iO2k6MDtzOjg6InN1YnRvdGFsIjtpOjM2MDAwMDA7fX1zOjk6InRhbWJhaGFucyI7YToxOntpOjA7YTo0OntzOjI6ImlkIjtzOjE6IjEiO3M6NDoibmFtYSI7czoxNDoiU2FyYXBhbiBQYWdpIDEiO3M6NjoianVtbGFoIjtpOjE7czo4OiJzdWJ0b3RhbCI7aToyNTAwMDt9fXM6OToidGdsX211bGFpIjtzOjE2OiIyMDI1LTA3LTA0IDA4OjAwIjtzOjExOiJ0Z2xfc2VsZXNhaSI7czoxNjoiMjAyNS0wNy0wNCAxMjowMCI7czoxMDoidG90YWxIYXJnYSI7aTo1MjI1MDAwO3M6NToibm90ZXMiO3M6MzoiaGFpIjtzOjQ6ImtvZGUiO3M6MjE6IlRSWDIwMjUwNzAzMTgzNTI2MTg3OCI7fXM6ODoidHJhbnNmZXIiO2E6ODp7czo4OiJydWFuZ2FucyI7YToyOntpOjA7YTo1OntzOjI6ImlkIjtzOjI6IjEzIjtzOjQ6Im5hbWEiO3M6NzoiQnJhbWFyYSI7czo1OiJoYXJnYSI7aTo0MDAwMDA7czo2OiJkaXNrb24iO2k6MDtzOjg6InN1YnRvdGFsIjtpOjE2MDAwMDA7fWk6MTthOjU6e3M6MjoiaWQiO3M6MjoiMTciO3M6NDoibmFtYSI7czo3OiJOaXJtYW5hIjtzOjU6ImhhcmdhIjtpOjkwMDAwMDtzOjY6ImRpc2tvbiI7aTowO3M6ODoic3VidG90YWwiO2k6MzYwMDAwMDt9fXM6OToidGFtYmFoYW5zIjthOjE6e2k6MDthOjQ6e3M6MjoiaWQiO3M6MToiMSI7czo0OiJuYW1hIjtzOjE0OiJTYXJhcGFuIFBhZ2kgMSI7czo2OiJqdW1sYWgiO2k6MTtzOjg6InN1YnRvdGFsIjtpOjI1MDAwO319czo5OiJ0Z2xfbXVsYWkiO3M6MTY6IjIwMjUtMDctMDQgMDg6MDAiO3M6MTE6InRnbF9zZWxlc2FpIjtzOjE2OiIyMDI1LTA3LTA0IDEyOjAwIjtzOjEwOiJ0b3RhbEhhcmdhIjtpOjUyMjUwMDA7czo1OiJub3RlcyI7czozOiJoYWkiO3M6NDoia29kZSI7czoyMToiVFJYMjAyNTA3MDMxODM1MjYxODc4IjtzOjEyOiJtZXRvZGVfYmF5YXIiO3M6ODoibWlkdHJhbnMiO319', 1751567825);
+INSERT INTO public.sessions VALUES ('sVjfXPB1iDmy1jRe7kmG1Q1hhPeNDvSITNc1w8Ci', 16, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoieDlKMkloS2sxdGprT2NwRjRNNjRXUzB4RUVRTXp2MWRTaTRScXMwViI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mzc6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9hZG1pbi9wZWxhbmdnYW4iO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aToxNjt9', 1753619466);
 
 
 --
--- TOC entry 4999 (class 0 OID 26489)
+-- TOC entry 5000 (class 0 OID 26489)
 -- Dependencies: 240
 -- Data for Name: trx_sewa; Type: TABLE DATA; Schema: public; Owner: -
 --
@@ -1067,18 +1074,31 @@ INSERT INTO public.trx_sewa VALUES (69, 12, 806600, '16', '2025-01-02 01:00:00',
 INSERT INTO public.trx_sewa VALUES (70, 32, 806600, '16', '2025-01-02 01:00:00', '2025-01-02 03:00:00', 'ini kedua', 13, NULL, '2025-06-28 12:39:18', '2025-06-29 03:45:01', NULL, 'TRX202506281239183261                                                                                                                                                                                                                                          ', 1);
 INSERT INTO public.trx_sewa VALUES (67, 12, 1134900, '16', '2025-02-02 01:00:00', '2025-02-02 03:01:00', 'yoi brooh', 0, NULL, '2025-06-28 11:19:20', '2025-06-29 03:45:10', NULL, 'TRX202506281119207818                                                                                                                                                                                                                                          ', 3);
 INSERT INTO public.trx_sewa VALUES (68, 32, 1134900, '16', '2025-02-02 01:00:00', '2025-02-02 03:01:00', 'yoi brooh', 13, NULL, '2025-06-28 11:19:20', '2025-06-29 03:45:10', NULL, 'TRX202506281119207818                                                                                                                                                                                                                                          ', 3);
-INSERT INTO public.trx_sewa VALUES (75, 12, 1710000, '1', '2025-06-30 08:00:00', '2025-06-30 12:00:00', 'tesss', 0, NULL, '2025-06-29 03:58:38', '2025-06-29 04:01:26', NULL, 'TRX202506290358388926                                                                                                                                                                                                                                          ', 1);
-INSERT INTO public.trx_sewa VALUES (76, 20, 1710000, '1', '2025-06-30 08:00:00', '2025-06-30 12:00:00', 'tesss', 5, NULL, '2025-06-29 03:58:38', '2025-06-29 04:01:26', NULL, 'TRX202506290358388926                                                                                                                                                                                                                                          ', 1);
+INSERT INTO public.trx_sewa VALUES (85, 37, 10260000, '1', '2025-07-21 08:00:00', '2025-07-21 10:00:00', NULL, 10, NULL, '2025-07-21 03:16:57', '2025-07-21 03:16:57', NULL, 'TRX202507210316573586                                                                                                                                                                                                                                          ', 0);
+INSERT INTO public.trx_sewa VALUES (86, 37, 10260000, '1', '2025-07-21 08:00:00', '2025-07-21 10:00:00', NULL, 10, NULL, '2025-07-21 03:17:33', '2025-07-21 03:17:33', NULL, 'TRX202507210317334134                                                                                                                                                                                                                                          ', 0);
 INSERT INTO public.trx_sewa VALUES (71, 15, 831600, '17', '2025-01-01 01:00:00', '2025-01-01 02:01:00', 'ini adalah pesanan', 0, NULL, '2025-06-28 13:43:20', '2025-06-29 04:04:00', NULL, 'TRX202506281343207180                                                                                                                                                                                                                                          ', 2);
 INSERT INTO public.trx_sewa VALUES (72, 32, 831600, '17', '2025-01-01 01:00:00', '2025-01-01 02:01:00', 'ini adalah pesanan', 13, NULL, '2025-06-28 13:43:20', '2025-06-29 04:04:00', NULL, 'TRX202506281343207180                                                                                                                                                                                                                                          ', 2);
 INSERT INTO public.trx_sewa VALUES (73, 32, 1433200, '17', '2025-01-04 01:00:00', '2025-01-04 04:01:00', 'haaaaai', 13, NULL, '2025-06-28 14:05:30', '2025-06-29 04:04:11', NULL, 'TRX202506281405292184                                                                                                                                                                                                                                          ', 2);
 INSERT INTO public.trx_sewa VALUES (74, 33, 1433200, '17', '2025-01-04 01:00:00', '2025-01-04 04:01:00', 'haaaaai', 20, NULL, '2025-06-28 14:05:30', '2025-06-29 04:04:11', NULL, 'TRX202506281405292184                                                                                                                                                                                                                                          ', 2);
 INSERT INTO public.trx_sewa VALUES (77, 13, 5225000, '1', '2025-07-04 08:00:00', '2025-07-04 12:00:00', 'hai', 0, NULL, '2025-07-03 18:35:27', '2025-07-03 18:37:05', NULL, 'TRX202507031835261878                                                                                                                                                                                                                                          ', 1);
 INSERT INTO public.trx_sewa VALUES (78, 17, 5225000, '1', '2025-07-04 08:00:00', '2025-07-04 12:00:00', 'hai', 0, NULL, '2025-07-03 18:35:27', '2025-07-03 18:37:05', NULL, 'TRX202507031835261878                                                                                                                                                                                                                                          ', 1);
+INSERT INTO public.trx_sewa VALUES (75, 12, 1710000, '1', '2025-06-30 08:00:00', '2025-06-30 12:00:00', 'tesss', 0, NULL, '2025-06-29 03:58:38', '2025-07-06 15:13:23', NULL, 'TRX202506290358388926                                                                                                                                                                                                                                          ', 3);
+INSERT INTO public.trx_sewa VALUES (76, 20, 1710000, '1', '2025-06-30 08:00:00', '2025-06-30 12:00:00', 'tesss', 5, NULL, '2025-06-29 03:58:38', '2025-07-06 15:13:23', NULL, 'TRX202506290358388926                                                                                                                                                                                                                                          ', 3);
+INSERT INTO public.trx_sewa VALUES (79, 37, 1260000, '1', '2025-07-21 08:00:00', '2025-07-21 10:00:00', NULL, 10, NULL, '2025-07-21 03:10:27', '2025-07-21 03:10:27', NULL, 'TRX202507210310276323                                                                                                                                                                                                                                          ', 0);
+INSERT INTO public.trx_sewa VALUES (80, 37, 10260000, '1', '2025-07-21 08:00:00', '2025-07-21 10:00:00', NULL, 10, NULL, '2025-07-21 03:14:06', '2025-07-21 03:14:06', NULL, 'TRX202507210314062371                                                                                                                                                                                                                                          ', 0);
+INSERT INTO public.trx_sewa VALUES (81, 37, 10260000, '1', '2025-07-21 08:00:00', '2025-07-21 10:00:00', NULL, 10, NULL, '2025-07-21 03:14:32', '2025-07-21 03:14:32', NULL, 'TRX202507210314328499                                                                                                                                                                                                                                          ', 0);
+INSERT INTO public.trx_sewa VALUES (82, 37, 10260000, '1', '2025-07-21 08:00:00', '2025-07-21 10:00:00', NULL, 10, NULL, '2025-07-21 03:15:00', '2025-07-21 03:15:00', NULL, 'TRX202507210315001176                                                                                                                                                                                                                                          ', 0);
+INSERT INTO public.trx_sewa VALUES (83, 37, 10260000, '1', '2025-07-21 08:00:00', '2025-07-21 10:00:00', NULL, 10, NULL, '2025-07-21 03:15:22', '2025-07-21 03:15:22', NULL, 'TRX202507210315222571                                                                                                                                                                                                                                          ', 0);
+INSERT INTO public.trx_sewa VALUES (84, 37, 10260000, '1', '2025-07-21 08:00:00', '2025-07-21 10:00:00', NULL, 10, NULL, '2025-07-21 03:16:17', '2025-07-21 03:16:17', NULL, 'TRX202507210316172467                                                                                                                                                                                                                                          ', 0);
+INSERT INTO public.trx_sewa VALUES (87, 37, 10260000, '1', '2025-07-21 08:00:00', '2025-07-21 10:00:00', NULL, 10, NULL, '2025-07-21 03:18:39', '2025-07-21 03:18:39', NULL, 'TRX202507210318398952                                                                                                                                                                                                                                          ', 0);
+INSERT INTO public.trx_sewa VALUES (88, 37, 10260000, '1', '2025-07-21 08:00:00', '2025-07-21 10:00:00', NULL, 10, NULL, '2025-07-21 03:19:15', '2025-07-21 03:19:15', NULL, 'TRX202507210319158987                                                                                                                                                                                                                                          ', 0);
+INSERT INTO public.trx_sewa VALUES (89, 37, 10260000, '1', '2025-07-21 08:00:00', '2025-07-21 10:00:00', NULL, 10, NULL, '2025-07-21 03:19:54', '2025-07-21 03:19:54', NULL, 'TRX202507210319546724                                                                                                                                                                                                                                          ', 0);
+INSERT INTO public.trx_sewa VALUES (90, 37, 10260000, '1', '2025-07-21 08:00:00', '2025-07-21 10:00:00', NULL, 10, NULL, '2025-07-21 03:21:21', '2025-07-21 03:21:21', NULL, 'TRX202507210321215403                                                                                                                                                                                                                                          ', 0);
+INSERT INTO public.trx_sewa VALUES (91, 10, 1025000, '20', '2025-07-21 12:00:00', '2025-07-21 14:00:00', NULL, 0, NULL, '2025-07-21 03:23:50', '2025-07-21 03:30:18', NULL, 'TRX202507210323503887                                                                                                                                                                                                                                          ', 1);
 
 
 --
--- TOC entry 5000 (class 0 OID 26494)
+-- TOC entry 5001 (class 0 OID 26494)
 -- Dependencies: 241
 -- Data for Name: trx_sewa_fasilitas; Type: TABLE DATA; Schema: public; Owner: -
 --
@@ -1093,23 +1113,37 @@ INSERT INTO public.trx_sewa_fasilitas VALUES (52, 76, '3', 1, 0, '2025-06-29 03:
 INSERT INTO public.trx_sewa_fasilitas VALUES (53, 76, '26', 2, 0, '2025-06-29 03:58:38', '2025-06-29 03:58:38');
 INSERT INTO public.trx_sewa_fasilitas VALUES (54, 76, '30', 1, 0, '2025-06-29 03:58:38', '2025-06-29 03:58:38');
 INSERT INTO public.trx_sewa_fasilitas VALUES (55, 78, '1', 1, 0, '2025-07-03 18:35:27', '2025-07-03 18:35:27');
+INSERT INTO public.trx_sewa_fasilitas VALUES (56, 80, '37', 20, 0, '2025-07-21 03:14:06', '2025-07-21 03:14:06');
+INSERT INTO public.trx_sewa_fasilitas VALUES (57, 81, '37', 20, 0, '2025-07-21 03:14:32', '2025-07-21 03:14:32');
+INSERT INTO public.trx_sewa_fasilitas VALUES (58, 82, '37', 20, 0, '2025-07-21 03:15:00', '2025-07-21 03:15:00');
+INSERT INTO public.trx_sewa_fasilitas VALUES (59, 83, '37', 20, 0, '2025-07-21 03:15:22', '2025-07-21 03:15:22');
+INSERT INTO public.trx_sewa_fasilitas VALUES (60, 84, '37', 20, 0, '2025-07-21 03:16:17', '2025-07-21 03:16:17');
+INSERT INTO public.trx_sewa_fasilitas VALUES (61, 85, '37', 20, 0, '2025-07-21 03:16:57', '2025-07-21 03:16:57');
+INSERT INTO public.trx_sewa_fasilitas VALUES (62, 86, '37', 20, 0, '2025-07-21 03:17:33', '2025-07-21 03:17:33');
+INSERT INTO public.trx_sewa_fasilitas VALUES (63, 87, '37', 20, 0, '2025-07-21 03:18:39', '2025-07-21 03:18:39');
+INSERT INTO public.trx_sewa_fasilitas VALUES (64, 88, '37', 20, 0, '2025-07-21 03:19:15', '2025-07-21 03:19:15');
+INSERT INTO public.trx_sewa_fasilitas VALUES (65, 89, '37', 20, 0, '2025-07-21 03:19:54', '2025-07-21 03:19:54');
+INSERT INTO public.trx_sewa_fasilitas VALUES (66, 90, '37', 20, 0, '2025-07-21 03:21:21', '2025-07-21 03:21:21');
+INSERT INTO public.trx_sewa_fasilitas VALUES (67, 91, '1', 1, 0, '2025-07-21 03:23:50', '2025-07-21 03:23:50');
 
 
 --
--- TOC entry 5003 (class 0 OID 26499)
+-- TOC entry 5004 (class 0 OID 26499)
 -- Dependencies: 244
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-INSERT INTO public.users VALUES (15, 'ranibilla@gmail.com', NULL, NULL, '$2y$12$R6kcFTmFlHdH67yeVWZlqO9Z3CN6PmBuAaqzfUBNB4lRGPzIlgIuW', true, NULL, NULL, '2024-12-27 15:24:46', 2);
 INSERT INTO public.users VALUES (17, 'catur.21048@mhs.unesa.ac.id', NULL, NULL, '$2y$12$Qn8y70iQcVSEnDg2CvhJhuYldzQDikp6snSgqfMKhzW7Q.wXXXxkK', true, NULL, NULL, NULL, 2);
-INSERT INTO public.users VALUES (1, 'syaharanibilla1@gmail.com', NULL, '2024-12-26 07:31:38', '$2y$12$WqlXa4SvnzzLOHGgwN5BXOdfaCsHgti0SfNFJHwwIVTJyzXD7GETu', true, 'XceS1HScitQOoyTrgxbLAh3taP78JznuczvGJQzfIsSEwFF3Xn8XOVUQAkUT', '2024-12-26 07:31:38', '2025-07-02 17:44:38', 2);
 INSERT INTO public.users VALUES (16, 'ninspacecenter@gmail.com', NULL, NULL, '$2y$12$SFybf6kNvYwZte8Vssy5tOeaLCk6mB.LxEMo1CrSs0VQU2qfN20KC', true, NULL, NULL, NULL, 1);
 INSERT INTO public.users VALUES (19, 'atafarisa@gmail.com', NULL, NULL, '$2y$12$05kai1zAOISb6s2uI8BHMeU1Q/G9CTU1pzAxCY5y8VhbA1mOov7gu', true, NULL, NULL, NULL, 2);
+INSERT INTO public.users VALUES (1, 'syaharanibilla1@gmail.com', NULL, '2024-12-26 07:31:38', '$2y$12$WqlXa4SvnzzLOHGgwN5BXOdfaCsHgti0SfNFJHwwIVTJyzXD7GETu', true, 'iUmk838gblHvj3x4rtgZXZ3Q9nyrlqtqI7xpaYQDbX27RbYgYaGvNiPNzpl6', '2024-12-26 07:31:38', '2025-07-02 17:44:38', 2);
+INSERT INTO public.users VALUES (20, 'anjar.dosen@gmail.com', NULL, NULL, '$2y$12$sDGArifW5qA6K5ddogBUt.mmyzLUMdad3TngaGYHOyn77v6yOfTsW', true, NULL, NULL, NULL, 2);
+INSERT INTO public.users VALUES (24, 'isengbilla@gmail.com', NULL, NULL, '$2y$12$cwUmYKVcXvuFqqMCDtCAx.t85Xkmn.QPav8EdN.pCeVWtuQBihyuK', true, NULL, NULL, '2025-07-25 17:44:43', 2);
+INSERT INTO public.users VALUES (27, 'greenyjastul@gmail.com', NULL, NULL, '$2y$12$je8ViGrtjJmiFoh95GFxret9z8tpn1mmhFSbDwXwl4aG7Ml0veY26', true, NULL, NULL, NULL, 2);
 
 
 --
--- TOC entry 5025 (class 0 OID 0)
+-- TOC entry 5026 (class 0 OID 0)
 -- Dependencies: 218
 -- Name: failed_jobs_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
@@ -1118,7 +1152,7 @@ SELECT pg_catalog.setval('public.failed_jobs_id_seq', 1, false);
 
 
 --
--- TOC entry 5026 (class 0 OID 0)
+-- TOC entry 5027 (class 0 OID 0)
 -- Dependencies: 220
 -- Name: fasilitas_ruangan_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
@@ -1127,7 +1161,7 @@ SELECT pg_catalog.setval('public.fasilitas_ruangan_id_seq', 72, true);
 
 
 --
--- TOC entry 5027 (class 0 OID 0)
+-- TOC entry 5028 (class 0 OID 0)
 -- Dependencies: 222
 -- Name: informasi_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
@@ -1136,7 +1170,7 @@ SELECT pg_catalog.setval('public.informasi_id_seq', 10, true);
 
 
 --
--- TOC entry 5028 (class 0 OID 0)
+-- TOC entry 5029 (class 0 OID 0)
 -- Dependencies: 225
 -- Name: jobs_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
@@ -1145,16 +1179,16 @@ SELECT pg_catalog.setval('public.jobs_id_seq', 1, false);
 
 
 --
--- TOC entry 5029 (class 0 OID 0)
+-- TOC entry 5030 (class 0 OID 0)
 -- Dependencies: 227
 -- Name: master_profil_customer_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.master_profil_customer_id_seq', 11, true);
+SELECT pg_catalog.setval('public.master_profil_customer_id_seq', 19, true);
 
 
 --
--- TOC entry 5030 (class 0 OID 0)
+-- TOC entry 5031 (class 0 OID 0)
 -- Dependencies: 229
 -- Name: migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
@@ -1163,16 +1197,16 @@ SELECT pg_catalog.setval('public.migrations_id_seq', 12, true);
 
 
 --
--- TOC entry 5031 (class 0 OID 0)
+-- TOC entry 5032 (class 0 OID 0)
 -- Dependencies: 231
 -- Name: mst_fasilitas_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.mst_fasilitas_id_seq', 39, true);
+SELECT pg_catalog.setval('public.mst_fasilitas_id_seq', 44, true);
 
 
 --
--- TOC entry 5032 (class 0 OID 0)
+-- TOC entry 5033 (class 0 OID 0)
 -- Dependencies: 233
 -- Name: mst_harga_sewa_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
@@ -1181,16 +1215,16 @@ SELECT pg_catalog.setval('public.mst_harga_sewa_id_seq', 12, true);
 
 
 --
--- TOC entry 5033 (class 0 OID 0)
+-- TOC entry 5034 (class 0 OID 0)
 -- Dependencies: 235
 -- Name: mst_ruangan_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.mst_ruangan_id_seq', 33, true);
+SELECT pg_catalog.setval('public.mst_ruangan_id_seq', 37, true);
 
 
 --
--- TOC entry 5034 (class 0 OID 0)
+-- TOC entry 5035 (class 0 OID 0)
 -- Dependencies: 237
 -- Name: orders_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
@@ -1199,34 +1233,34 @@ SELECT pg_catalog.setval('public.orders_id_seq', 5, true);
 
 
 --
--- TOC entry 5035 (class 0 OID 0)
+-- TOC entry 5036 (class 0 OID 0)
 -- Dependencies: 242
 -- Name: trx_sewa_fasilitas_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.trx_sewa_fasilitas_id_seq', 55, true);
-
-
---
--- TOC entry 5036 (class 0 OID 0)
--- Dependencies: 243
--- Name: trx_sewa_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
---
-
-SELECT pg_catalog.setval('public.trx_sewa_id_seq', 78, true);
+SELECT pg_catalog.setval('public.trx_sewa_fasilitas_id_seq', 67, true);
 
 
 --
 -- TOC entry 5037 (class 0 OID 0)
+-- Dependencies: 243
+-- Name: trx_sewa_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.trx_sewa_id_seq', 91, true);
+
+
+--
+-- TOC entry 5038 (class 0 OID 0)
 -- Dependencies: 245
 -- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.users_id_seq', 19, true);
+SELECT pg_catalog.setval('public.users_id_seq', 27, true);
 
 
 --
--- TOC entry 4787 (class 2606 OID 26520)
+-- TOC entry 4788 (class 2606 OID 26520)
 -- Name: cache_locks cache_locks_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1235,7 +1269,7 @@ ALTER TABLE ONLY public.cache_locks
 
 
 --
--- TOC entry 4785 (class 2606 OID 26522)
+-- TOC entry 4786 (class 2606 OID 26522)
 -- Name: cache cache_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1244,7 +1278,7 @@ ALTER TABLE ONLY public.cache
 
 
 --
--- TOC entry 4789 (class 2606 OID 26524)
+-- TOC entry 4790 (class 2606 OID 26524)
 -- Name: failed_jobs failed_jobs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1253,7 +1287,7 @@ ALTER TABLE ONLY public.failed_jobs
 
 
 --
--- TOC entry 4791 (class 2606 OID 26526)
+-- TOC entry 4792 (class 2606 OID 26526)
 -- Name: failed_jobs failed_jobs_uuid_unique; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1262,7 +1296,7 @@ ALTER TABLE ONLY public.failed_jobs
 
 
 --
--- TOC entry 4793 (class 2606 OID 26528)
+-- TOC entry 4794 (class 2606 OID 26528)
 -- Name: fasilitas_ruangan fasilitas_ruangan_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1271,7 +1305,7 @@ ALTER TABLE ONLY public.fasilitas_ruangan
 
 
 --
--- TOC entry 4795 (class 2606 OID 26530)
+-- TOC entry 4796 (class 2606 OID 26530)
 -- Name: informasi informasi_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1280,7 +1314,7 @@ ALTER TABLE ONLY public.informasi
 
 
 --
--- TOC entry 4797 (class 2606 OID 26532)
+-- TOC entry 4798 (class 2606 OID 26532)
 -- Name: job_batches job_batches_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1289,7 +1323,7 @@ ALTER TABLE ONLY public.job_batches
 
 
 --
--- TOC entry 4799 (class 2606 OID 26534)
+-- TOC entry 4800 (class 2606 OID 26534)
 -- Name: jobs jobs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1298,7 +1332,7 @@ ALTER TABLE ONLY public.jobs
 
 
 --
--- TOC entry 4802 (class 2606 OID 26536)
+-- TOC entry 4803 (class 2606 OID 26536)
 -- Name: master_profil_customer master_profil_customer_email_unique; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1307,7 +1341,7 @@ ALTER TABLE ONLY public.master_profil_customer
 
 
 --
--- TOC entry 4804 (class 2606 OID 26538)
+-- TOC entry 4805 (class 2606 OID 26538)
 -- Name: master_profil_customer master_profil_customer_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1316,7 +1350,7 @@ ALTER TABLE ONLY public.master_profil_customer
 
 
 --
--- TOC entry 4806 (class 2606 OID 26540)
+-- TOC entry 4807 (class 2606 OID 26540)
 -- Name: migrations migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1325,7 +1359,7 @@ ALTER TABLE ONLY public.migrations
 
 
 --
--- TOC entry 4808 (class 2606 OID 26542)
+-- TOC entry 4809 (class 2606 OID 26542)
 -- Name: mst_fasilitas mst_fasilitas_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1334,7 +1368,7 @@ ALTER TABLE ONLY public.mst_fasilitas
 
 
 --
--- TOC entry 4810 (class 2606 OID 26544)
+-- TOC entry 4811 (class 2606 OID 26544)
 -- Name: mst_harga_sewa mst_harga_sewa_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1343,7 +1377,7 @@ ALTER TABLE ONLY public.mst_harga_sewa
 
 
 --
--- TOC entry 4812 (class 2606 OID 26546)
+-- TOC entry 4813 (class 2606 OID 26546)
 -- Name: mst_ruangan mst_ruangan_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1352,7 +1386,7 @@ ALTER TABLE ONLY public.mst_ruangan
 
 
 --
--- TOC entry 4814 (class 2606 OID 26548)
+-- TOC entry 4815 (class 2606 OID 26548)
 -- Name: orders orders_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1361,7 +1395,7 @@ ALTER TABLE ONLY public.orders
 
 
 --
--- TOC entry 4816 (class 2606 OID 26550)
+-- TOC entry 4817 (class 2606 OID 26550)
 -- Name: password_reset_tokens password_reset_tokens_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1370,7 +1404,7 @@ ALTER TABLE ONLY public.password_reset_tokens
 
 
 --
--- TOC entry 4819 (class 2606 OID 26552)
+-- TOC entry 4820 (class 2606 OID 26552)
 -- Name: sessions sessions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1379,7 +1413,7 @@ ALTER TABLE ONLY public.sessions
 
 
 --
--- TOC entry 4824 (class 2606 OID 26554)
+-- TOC entry 4825 (class 2606 OID 26554)
 -- Name: trx_sewa_fasilitas trx_sewa_fasilitas_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1388,7 +1422,7 @@ ALTER TABLE ONLY public.trx_sewa_fasilitas
 
 
 --
--- TOC entry 4822 (class 2606 OID 26556)
+-- TOC entry 4823 (class 2606 OID 26556)
 -- Name: trx_sewa trx_sewa_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1397,7 +1431,7 @@ ALTER TABLE ONLY public.trx_sewa
 
 
 --
--- TOC entry 4826 (class 2606 OID 26558)
+-- TOC entry 4827 (class 2606 OID 26558)
 -- Name: users users_email_unique; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1406,7 +1440,7 @@ ALTER TABLE ONLY public.users
 
 
 --
--- TOC entry 4828 (class 2606 OID 26560)
+-- TOC entry 4829 (class 2606 OID 26560)
 -- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1415,7 +1449,7 @@ ALTER TABLE ONLY public.users
 
 
 --
--- TOC entry 4800 (class 1259 OID 26561)
+-- TOC entry 4801 (class 1259 OID 26561)
 -- Name: jobs_queue_index; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1423,7 +1457,7 @@ CREATE INDEX jobs_queue_index ON public.jobs USING btree (queue);
 
 
 --
--- TOC entry 4817 (class 1259 OID 26562)
+-- TOC entry 4818 (class 1259 OID 26562)
 -- Name: sessions_last_activity_index; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1431,7 +1465,7 @@ CREATE INDEX sessions_last_activity_index ON public.sessions USING btree (last_a
 
 
 --
--- TOC entry 4820 (class 1259 OID 26563)
+-- TOC entry 4821 (class 1259 OID 26563)
 -- Name: sessions_user_id_index; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1439,7 +1473,7 @@ CREATE INDEX sessions_user_id_index ON public.sessions USING btree (user_id);
 
 
 --
--- TOC entry 4829 (class 2606 OID 26564)
+-- TOC entry 4830 (class 2606 OID 26564)
 -- Name: fasilitas_ruangan fasilitas_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1448,7 +1482,7 @@ ALTER TABLE ONLY public.fasilitas_ruangan
 
 
 --
--- TOC entry 4830 (class 2606 OID 26569)
+-- TOC entry 4831 (class 2606 OID 26569)
 -- Name: fasilitas_ruangan ruangan_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1456,7 +1490,7 @@ ALTER TABLE ONLY public.fasilitas_ruangan
     ADD CONSTRAINT ruangan_fk FOREIGN KEY (ruangan_id) REFERENCES public.mst_ruangan(id);
 
 
--- Completed on 2025-07-04 13:09:15
+-- Completed on 2025-07-27 19:35:01
 
 --
 -- PostgreSQL database dump complete
