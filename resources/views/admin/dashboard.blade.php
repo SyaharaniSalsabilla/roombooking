@@ -78,14 +78,9 @@
                                 <div class="col-md-6 mb-0">
                                     <div class="card small-widget">
                                         <div class="card-body primary">
-                                            <span class="f-light">Ruangan Terlaris</span>
+                                            <span class="f-light">Total Pesanan Bulan Ini</span>
                                             <div class="d-flex align-items-end gap-1">
-                                                @if ($room)
-                                                    <h4>{{ $room->nama_ruangan }}</h4>
-                                                    <small>{{ $room->jumlah_pemesanan }} pemesanan</small>
-                                                @else
-                                                    <h4>-</h4>
-                                                @endif
+                                                <h4>{{ $totalPesananBulanIni }}</h4>
                                             </div>
                                             <div class="bg-gradient">
                                                 <svg class="stroke-icon svg-fill">
@@ -117,28 +112,29 @@
 
                     <div class="row">
                         <div class="col-xxl-6 col-md-6 col-sm-12 box-col-6">
-                            <!-- CARD PERTAMA: xxxxxxxxxx -->
+                            <!-- CARD PERTAMA: Ruangan Paling Sering Dipesan -->
                             <div class="appointment">
                                 <div class="card">
                                     <div class="card-header card-no-border">
                                         <div class="header-top">
-                                            <h5 class="m-0">xxxxxxxxxx</h5>
+                                            <h5 class="m-0">Ruangan Paling Sering Dipesan Bulan Ini</h5>
                                         </div>
                                     </div>
                                     <div class="card-body pt-0">
                                         <div class="appointment-table customer-table table-responsive">
                                             <table class="table table-bordernone">
                                                 <tbody>
-                                                    @foreach ($customers as $customer)
+                                                    @forelse ($topRooms as $room)
                                                         <tr>
-                                                            <td><i class="fas fa-user"></i></td>
+                                                            <td><i class="fas fa-door-open"></i></td>
                                                             <td class="img-content-box">
-                                                                <a class="f-w-500">{{ $customer->nama }}</a><br>
-                                                                <span>{{ $customer->email }}</span>
-                                                                <small><strong>{{ $customer->total_pemesanan }} pemesanan</strong></small>
+                                                                <a class="f-w-500">{{ $room->nama_ruangan }}</a><br>
+                                                                <small><strong>{{ $room->jumlah_pemesanan }} kali dipesan</strong></small>
                                                             </td>
                                                         </tr>
-                                                    @endforeach
+                                                    @empty
+                                                        <tr><td colspan="2">Tidak ada data pemesanan bulan ini.</td></tr>
+                                                    @endforelse
                                                 </tbody>
                                             </table>
                                         </div>
