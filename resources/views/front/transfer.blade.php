@@ -73,29 +73,11 @@
                                 <div class="item-summary flex justify-between border-b py-1 pr-4">
                                     <p class="item-name text-primary-5 text-left font-semibold">
                                         <span class="item-name text-primary-5 text-left font-semibold">
-                                            Notes: 
+                                            Catatan: 
                                         </span>{{ $notes }}
                                     </p>
                                 </div>
                             </div>
-                            <form id="orderForm" method="POST">
-                                @csrf
-                                <input type="hidden" name="data_ruangan" id="data_ruangan" value="{{ json_encode($ruangans)}}"> 
-                                <input type="hidden" name="data_tambahan" id="data_tambahan" value="{{json_encode($tambahans)}}">
-                                <input type="hidden" name="data_total" id="data_total" value="{{$totalHarga}}">  
-
-                                <input type="hidden" name="data_tgl_mulai" id="data_tgl_mulai" value="{{$tgl_mulai}}">  
-                                <input type="hidden" name="data_tgl_sampai" id="data_tgl_sampai" value="{{$tgl_selesai}}">
-                                <input type="hidden" name="data_note" id="data_note" value="{{$notes}}"> 
-                                <input type="hidden" name="data_metode_bayar" id="data_metode_bayar">
-                                <input type="hidden" name="data_kode" id="data_kode">
-                                
-                            </form>
-                            <a class="hover:text-red-500">   
-                                    <div class="grid grid-cols-1 items-center p-4">
-                                        
-                                    </div>
-                                </a>
                         </div>
                     </div>
                 </div>

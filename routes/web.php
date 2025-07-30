@@ -47,7 +47,10 @@ Route::post('/login/post', [UsersController::class, 'login'])->name('login.post'
 Route::post('/login/customer', [UsersController::class, 'login_customer'])->name('login.post.customer');
 Route::get('/logout', [LoginsController::class, 'logout'])->name('logout');
 Route::post('/profil/update-password', [LoginsController::class, 'updatePassword'])->name('profil.updatePassword');
-Route::get('/riwayat/transaksi', [LoginsController::class, 'riwayat_transaksi'])->name('riwayat.transaksi');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/riwayat/transaksi', [LoginsController::class, 'riwayat_transaksi'])->name('riwayat.transaksi');
+    Route::get('/riwayat/transaksi/{kode}/{status}', [LoginsController::class, 'statusFasilitas'])->name('riwayat.transaksi.status');
+});
 Route::get('/forgot-password', [LoginsController::class, 'showLinkRequestForm'])->name('password.request');
 Route::get('/reset-password/{token}', [LoginsController::class, 'showResetForm'])->name('password.reset');
 

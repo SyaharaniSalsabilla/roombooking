@@ -6,54 +6,99 @@
             <h2 class="w-full text-center font-primary font-semibold uppercase text-3xl text-primary-5 mb-4">Riwayat Transaksi
             </h2>
             <div class="overflow-x-auto bg-white shadow-md rounded-lg">
-                <table class="w-full text-sm text-left text-gray-700 border border-gray-200">
-                    <thead class="bg-primary-1 text-primary-5 uppercase text-xs text-center">
+                <table class="w-full text-sm text-left text-gray-700 border border-gray-200 divide-y-2 divide-primary-5 rounded-lg">
+                    <thead class="bg-primary-1 text-primary-5 uppercase text-xs text-center rounded-lg">
                         <tr>
                             <th class="px-4 py-3">No</th>
-                            <th class="px-4 py-3">Ruangan</th>
+                            <th class="px-4 py-3">Kode Transaksi</th>
+                            <th class="px-4 py-3">Nama Ruangan</th>
+                            <th class="px-4 py-3">Fasilitas</th>
+                            <th class="px-4 py-3">Durasi</th>
+                            <!-- <th class="px-4 py-3">Nama Penyewa</th> -->
                             <th class="px-4 py-3">Tanggal Awal</th>
                             <th class="px-4 py-3">Tanggal Akhir</th>
-                            <th class="px-4 py-3">Nominal</th>
-                            <th class="px-4 py-3">Deskripsi</th>
+                            <th class="px-4 py-3">Catatan</th>
+                            <th class="px-4 py-3">Status</th>
+                            <th class="px-4 py-3">Aksi</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        @forelse ($riwayatTransaksi as $index => $transaksi)
-                            <tr class="border-t border-gray-200 hover:bg-gray-100 text-center">
-                                <td class="px-4 py-3">{{ $index + 1 }}</td>
-                                <td class="px-4 py-3">{{ $transaksi->ruangan->nama_ruangan ?? '-' }}</td>
-                                <td class="px-4 py-3">{{ $transaksi->tanggal_awal ?? $transaksi->tanggal_awal->format('d M Y') }}</td>
-                                <td class="px-4 py-3">{{ $transaksi->tanggal_akhir ?? $transaksi->tanggal_akhir->format('d M Y') }}</td>
-                                <td class="px-4 py-3">{{ $transaksi->mst_harga_sewa_id }}</td>
-                                <td class="px-4 py-3">{{ $transaksi->deskripsi }}</td>
-                            </tr>
-                        <!-- @if(count($transaksi->sewaFasilitas) > 0)
-                            <tr>
-                                <td colspan="7">
-                                    <table border="1" width="100%">
-                                        <thead>
-                                            <tr>
-                                                <th>Nama</th>
-                                                <th>Jumlah</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach($transaksi->sewaFasilitas as $fas)
-                                                    <tr>
-                                                        <td>{{$fas->fs->nama_fasilitas ?? '-'}}</td>
-                                                        <td>{{$fas->kuantitas }}</td>
-                                                    </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
+                    <tbody class="flex-col divide-y-2 divide-primary-5 rounded-lg">
+                        @foreach ($transaksi as $trx)
+                            @php
+                                $tanggalAwal = \Carbon\Carbon::parse($trx->tanggal_awal);
+                                $tanggalAkhir = \Carbon\Carbon::parse($trx->tanggal_akhir);
+                                $selisihJam = $tanggalAwal->diffInHours($tanggalAkhir);
+                            @endphp
+                            <tr >
+                                <td class="px-4 py-3">{{ $loop->iteration }}</td>
+                                <td class="px-4 py-3">{{ $trx->kode_transaksi }}</td>
+                                <td class="px-4 py-3">{{ $trx->gabungan_nama_ruangan }}</td>
+                                <td class="px-4 py-3">
+                                    @if (count($trx->sewaFasilitas) > 0)
+                                        @foreach ($trx->sewaFasilitas as $fas)
+                                            {{ $fas->fs->nama_fasilitas ? $fas->fs->nama_fasilitas . '(' . $fas->kuantitas . ')' : '-' }}<br>
+                                        @endforeach
+                                    @else
+                                        -
+                                    @endif
+                                <td class="px-4 py-3">{{ round($selisihJam, 2) }} Jam</td>
+                                <!-- <td class="px-4 py-3">{{ $trx->user->profile->nama ?? '-' }}</td> -->
+                                <td class="px-4 py-3">{{ $trx->tanggal_awal }}</td>
+                                <td class="px-4 py-3">{{ $trx->tanggal_akhir }}</td>
+                                <td class="px-4 py-3">{{ $trx->keperluan }}</td>
+                                <td class="px-4 py-3">
+                                    @if ($trx->status == 0)
+                                        <span class="badge bg-warning">Menunggu Pembayaran</span>
+                                    @elseif ($trx->status == 1)
+                                        <span class="badge bg-success">Pembayaran Diterima</span>
+                                    @elseif ($trx->status == 2)
+                                        <span class="badge bg-info">Selesai</span>
+                                    @else
+                                        <span class="badge bg-danger">Dibatalkan</span>
+                                    @endif
                                 </td>
+                                <td class="px-4 py-3">
+                                    <ul class="action d-flex gap-2 flex-wrap">
+                                        {{-- Tombol kirim invoice --}}
+                                        <li>
+                                            <a
+                                                href="{{ route('riwayat.transaksi.status', [$trx->kode_transaksi, 4]) }}">
+                                                <i class="fa-solid fa-envelope"></i> Kirim Invoice
+                                            </a>
+                                        </li>
+
+                                    </ul>
+                                </td>
+
                             </tr>
-                        @endif -->
-                        @empty
-                            <tr>
-                                <td colspan="7" class="text-center py-4 text-gray-500">Tidak ada riwayat transaksi.</td>
-                            </tr>
-                        @endforelse
+                            {{--
+                            @if (count($trx->sewaFasilitas) > 0)
+                                <tr>
+                                    <td></td>
+                                    <td colspan="9">
+                                        <table border="1" width="100%">
+                                            <thead>
+                                                <tr>
+                                                    <th style="min-width:150px !important;" class="text-start">
+                                                        Nama Fasilitas</th>
+                                                    <th>Jumlah</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($trx->sewaFasilitas as $fas)
+                                                    <tr>
+                                                        <td style="min-width:150px !important;"
+                                                            class="text-start">
+                                                            {{ $fas->fs->nama_fasilitas ?? '-' }}</td>
+                                                        <td>{{ $fas->kuantitas }}</td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                            @endif --}}
+                        @endforeach
                     </tbody>
                 </table>
             </div>

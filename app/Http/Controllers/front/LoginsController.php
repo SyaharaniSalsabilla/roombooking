@@ -23,6 +23,9 @@ use Midtrans\Config;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\URL;
 use App\Mail\InvoiceMail;
+use App\Models\Profil;
+use App\Models\harga_sewa;
+use App\Models\sewa_fasilitas;
 
 class LoginsController extends Controller
 {
@@ -228,12 +231,106 @@ class LoginsController extends Controller
         // Ambil user yang sedang login
         $user = Auth::user();
 
-        // Ambil riwayat transaksi milik user tersebut
-        $riwayatTransaksi = trx_sewa::with('ruangan')->where('mst_profil_id', $user->id)
-                                ->orderBy('created_at', 'desc')
-                                ->get();
-        // Kirim data ke view
-        return view('front.riwayat_transaksi', compact('riwayatTransaksi'));
+        // Ambil semua data yang dibutuhkan
+        $fasilitas = fasilitas::all();
+        $profil = profil::all();
+        $ruangan = Ruangan::all();
+        $harga = harga_sewa::all();
+
+        // Ambil transaksi hanya milik user yang sedang login
+        $transaksi = trx_sewa::with(['ruangan', 'sewaFasilitas', 'sewaFasilitas.fasilitas', 'user'])
+                        ->where('mst_profil_id', $user->id)
+                        ->orderBy('created_at', 'desc')
+                        ->get();
+
+        // Group berdasarkan kode_transaksi agar bisa ditampilkan sebagai 1 baris per transaksi
+        $transaksi = $transaksi->groupBy('kode_transaksi')->map(function ($items, $kode) {
+            $last = $items->last();
+
+            // Gabungkan semua nama ruangan unik
+            $nama_ruangan = $items->pluck('ruangan.nama_ruangan')->unique()->implode(', ');
+            $last->gabungan_nama_ruangan = $nama_ruangan;
+
+            return $last;
+        });
+
+        return view('front.riwayat_transaksi', compact(['ruangan', 'harga', 'fasilitas', 'profil', 'transaksi']));
+    }
+
+
+    public function statusFasilitas($kode, $status)
+    {
+        if ($status == 4) {
+            $this->sendInvoice($kode);
+            return redirect()->back()->with('success', 'Status fasilitas berhasil diperbarui dan invoice telah dikirim.');
+        }
+        $updated = trx_sewa::where('kode_transaksi', $kode)->update(['status' => $status]);
+
+        return redirect()->back()->with('success', 'Status fasilitas berhasil diperbarui.');
+    }
+    
+    protected function sendInvoice($kode)
+    {
+        $user = auth()->user();
+
+        // Ambil data profil user berdasarkan email
+        $profil = \App\Models\profil::where('email', $user->email)->first();
+
+        $transaksi = trx_sewa::with(['ruangan', 'sewaFasilitas', 'sewaFasilitas.fasilitas'])
+        ->where('kode_transaksi', $kode)
+        ->where('mst_profil_id', $profil->id) // hanya ambil transaksi milik user login
+        ->get();
+
+        $ruangan = [];
+        $fasilitas = null;
+        $email = '';
+        $harga_total = 0;
+        $note = '';
+        $tanggal_awal = '';
+        $tanggal_akhir = '';
+        $status = '';
+        $waktu = 0;
+        foreach ($transaksi as $trx) {
+            $ruangan[] = Ruangan::where('id', $trx->mst_ruangan_id)->first();
+            $fasilitas = sewa_fasilitas::where('trx_sewa_id', $trx->id)->get();
+            $email = $trx->user->email;
+            $harga_total = $trx->mst_harga_sewa_id;
+            $note = $trx->keperluan;
+            $tanggal_awal = $trx->tanggal_awal;
+            $tanggal_akhir = $trx->tanggal_akhir;
+            if ($trx->status == 0) {
+                $status = 'Menunggu pembayaran';
+            } else if ($trx->status == 1) {
+                $status = 'Pembayaran diterima';
+            } else if ($trx->status == 2) {
+                $status = 'Selesai';
+            } else if ($trx->status == 3) {
+                $status = 'Dibatalkan';
+            }
+            $tanggalAwal = \Carbon\Carbon::parse($trx->tanggal_awal);
+            $tanggalAkhir = \Carbon\Carbon::parse($trx->tanggal_akhir);
+            $waktu = ceil($tanggalAwal->diffInHours($tanggalAkhir));
+        }
+
+        $data = [
+            'kode_transaksi' => $kode,
+            'ruangan' => $ruangan,
+            'fasilitas' => $fasilitas,
+            'email' => $email,
+            'harga_t' => $harga_total,
+            'note' => $note,
+            'tanggal_awal' => $tanggal_awal,
+            'tanggal_akhir' => $tanggal_akhir,
+            'status' => $status,
+            'waktu' => $waktu,
+        ];
+
+        Mail::send('admin.transaction.invoice', $data, function ($message) use ($email) {
+            $message->to($email)
+                ->subject('Invoice Pemesanan - Nin Space');
+        });
+
+        return redirect()->back()->with('success', 'Invoice berhasil dikirim ke email Anda.');
     }
 
 

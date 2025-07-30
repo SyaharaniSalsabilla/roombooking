@@ -128,6 +128,6 @@ class TransaksiController extends Controller
                 ->subject('Invoice Pemesanan - Nin Space');
         });
 
-        return 'Email sudah dikirim!';
+        return 'Invoice berhasil dikirim ke email Anda.';
     }
 }
