@@ -38,10 +38,15 @@
                             </div>
                             <div class="flex justify-between py-2 items-center">
                                 <div class="flex gap-2 items-center">
-                                    <h2 class=" font-primary text-lg uppercase">IDR {{ number_format($Ruangan->harga, 0, ',', '.') }}</h2>
+                                    @if ($Ruangan->diskon > 0)
+                                        <h2 class=" font-primary text-lg uppercase">IDR {{ number_format($Ruangan->harga - ($Ruangan->harga * $Ruangan->diskon / 100), 0, ',', '.') }}</h2>
+                                        <p class="line-through text-gray-300 font-primary">IDR {{ number_format($Ruangan->harga, 0, ',', '.') }}</p>
+                                        <h2 class=" font-primary text-lg uppercase"><?= $Ruangan->diskon ?>% off</h2>
+                                    @else
+                                        <h2 class=" font-primary text-lg uppercase">IDR {{ number_format($Ruangan->harga, 0, ',', '.') }}</h2>
+                                    @endif
                                 </div>
-                                <form id="pesanan" action="{{route('transaksi.pesan',[12,1])}}" method="POST">@csrf</form>
-                                <a href="{{route('pesan1', $Ruangan->id)}}" class="hover:text-red-500">
+                                <a href="{{route('pesan1', ['id' => $Ruangan->id])}}" class="hover:text-red-500">
                                     <button class="bg-primary-2 text-primary-5 px-4 py-1 rounded-lg">Pesan Sekarang</button>
                                 </a>
                             </div>

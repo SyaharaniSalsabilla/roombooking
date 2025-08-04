@@ -8,9 +8,14 @@
                 <div class="grid grid-cols-3 gap-12">
                     <div class="flex flex-col gap-2 col-span-2 font-secondary text-justify">
                         <p>Langkah 3 dari 4</p>
-                        <h2 class="w-full font-primary font-semibold text-3xl text-primary-5 mb-2">
-                            Tinjau ulang dan konfirmasi
-                        </h2>
+                        <div class="flex justify-between">
+                            <h2 class=" font-primary font-semibold text-3xl text-primary-5 mb-2">
+                                Tinjau ulang dan konfirmasi
+                            </h2>
+                            <p id="holdTime">
+                                {{ json_encode($now) }}
+                            </p>
+                        </div>
                         <div class="flex flex-col items-center bg-primary-1 rounded-lg p-8">
                             <h2 class="w-full text-center font-primary font-semibold text-xl text-primary-5 mb-4">
                                 Tambah Catatan Pesanan
@@ -45,16 +50,16 @@
                                 </li>
                             </ul>
                         </div>
-                        
+
                     </div>
                     <div class="col-span-1">
                         <form method="POST" id="prev" action="{{route('pesan2')}}">
                             @csrf
-                            <input type="hidden" name="data_ruangan" id="data_ruangan" value="{{ json_encode($ruangans)}}"> 
+                            <input type="hidden" name="data_ruangan" id="data_ruangan" value="{{ json_encode($ruangans)}}">
                             <input type="hidden" name="data_tambahan" id="data_tambahan" value="{{json_encode($tambahans)}}">
-                            <input type="hidden" name="data_total" id="data_total" value="{{$totalHarga}}">  
+                            <input type="hidden" name="data_total" id="data_total" value="{{$totalHarga}}">
 
-                            <input type="hidden" name="data_tgl_mulai" id="data_tgl_mulai" value="{{$tgl_mulai}}">  
+                            <input type="hidden" name="data_tgl_mulai" id="data_tgl_mulai" value="{{$tgl_mulai}}">
                             <input type="hidden" name="data_tgl_sampai" id="data_tgl_sampai" value="{{$tgl_selesai}}">
                         </form>
                         <div class="flex flex-col mb-4">
@@ -68,7 +73,7 @@
                             </div>
                             <span class="divider text-center " >
                                 <div class="p-2">
-                                    <label id="lbl_tanggal_awal" class="font-semibold">{{$tgl_mulai}}</label> 
+                                    <label id="lbl_tanggal_awal" class="font-semibold">{{$tgl_mulai}}</label>
                                     <span class="text-primary-5">to</span>
                                     <label id="lbl_tanggal_akhir" class="font-semibold">{{ $tgl_selesai}}</label>
                                 </div>
@@ -99,14 +104,14 @@
                             </div>
                             <form method="POST" id="orderForm" action="{{route('pesan4')}}">
                                 @csrf
-                                <input type="hidden" name="data_ruangan" id="data_ruangan" value="{{ json_encode($ruangans)}}"> 
+                                <input type="hidden" name="data_ruangan" id="data_ruangan" value="{{ json_encode($ruangans)}}">
                                 <input type="hidden" name="data_tambahan" id="data_tambahan" value="{{json_encode($tambahans)}}">
-                                <input type="hidden" name="data_total" id="data_total" value="{{$totalHarga}}">  
+                                <input type="hidden" name="data_total" id="data_total" value="{{$totalHarga}}">
 
-                                <input type="hidden" name="data_tgl_mulai" id="data_tgl_mulai" value="{{$tgl_mulai}}">  
+                                <input type="hidden" name="data_tgl_mulai" id="data_tgl_mulai" value="{{$tgl_mulai}}">
                                 <input type="hidden" name="data_tgl_sampai" id="data_tgl_sampai" value="{{$tgl_selesai}}">
                                 <input type="hidden" name="data_note" id="data_note">
-                                <a class="hover:text-red-500">   
+                                <a class="hover:text-red-500">
                                     <div class="grid grid-cols-1 items-center p-4">
                                         <button id="btn_submit" class="text-primary-2 bg-primary-5 rounded-xl py-2 px-4">Lanjutkan</button>
                                     </div>
@@ -138,10 +143,39 @@
                 document.getElementById('data_total').value = totalHarga;
                 note = document.getElementById('note').value ;
                 document.getElementById('data_note').value = note;
-                
+
                 document.getElementById('orderForm').submit();
         });
     });
 
+</script>
+<script>
+    const holdTimeText = document.getElementById('holdTime').textContent.trim().replace(/"/g, '');
+    const expiredAt = new Date(holdTimeText);
+    const countdownText = document.createElement('span');
+
+    // Ganti isi p dengan teks awal + countdown
+    const holdTimeElement = document.getElementById('holdTime');
+    holdTimeElement.innerHTML = 'Selessaikan pesanan dalam: ';
+    holdTimeElement.appendChild(countdownText);
+
+    function updateCountdown() {
+        const now = new Date();
+        const diff = expiredAt - now;
+
+        if (diff <= 0) {
+            countdownText.textContent = "Expired";
+            window.location.href = "{{ route('room') }}"; // Redirect to pesan1
+            return;
+        }
+
+        const minutes = Math.floor(diff / 1000 / 60);
+        const seconds = Math.floor((diff / 1000) % 60);
+
+        countdownText.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    }
+
+    updateCountdown(); // awal
+    setInterval(updateCountdown, 1000);
 </script>
 @endsection

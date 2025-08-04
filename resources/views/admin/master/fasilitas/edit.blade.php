@@ -27,6 +27,12 @@
                             name="harga" placeholder="Masukkan Harga Sewa" required oninput="formatCurrency(this)">
                     </div>
                     <div class="mb-3">
+                        <label for="waktu_produksi" class="form-label">Waktu Produksi (mnt/pcs)</label>
+                        <input type="number" class="form-control" id="waktu_produksi" name="waktu_produksi"
+                            value="{{ $fasilitas->waktu_produksi }}"
+                            placeholder="Masukkan Waktu Produksi dalam menit per pcs" required>
+                    </div>
+                    <div class="mb-3">
                         <label for="deskripsi" class="form-label">Deskripsi</label>
                         <textarea class="form-control" id="deskripsi" name="deskripsi" rows="3" required>{{ $fasilitas->deskripsi }}</textarea>
                     </div>

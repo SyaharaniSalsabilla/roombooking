@@ -29,7 +29,8 @@ class Ruangan extends Authenticatable
         'image',
         'harga',
         'diskon',
-        'active'
+        'active',
+        'waktu_produksi'
     ];
 
     public function booked(){

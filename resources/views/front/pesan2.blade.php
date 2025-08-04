@@ -32,6 +32,9 @@
                                 class="w-full text-center px-3 py-3 bg-primary-1 border border-primary-5  rounded-md text-primary-5 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent">
                             <button class="text-primary-1 bg-primary-5 rounded-xl py-2 px-4" id="sampai-ok" style="display:none">OK</button>
                         </div>
+                        @if(json_encode($waktu_persiapan) > 0)
+                        <span class="text-danger text-primary-5">Note : Pesanan ini memiliki waktu kurang lebih {{json_encode($waktu_persiapan)}} menit untuk persiapan</span>
+                        @endif
                         <span class="text-danger text-primary-5">{{ $errors->has('tgl_selesai') ? $errors->first('tgl_selesai') : ''}}</span>
                         <span class="text-danger text-primary-5">{{ $errors->has('message') ? $errors->first('message') : ''}}</span>
                     </div>

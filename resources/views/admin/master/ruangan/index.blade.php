@@ -35,6 +35,7 @@
                                         <th>Lebar</th>
                                         <th>Harga</th>
                                         <th>Diskon</th>
+                                        <th>Waktu Persiapan (menit)</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
@@ -53,6 +54,8 @@
                                                 @else
                                                     Tidak ada diskon
                                                 @endif
+                                            </td>
+                                            <td>{{ $ruangan->waktu_produksi }}</td>
                                             <td>
                                                 <ul class="action">
                                                     <li class="edit">

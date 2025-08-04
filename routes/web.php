@@ -50,6 +50,7 @@ Route::post('/profil/update-password', [LoginsController::class, 'updatePassword
 Route::middleware(['auth'])->group(function () {
     Route::get('/riwayat/transaksi', [LoginsController::class, 'riwayat_transaksi'])->name('riwayat.transaksi');
     Route::get('/riwayat/transaksi/{kode}/{status}', [LoginsController::class, 'statusFasilitas'])->name('riwayat.transaksi.status');
+    Route::get('/invoice/{kode}/pdf', [LoginsController::class, 'cetakPDF'])->name('invoice.pdf'); // tambahkan ini
 });
 Route::get('/forgot-password', [LoginsController::class, 'showLinkRequestForm'])->name('password.request');
 Route::get('/reset-password/{token}', [LoginsController::class, 'showResetForm'])->name('password.reset');

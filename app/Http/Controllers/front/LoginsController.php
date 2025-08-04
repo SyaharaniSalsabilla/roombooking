@@ -5,6 +5,7 @@ namespace App\Http\Controllers\front;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\RoomHold;
 use App\Models\MasterSpace;
 use App\Models\Ruangan;
 use App\Models\trx_sewa;
@@ -13,7 +14,7 @@ use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\fasilitas;
-use App\Models\fasilitasRuangan;
+// use App\Models\fasilitasRuangan;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Auth\Events\PasswordReset;
@@ -26,6 +27,8 @@ use App\Mail\InvoiceMail;
 use App\Models\Profil;
 use App\Models\harga_sewa;
 use App\Models\sewa_fasilitas;
+use Carbon\Carbon;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class LoginsController extends Controller
 {
@@ -352,18 +355,28 @@ class LoginsController extends Controller
 
     public function pesan2(Request $request)
     {
-
         if($request->method() == 'GET'){
             $datas = session()->get('pesan2');
+            // dd($datas);
             return view('.front.pesan2',$datas);
         }
 
         $data = json_decode($request->input('data_json'), true);
+
+        $total_waktu = 0;
+        foreach($data['itemTambahan'] as $key => $item){
+            $fasilitas = fasilitas::find($item['id']);
+            if($fasilitas){
+                $total_waktu += ($fasilitas->waktu_produksi * $item['jumlah']);
+            }
+        }
+
         $datas = [
             'ruangan' => $data['ruangan'] ?? [],
             'itemTambahan' => $data['itemTambahan'] ?? null,
             'totalHarga' => $data['totalHarga'] ?? 0,
-            'pesanan' => $pesanan = $data['ruangan'][0]
+            'pesanan' => $pesanan = $data['ruangan'][0],
+            'waktu_persiapan' => $total_waktu,
         ];
 
         session()->put('pesan2', $datas);
@@ -373,7 +386,7 @@ class LoginsController extends Controller
     public function pesan3(Request $request)
     {
         if($request->method() == 'GET'){
-            $datas = session()->get('datas');
+            $datas = session()->get('pesan3');
 
             if($datas){
                 return view('.front.pesan3',$datas);
@@ -396,7 +409,8 @@ class LoginsController extends Controller
             'tambahans' => $data_tambahan,
             'tgl_mulai' => $tgl_jam_mulai,
             'tgl_selesai' => $tgl_jam_selesai,
-            'totalHarga' => $data_total
+            'totalHarga' => $data_total,
+            'now' => now()->addMinutes(15),
         ];
 
          $validator = Validator::make($returnsVal, [
@@ -411,11 +425,55 @@ class LoginsController extends Controller
             'tgl_selesai.after' => 'Tanggal / jam selesai harus lebih besar dari tanggal mulai.',
         ]);
 
+        $waktuMulai = date('Y-m-d H:i:s', strtotime("$tgl_mulai $jam_mulai"));
+        $waktuSelesai = date('Y-m-d H:i:s', strtotime("$tgl_sampai $jam_Sampai"));
+
+
+        $last_data = session()->get('pesan2');
+        $waktu_persiapan = $last_data['waktu_persiapan'];
+
+        $waktu_minimal = now()->addMinutes($waktu_persiapan);
+        // dd($waktu_minimal);
+
+        if($waktuMulai < $waktu_minimal){
+            return back()->withErrors(['message' => "Waktu mulai tidak boleh kurang dari waktu persiapan. minimal waktu mulai adalah $waktu_minimal"])->withInput();
+        }
+
+
+        $hold_message = '';
+        foreach ($data_ruangan as $v) {
+            // dump($v['id']);
+            // dump($waktuMulai, $waktuSelesai);
+            // dd(RoomHold::isConflict($v['id'], $waktuMulai, $waktuSelesai));
+
+            $ruangan = Ruangan::find($v['id']);
+
+            if(RoomHold::isConflict($v['id'], $waktuMulai, $waktuSelesai, $ruangan->waktu_produksi)){
+                $hold_message .= "Ruangan {$v['nama']} sudah di-hold pada waktu tersebut.\n";
+            }
+        }
+        if (!empty($hold_message)) {
+            return back()->withErrors(['message' => $hold_message])->withInput();
+        }else{
+            foreach ($data_ruangan as $v) {
+                RoomHold::create([
+                    'user_id' => Auth::user()->id,
+                    'ruangan_id' => $v['id'],
+                    'waktu_mulai' => $waktuMulai,
+                    'waktu_selesai' => $waktuSelesai,
+                    'waktu_kadaluarsa' => now()->addMinutes(15), // Contoh: hold berlaku selama 15 menit
+                ]);
+            }
+        }
+
         // Cek pesanan
         $trx_ruangan = null;
         if(is_array($returnsVal['ruangans'])){
             foreach ($returnsVal['ruangans'] as $ruangan) {
-                if ($this->checkPesanan($ruangan['id'], [$returnsVal['tgl_mulai'], $returnsVal['tgl_selesai']])) {
+
+                $r = Ruangan::find($ruangan['id']);
+
+                if ($this->checkPesanan($ruangan['id'], [$returnsVal['tgl_mulai'], $returnsVal['tgl_selesai']], $r->waktu_produksi)) {
                     $namaRuangan = Ruangan::find($ruangan['id'])->nama_ruangan;
                     return back()
                         ->withErrors(['message' => "Ruangan $namaRuangan sudah dipesan pada tanggal {$returnsVal['tgl_mulai']} - {$returnsVal['tgl_selesai']}"])
@@ -511,11 +569,11 @@ class LoginsController extends Controller
 
 
         if(is_array($data_ruangan)){
-
-
-
             foreach ($data_ruangan as $ruangan) {
-                if ($this->checkPesanan($ruangan['id'], [$tgl_mulai, $tgl_sampai])) {
+
+                $r = Ruangan::find($ruangan['id']);
+
+                if ($this->checkPesanan($ruangan['id'], [$tgl_mulai, $tgl_sampai], $r->waktu_produksi)) {
                     $namaRuangan = Ruangan::find($ruangan['id'])->nama_ruangan;
                     return back()
                         ->withErrors(['message' => "Ruangan $namaRuangan sudah dipesan pada tanggal $tgl_mulai - $tgl_sampai"])
@@ -682,16 +740,17 @@ class LoginsController extends Controller
         return view('.front.transfer',$returnsVal);
     }
 
-    public function checkPesanan($ruanganId, $tanggalRange)
+    public function checkPesanan($ruanganId, $tanggalRange, $waktu_persiapan = 0)
     {
+        $tanggalRange[0] = Carbon::parse($tanggalRange[0])->subMinutes($waktu_persiapan);
         return trx_sewa::where('mst_ruangan_id', $ruanganId)
             ->where('status','1')
             ->where(function ($query) use ($tanggalRange) {
                 $query->whereBetween('tanggal_awal', $tanggalRange)
                     ->orWhereBetween('tanggal_akhir', $tanggalRange)
                     ->orWhere(function ($subQuery) use ($tanggalRange) {
-                        $subQuery->where('tanggal_awal', '<=', $tanggalRange[0])
-                                ->where('tanggal_akhir', '>=', $tanggalRange[1]);
+                        $subQuery->where('tanggal_awal', '<', $tanggalRange[0])
+                                ->where('tanggal_akhir', '>', $tanggalRange[1]);
                     });
             })->exists();
     }
@@ -717,38 +776,108 @@ class LoginsController extends Controller
         return view('front.find_user');
     }
 
-    public function konfirmasiPembayaran($id)
+    public function cetakPDF($kode)
     {
-        $pemesanan = Pemesanan::with(['ruangan', 'fasilitas.fs'])->findOrFail($id);
-        $pemesanan->status = 'Pembayaran diterima';
-        $pemesanan->save();
+        $user = auth()->user();
 
-        // === 1. Buat data invoice
+        // Ambil data transaksi berdasarkan kode transaksi
+        $transaksi = trx_sewa::where('kode_transaksi', $kode)
+            ->with(['ruangan', 'sewaFasilitas', 'sewaFasilitas.fasilitas', 'user.profile'])
+            ->get();
+
+        $ruangan = [];
+        $fasilitas = null;
+        $email = '';
+        $harga_total = 0;
+        $note = '';
+        $tanggal_awal = '';
+        $tanggal_akhir = '';
+        $status = '';
+        $waktu = 0;
+        $nama = '';
+        $telepon = '';
+
+        foreach ($transaksi as $trx) {
+            $ruangan[] = Ruangan::where('id', $trx->mst_ruangan_id)->first();
+            $fasilitas = sewa_fasilitas::where('trx_sewa_id', $trx->id)->get();
+            $email = $trx->user->email;
+            $harga_total = $trx->mst_harga_sewa_id;
+            $note = $trx->keperluan;
+            $tanggal_awal = $trx->tanggal_awal;
+            $tanggal_akhir = $trx->tanggal_akhir;
+            $nama = $trx->user->profile->nama ?? 'Tidak ada nama';
+            $telepon = $trx->user->profile->telepon ?? 'Tidak ada telepon';
+
+            if ($trx->status == 0) {
+                $status = 'Menunggu pembayaran';
+            } else if ($trx->status == 1) {
+                $status = 'Pembayaran diterima';
+            } else if ($trx->status == 2) {
+                $status = 'Selesai';
+            } else if ($trx->status == 3) {
+                $status = 'Dibatalkan';
+            }
+
+            $tanggalAwal = \Carbon\Carbon::parse($trx->tanggal_awal);
+            $tanggalAkhir = \Carbon\Carbon::parse($trx->tanggal_akhir);
+            $waktu = ceil($tanggalAwal->diffInHours($tanggalAkhir));
+        }
+
         $data = [
-            'kode_transaksi' => $pemesanan->kode_transaksi,
-            'tanggal_awal' => $pemesanan->tgl_mulai,
-            'tanggal_akhir' => $pemesanan->tgl_selesai,
-            'status' => $pemesanan->status,
-            'ruangan' => $pemesanan->ruangan,
-            'fasilitas' => $pemesanan->fasilitas,
-            'waktu' => $pemesanan->durasi_jam,
-            'harga_t' => $pemesanan->total_harga,
-            'note' => $pemesanan->catatan,
+            'kode_transaksi' => $kode,
+            'ruangan' => $ruangan,
+            'fasilitas' => $fasilitas,
+            'email' => $email,
+            'harga_t' => $harga_total,
+            'note' => $note,
+            'tanggal_awal' => $tanggal_awal,
+            'tanggal_akhir' => $tanggal_akhir,
+            'status' => $status,
+            'waktu' => $waktu,
+            'nama' => $nama,
+            'telepon' => $telepon,
         ];
 
-        // === 2. Generate dan simpan PDF
-        $filename = 'invoice_' . $pemesanan->kode_transaksi . '.pdf';
-        $pdf = Pdf::loadView('invoice-pdf', $data); // atau 'invoice' jika kamu pakai view yg sama
-        Storage::put('public/invoices/' . $filename, $pdf->output());
+        // Buat PDF dan download
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('admin.transaction.newInvoice', $data);
+        // return $pdf->download("invoice-{$nama}-{$kode}.pdf");
+        return $pdf->download('invoice-' . trim($nama) . '-' . trim($kode) . '.pdf');
 
-        // === 3. Buat link download
-        $downloadLink = asset('storage/invoices/' . $filename);
-
-        // === 4. Kirim email
-        Mail::to($pemesanan->user->email)->send(new InvoiceMail($pemesanan, $downloadLink));
-
-        return redirect()->back()->with('success', 'Pembayaran dikonfirmasi dan invoice dikirim.');
     }
+
+
+    // public function konfirmasiPembayaran($id)
+    // {
+    //     $pemesanan = Pemesanan::with(['ruangan', 'fasilitas.fs'])->findOrFail($id);
+    //     $pemesanan->status = 'Pembayaran diterima';
+    //     $pemesanan->save();
+
+    //     // === 1. Buat data invoice
+    //     $data = [
+    //         'kode_transaksi' => $pemesanan->kode_transaksi,
+    //         'tanggal_awal' => $pemesanan->tgl_mulai,
+    //         'tanggal_akhir' => $pemesanan->tgl_selesai,
+    //         'status' => $pemesanan->status,
+    //         'ruangan' => $pemesanan->ruangan,
+    //         'fasilitas' => $pemesanan->fasilitas,
+    //         'waktu' => $pemesanan->durasi_jam,
+    //         'harga_t' => $pemesanan->total_harga,
+    //         'note' => $pemesanan->catatan,
+    //     ];
+
+    //     // === 2. Generate dan simpan PDF
+    //     $filename = 'invoice_' . $pemesanan->kode_transaksi . '.pdf';
+    //     $pdf = Pdf::loadView('invoice-pdf', $data); // atau 'invoice' jika kamu pakai view yg sama
+    //     Storage::put('public/invoices/' . $filename, $pdf->output());
+
+    //     // === 3. Buat link download
+    //     $downloadLink = asset('storage/invoices/' . $filename);
+
+    //     // === 4. Kirim email
+    //     Mail::to($pemesanan->user->email)->send(new InvoiceMail($pemesanan, $downloadLink));
+
+    //     return redirect()->back()->with('success', 'Pembayaran dikonfirmasi dan invoice dikirim.');
+    // }
 
     public function getSnapToken(Request $request)
     {

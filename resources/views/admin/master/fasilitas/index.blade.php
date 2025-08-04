@@ -22,6 +22,7 @@
                                         <th>Kuantitas</th>
                                         <th>Deskripsi</th>
                                         <th>Harga Satuan</th>
+                                        <th>Waktu Produksi (menit/pcs)</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
@@ -32,6 +33,7 @@
                                             <td>{{ $fas->kuantitas }}</td>
                                             <td>{{ $fas->deskripsi }}</td>
                                             <td>{{ $fas->harga_satuan }}</td>
+                                            <td>{{ $fas->waktu_produksi }}</td>
                                             <td>
                                                 <ul class="action">
                                                     <li class="edit">

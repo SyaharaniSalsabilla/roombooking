@@ -36,6 +36,7 @@ class FasilitasController extends Controller
             'kuantitas' => 'required',
             'deskripsi' => 'required',
             'harga' => 'required',
+            'waktu_produksi' => 'required|integer|min:0', // Validasi waktu_produksi harus integer dan tidak negatif
         ]);
 
 
@@ -47,7 +48,8 @@ class FasilitasController extends Controller
             'deskripsi' => $request->deskripsi,
             'harga_satuan' => $harga,
             'is_umum' => false,
-            'image' => ''
+            'image' => '',
+            'waktu_produksi' => $request->waktu_produksi,
         ]);
 
         return redirect()->route('admin.fasilitas')->with('success', 'Fasility added successfully!');
@@ -62,7 +64,7 @@ class FasilitasController extends Controller
             'kuantitas' => 'required',
             'deskripsi' => 'required',
             'harga' => 'required',
-
+            'waktu_produksi' => 'required|integer|min:0',
         ]);
 
 
@@ -73,6 +75,7 @@ class FasilitasController extends Controller
             'kuantitas' => $request->kuantitas,
             'deskripsi' => $request->deskripsi,
             'harga_satuan' => $harga,
+            'waktu_produksi' => $request->waktu_produksi,
         ]);
 
         return redirect()->route('admin.fasilitas')->with('success', 'Fasility updated successfully!');

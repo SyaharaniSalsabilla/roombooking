@@ -59,14 +59,18 @@
                                 </td>
                                 <td class="px-4 py-3">
                                     <ul class="action d-flex gap-2 flex-wrap">
-                                        {{-- Tombol kirim invoice --}}
+                                        <!-- {{-- Tombol kirim invoice --}}
                                         <li>
-                                            <a
-                                                href="{{ route('riwayat.transaksi.status', [$trx->kode_transaksi, 4]) }}">
+                                            <a href="{{ route('riwayat.transaksi.status', [$trx->kode_transaksi, 4]) }}">
                                                 <i class="fa-solid fa-envelope"></i> Kirim Invoice
                                             </a>
+                                        </li> -->
+                                        {{-- Tombol download invoice --}}
+                                        <li>
+                                            <a href="{{ route('invoice.pdf', $trx->kode_transaksi) }}" target="_blank">
+                                                <i class="fa-solid fa-file-pdf"></i> Download Invoice
+                                            </a>
                                         </li>
-
                                     </ul>
                                 </td>
 

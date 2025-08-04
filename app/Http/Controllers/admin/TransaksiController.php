@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+// use Barryvdh\DomPDF\Facade\Pdf;
+use PDF;
 
 class TransaksiController extends Controller
 {
@@ -96,6 +98,8 @@ class TransaksiController extends Controller
             $note = $trx->keperluan;
             $tanggal_awal = $trx->tanggal_awal;
             $tanggal_akhir = $trx->tanggal_akhir;
+            $nama = $trx->user->profile->nama ?? 'Tidak ada nama';
+            $telepon = $trx->user->profile->telepon ?? 'Tidak ada telepon';
             if ($trx->status == 0) {
                 $status = 'Menunggu pembayaran';
             } else if ($trx->status == 1) {
@@ -121,11 +125,17 @@ class TransaksiController extends Controller
             'tanggal_akhir' => $tanggal_akhir,
             'status' => $status,
             'waktu' => $waktu,
+            'nama' => $nama,
+            'telepon' => $telepon,
         ];
+        $pdf = Pdf::loadView('admin.transaction.newInvoice', $data); // generate PDF dari view
 
-        Mail::send('admin.transaction.invoice', $data, function ($message) use ($email) {
+        Mail::send('admin.transaction.newInvoice', $data, function ($message) use ($email, $pdf, $nama, $kode) {
             $message->to($email)
-                ->subject('Invoice Pemesanan - Nin Space');
+                ->subject('Invoice - NinSpace')
+                ->attachData($pdf->output(), 'invoice-' . trim($nama) . '-' . trim($kode) . '.pdf', [
+                    'mime' => 'application/pdf',
+                ]);
         });
 
         return 'Invoice berhasil dikirim ke email Anda.';

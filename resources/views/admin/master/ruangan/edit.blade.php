@@ -55,7 +55,10 @@
                         <label for="diskon" class="form-label">Diskon (%)</label>
                         <input type="number" class="form-control" name="diskon" value="{{ $ruangan->diskon }}" min="0" max="100">
                     </div>
-
+                    <div class="mb-3">
+                        <label for="waktu_produksi" class="form-label">Waktu Persiapan (menit)</label>
+                        <input type="number" class="form-control" name="waktu_produksi" value="{{ $ruangan->waktu_produksi }}" required>
+                    </div>
                     <div class="mb-3">
                         <label for="deskripsi" class="form-label">Deskripsi</label>
                         <textarea class="form-control" name="deskripsi" rows="3" required>{{ $ruangan->deskripsi }}</textarea>

@@ -29,6 +29,8 @@ class RuanganController extends Controller
             'gambar_ruangan' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'harga' => 'required',
             'diskon' => 'nullable|numeric|min:0|max:100',
+            'waktu_produksi' => 'required|integer|min:0', // Validasi untuk waktu produksi
+
         ]);
 
         $imagePath = null;
@@ -51,6 +53,7 @@ class RuanganController extends Controller
             'harga' => $harga,
             'active' => true, // Set active to true by default
             'diskon' => $request->diskon ?? 0, // Default to 0 if not provided
+            'waktu_produksi' => $request->waktu_produksi, // Waktu produksi in minutes
         ]);
 
         return redirect()->route('admin.ruangan')->with('success', 'Ruangan berhasil ditambahkan!');
@@ -74,6 +77,7 @@ class RuanganController extends Controller
             'gambar_ruangan' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'harga' => 'required',
             'diskon' => 'nullable|numeric|min:0|max:100',
+            'waktu_produksi' => 'required|integer|min:0', // Validasi untuk waktu produksi
         ]);
 
         $ruangan = Ruangan::findOrFail($id);
@@ -98,6 +102,7 @@ class RuanganController extends Controller
             'deskripsi' => $request->deskripsi,
             'harga' => $harga,
             'diskon' => $request->diskon ?? 0, // Default to 0 if not provided
+            'waktu_produksi' => $request->waktu_produksi, // Waktu produksi in minutes
         ]);
 
         return redirect()->route('admin.ruangan')->with('success', 'Ruangan berhasil diperbarui!');
